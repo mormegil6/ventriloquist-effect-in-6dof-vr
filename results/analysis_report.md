@@ -1,7 +1,3 @@
-# 6DoF VR Ventriloquist Effect - Statistical Analysis Results
-
-Generated: 2025-12-28 15:21:44 
-
 ## 1. Dataset Overview
 
 | Measure | Value |
@@ -16,28 +12,17 @@ Generated: 2025-12-28 15:21:44
 First 10 observations:
 
 ```
- participantId trialSequenceNum  soundType   disparityRange stimulusDisparity_m participantError_m signedError_m
-          P001                1      Flute   Long (40-70cm)                0.40          0.2012292   -0.14826287
-          P001                2     Speech   Long (40-70cm)                0.61          0.3156049    0.22471552
-          P001                3 Pink Noise   Long (40-70cm)                0.40          0.4371269    0.04484877
-          P001                4       Drum Medium (30-40cm)                0.36          0.4964415    0.34577399
-          P001                5     Speech Medium (30-40cm)                0.34          0.4911234    0.23153717
-          P001                6      Flute   Long (40-70cm)                0.40          0.3913430   -0.13486513
-          P001                7 Pink Noise  Short (15-30cm)                0.24          0.5694570    0.10274400
-          P001                8 Pink Noise   Long (40-70cm)                0.40          0.6843969    0.48369829
-          P001                9 Pink Noise  Short (15-30cm)                0.24          0.9024074   -0.02115637
-          P001               10      Flute Medium (30-40cm)                0.38          0.5493741    0.49699437
- ventriloquistBias total_path_length
-       -0.37065717          6.181477
-        0.36838608          7.406651
-        0.11212194         10.535612
-        0.96048326          4.186433
-        0.68099167          9.682172
-       -0.33716282          5.625836
-        0.42810000          1.957344
-        1.20924571          3.585280
-       -0.08815155          3.160918
-        1.30787993          2.092318
+ participantId trialSequenceNum  soundType   disparityRange stimulusDisparity_m participantError_m signedError_m ventriloquistBias total_path_length
+          P001                1      Flute   Long (40-70cm)                0.40          0.2012292   -0.14826287       -0.37065717          6.181477
+          P001                2     Speech   Long (40-70cm)                0.61          0.3156049    0.22471552        0.36838608          7.406651
+          P001                3 Pink Noise   Long (40-70cm)                0.40          0.4371269    0.04484877        0.11212194         10.535612
+          P001                4       Drum Medium (30-40cm)                0.36          0.4964415    0.34577399        0.96048326          4.186433
+          P001                5     Speech Medium (30-40cm)                0.34          0.4911234    0.23153717        0.68099167          9.682172
+          P001                6      Flute   Long (40-70cm)                0.40          0.3913430   -0.13486513       -0.33716282          5.625836
+          P001                7 Pink Noise  Short (15-30cm)                0.24          0.5694570    0.10274400        0.42810000          1.957344
+          P001                8 Pink Noise   Long (40-70cm)                0.40          0.6843969    0.48369829        1.20924571          3.585280
+          P001                9 Pink Noise  Short (15-30cm)                0.24          0.9024074   -0.02115637       -0.08815155          3.160918
+          P001               10      Flute Medium (30-40cm)                0.38          0.5493741    0.49699437        1.30787993          2.092318
 ```
 
 ## 3. Descriptive Statistics
@@ -114,20 +99,13 @@ First 10 observations:
 Pearson correlations among key variables:
 
 ```
-                    stimulusDisparity_m participantError_m signedError_m ventriloquistBias total_path_length
-stimulusDisparity_m               1.000              0.249         0.289             0.010             0.049
-participantError_m                0.249              1.000         0.544             0.420             0.097
-signedError_m                     0.289              0.544         1.000             0.881             0.004
-ventriloquistBias                 0.010              0.420         0.881             1.000            -0.017
-total_path_length                 0.049              0.097         0.004            -0.017             1.000
-trialSequenceNum                  0.009             -0.086        -0.002            -0.012            -0.067
-                    trialSequenceNum
-stimulusDisparity_m            0.009
-participantError_m            -0.086
-signedError_m                 -0.002
-ventriloquistBias             -0.012
-total_path_length             -0.067
-trialSequenceNum               1.000
+                    stimulusDisparity_m participantError_m signedError_m ventriloquistBias total_path_length trialSequenceNum
+stimulusDisparity_m               1.000              0.249         0.289             0.010             0.049            0.009
+participantError_m                0.249              1.000         0.544             0.420             0.097           -0.086
+signedError_m                     0.289              0.544         1.000             0.881             0.004           -0.002
+ventriloquistBias                 0.010              0.420         0.881             1.000            -0.017           -0.012
+total_path_length                 0.049              0.097         0.004            -0.017             1.000           -0.067
+trialSequenceNum                  0.009             -0.086        -0.002            -0.012            -0.067            1.000
 ```
 
 ## 5. Main Ventriloquist Effect (Signed Error Model)
@@ -197,20 +175,31 @@ sondTypSpch -0.411  0.015  0.499
 sndTypPnkNs -0.398  0.001  0.500  0.499
 ```
 
-### 5.4 Variance Explained (R-squared)
+### 5.4 Type III F-tests (Satterthwaite)
+
+```
+Type III Analysis of Variance Table with Satterthwaite's method
+                     Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)    
+stimulusDisparity_m 1.12992 1.12992     1  30.50  41.948 3.431e-07 ***
+soundType           0.13511 0.04504     3 690.71   1.672    0.1717    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+### 5.5 Variance Explained (R-squared)
 
 | Type | R² |
 |------|----|
 | Marginal R² (fixed effects) | 0.082 |
 | Conditional R² (fixed + random) | 0.211 |
 
-### 5.5 Intraclass Correlation (ICC)
+### 5.6 Intraclass Correlation (ICC)
 
 ICC (participant) = 0.068
 
 Interpretation: 6.8% of variance in signed error is attributable to between-participant differences.
 
-### 5.6 Fixed Effects with 95% CI
+### 5.7 Fixed Effects with 95% CI
 
 | Parameter | Estimate | 95% CI | Interpretation |
 |-----------|----------|--------|----------------|
@@ -220,7 +209,7 @@ Interpretation: 6.8% of variance in signed error is attributable to between-part
 | Speech vs Drum | -0.0003 m | [-0.0337, 0.0332] | -0.03 cm |
 | Pink Noise vs Drum | -0.0251 m | [-0.0585, 0.0083] | -2.51 cm |
 
-### 5.7 Random Effects Variance
+### 5.8 Random Effects Variance
 
 ```
  Groups        Name                Std.Dev. Corr  
@@ -241,6 +230,12 @@ Interpretation: 6.8% of variance in signed error is attributable to between-part
 | Family | Gamma (log link) |
 | Rationale | Right-skewed positive data; multiplicative effects |
 
+Warning message:
+In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.024066 (tol = 0.002, component 1)
+Warning message:
+In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.0249302 (tol = 0.002, component 1)
 ### 6.2 Model Comparison: With vs Without Spatial Factors
 
 ```
@@ -260,8 +255,7 @@ model_accuracy           13 5830.0 5889.9  -2902    5804.0 2.1239  5     0.8318
 ```
 Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
  Family: Gamma  ( log )
-Formula: participantError_cm ~ stimDisparity_c + soundType + trialSequence_c +  
-    azimuthSector + elevationCategory + (1 | participantId)
+Formula: participantError_cm ~ stimDisparity_c + soundType + trialSequence_c +      azimuthSector + elevationCategory + (1 | participantId)
    Data: analysis_df
 Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e+05))
 
@@ -404,13 +398,15 @@ To disentangle individual strategies from trial-level effects:
 - **Between-subject (mean_rate)**: participant's average movement rate across all trials
 - **Within-subject (rate_dev)**: trial-level deviation from participant's mean
 
+Warning message:
+In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.0194302 (tol = 0.002, component 1)
 ### 8.2 Model Summary
 
 ```
 Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
  Family: Gamma  ( log )
-Formula: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum +  
-    mean_rate + rate_dev + (1 | participantId)
+Formula: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum +      mean_rate + rate_dev + (1 | participantId)
    Data: analysis_df
 Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e+05))
 
@@ -514,7 +510,20 @@ sondTypSpch -0.348  0.029  0.052  0.025 -0.022 -0.032  0.055  0.494
 sndTypPnkNs -0.334  0.003  0.008  0.017  0.014 -0.004  0.033  0.499  0.499
 ```
 
-### 9.2 Post-Hoc: Azimuth Sectors
+### 9.2 Type III F-tests (Satterthwaite)
+
+```
+Type III Analysis of Variance Table with Satterthwaite's method
+                     Sum Sq Mean Sq NumDF  DenDF F value Pr(>F)    
+stimulusDisparity_m 2.08866 2.08866     1 709.37 75.0633 <2e-16 ***
+azimuthSector       0.06405 0.02135     3 720.74  0.7672 0.5126    
+elevationCategory   0.00057 0.00029     2 727.80  0.0103 0.9898    
+soundType           0.15328 0.05109     3 704.20  1.8362 0.1392    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+### 9.3 Post-Hoc: Azimuth Sectors
 
 ```
  contrast      estimate     SE  df t.ratio p.value
@@ -530,7 +539,7 @@ Degrees-of-freedom method: kenward-roger
 P value adjustment: tukey method for comparing a family of 4 estimates 
 ```
 
-### 9.3 Post-Hoc: Elevation Categories
+### 9.4 Post-Hoc: Elevation Categories
 
 ```
  contrast       estimate     SE  df t.ratio p.value
@@ -621,5 +630,3 @@ Individual ventriloquist susceptibility (% of disparity captured by vision):
 | Movement (Gamma GLMM) | 0.180 | 0.233 | -1041.4 |
 
 ---
-
-*Report generated by statistical_analysis.R*
