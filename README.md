@@ -87,4 +87,4 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 
 ## Contact
 
-For questions regarding this supplementary material, please contact me via e-mail: bartlomiej.mroz@pg.edu.pl
+Bartłomiej Mróz · bartlomiej.mroz@pg.edu.pl · [bmroz.eu](https://bmroz.eu) · Department of Multimedia Systems, Gdańsk University of Technology
