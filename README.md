@@ -2,7 +2,10 @@
 
 # 6DoF VR Ventriloquist Effect - Supplementary Materials
 
-Supplementary materials for the paper: **"Ventriloquist Effect in 6-Degrees-of-Freedom Virtual Reality with Higher-Order Ambisonics"**
+Supplementary materials for the paper:
+
+***"Ventriloquist Effect in 6-Degrees-of-Freedom Virtual Reality with Higher-Order Ambisonics"***  
+Bartłomiej Mróz · *IEEE Transactions on Visualization and Computer Graphics*, 2026 [under review]
 
 This repository contains:
 - Raw experimental data (localization responses + head trajectories)
