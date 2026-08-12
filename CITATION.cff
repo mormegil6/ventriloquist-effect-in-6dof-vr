@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+message: "If you use this data or analysis code, please cite it as below."
+type: software
+title: "Ventriloquist Effect in 6-Degrees-of-Freedom Virtual Reality - Supplementary Materials"
+authors:
+  - family-names: "Mróz"
+    given-names: "Bartłomiej"
+    orcid: "https://orcid.org/0000-0002-8983-9050"
+    affiliation: "Gdańsk University of Technology"
+  - family-names: "Perkowski"
+    given-names: "Paweł"
+    affiliation: "Gdańsk University of Technology"
+abstract: "Supplementary materials for the IEEE Transactions on Visualization and Computer Graphics paper \"Ventriloquist Effect in 6-Degrees-of-Freedom Virtual Reality with Object-Based Spatial Audio\": trial-level localization responses and head-tracking trajectories for 31 participants, and the reproducible analysis pipeline behind every reported value - dataset construction with trajectory-derived measures (experienced angular disparity, head-to-source distance, cue eccentricity), linear mixed-effects modelling of the signed error, generalized mixed models of the unsigned error, the nonlinearity and breakpoint analyses, the developer tolerance lookup, and the LaTeX macro generation that writes reported statistics directly into the manuscript source."
+repository-code: "https://github.com/mormegil6/ventriloquist-effect-in-6dof-vr"
+url: "https://github.com/mormegil6/ventriloquist-effect-in-6dof-vr"
+license: CC-BY-4.0
+keywords:
+  - 6dof
+  - virtual-reality
+  - spatial-audio
+  - object-based-audio
+  - ventriloquist-effect
+  - audiovisual-integration
+  - psychoacoustics
+  - perception
+  - mixed-effects-models
+  - reproducible-research
+  - r
+preferred-citation:
+  type: article
+  title: "Ventriloquist Effect in 6-Degrees-of-Freedom Virtual Reality with Object-Based Spatial Audio"
+  authors:
+    - family-names: "Mróz"
+      given-names: "Bartłomiej"
+      orcid: "https://orcid.org/0000-0002-8983-9050"
+    - family-names: "Perkowski"
+      given-names: "Paweł"
+  journal: "IEEE Transactions on Visualization and Computer Graphics"
+  publisher:
+    name: "IEEE"
+  year: 2026
+  status: submitted
