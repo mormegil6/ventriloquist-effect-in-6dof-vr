@@ -9,11 +9,15 @@ authors:
     affiliation: "Gdańsk University of Technology"
   - family-names: "Perkowski"
     given-names: "Paweł"
+    orcid: "https://orcid.org/0009-0005-1629-2700"
     affiliation: "Gdańsk University of Technology"
 abstract: "Supplementary materials for the IEEE Transactions on Visualization and Computer Graphics paper \"Ventriloquist Effect in 6-Degrees-of-Freedom Virtual Reality with Object-Based Spatial Audio\": trial-level localization responses and head-tracking trajectories for 31 participants, and the reproducible analysis pipeline behind every reported value - dataset construction with trajectory-derived measures (experienced angular disparity, head-to-source distance, cue eccentricity), linear mixed-effects modelling of the signed error, generalized mixed models of the unsigned error, the nonlinearity and breakpoint analyses, the developer tolerance lookup, and the LaTeX macro generation that writes reported statistics directly into the manuscript source."
 repository-code: "https://github.com/mormegil6/ventriloquist-effect-in-6dof-vr"
 url: "https://github.com/mormegil6/ventriloquist-effect-in-6dof-vr"
 license: CC-BY-4.0
+version: 1.0.1
+doi: 10.5281/zenodo.21907408
+date-released: 2026-08-12
 keywords:
   - 6dof
   - virtual-reality
@@ -35,6 +39,7 @@ preferred-citation:
       orcid: "https://orcid.org/0000-0002-8983-9050"
     - family-names: "Perkowski"
       given-names: "Paweł"
+      orcid: "https://orcid.org/0009-0005-1629-2700"
   journal: "IEEE Transactions on Visualization and Computer Graphics"
   publisher:
     name: "IEEE"
