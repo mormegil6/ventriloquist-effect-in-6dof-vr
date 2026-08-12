@@ -1,0 +1,5 @@
+"model","AIC"
+"Gamma(log) glmmTMB",5851.08237266379
+"lognormal(log) glmmTMB as fitted",5909.98358276731
+"correct log-normal ML, y scale",5881.68021134959
+"Gaussian LMM on log(error), REML, log scale",1349.29781240442

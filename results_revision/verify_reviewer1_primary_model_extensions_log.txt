@@ -1,0 +1,513 @@
+
+==============================================================================
+0. DATA INTEGRITY
+==============================================================================
+n trials: 744  n participants: 31 
+trials per participant: 24 
+disparity range: 0.150000005960464 - 0.699999988079071  mean: 0.378871 
+trialSequence_c is grand-mean centred: TRUE 
+stimDisparity_c is grand-mean centred: TRUE 
+cor(trialSequenceNum, stimulusDisparity_m): 0.008709515 
+            
+             FALSE TRUE
+  Drum          90   96
+  Flute         89   97
+  Speech        99   87
+  Pink Noise    94   92
+
+==============================================================================
+1. M0 BASELINE REPRODUCTION
+==============================================================================
+                        Estimate Std. Error        df     t value     Pr(>|t|)
+(Intercept)          0.008673864 0.02144697  51.95648  0.40443307 6.875544e-01
+stimulusDisparity_m  0.346596424 0.05351408  30.50499  6.47673300 3.431374e-07
+soundTypeFlute       0.012038887 0.01705788 688.84558  0.70576696 4.805717e-01
+soundTypeSpeech     -0.000250160 0.01704480 689.24995 -0.01467661 9.882944e-01
+soundTypePink Noise -0.025068519 0.01704221 689.52240 -1.47096616 1.417565e-01
+
+Wald 95% CI for disparity:
+  b = 0.346596  SE = 0.053514  CI = [0.2417, 0.4515]
+ Groups        Name                Std.Dev. Corr  
+ participantId (Intercept)         0.04449        
+               stimulusDisparity_m 0.19015  -0.556
+ Residual                          0.16412        
+residual SD: 0.1641223 
+AIC(REML): -479.6378 
+
+==============================================================================
+1b. OPTIMISER SENSITIVITY / VCOV CONDITIONING FOR M0
+==============================================================================
+  optimizer   logLik    b_disp    se_disp   t_disp  df_disp     sd_int
+     bobyqa 248.8189 0.3465964 0.05351408 6.476733 30.50499 0.04449047
+ NelderMead 248.8189 0.3465965 0.05351402 6.476741 30.50494 0.04449032
+  nloptwrap 248.8189 0.3465965 0.05351392 6.476754 30.50489 0.04448985
+ nlminbwrap 248.8189 0.3465964 0.05351408 6.476733 30.50500 0.04449046
+  sd_slope       corr     sigma singular
+ 0.1901453 -0.5558979 0.1641223    FALSE
+ 0.1901448 -0.5558942 0.1641223    FALSE
+ 0.1901439 -0.5558890 0.1641223    FALSE
+ 0.1901453 -0.5558979 0.1641223    FALSE
+
+max spread of b_disp across optimisers: 8.164059e-08 
+max spread of se_disp across optimisers: 1.638786e-07 
+
+M0 fixed-effect vcov eigenvalues:
+[1] 0.0031124153 0.0006984524 0.0001455569 0.0001453235 0.0000939150
+M0 random-effect covariance eigenvalues:
+[1] 0.036790549 0.001344104
+
+Profile CI for disparity and for the RE parameters (cross-check on Wald):
+Computing profile confidence intervals ...
+Komunikaty ostrzegawcze:
+1: 'oldNames' is deprecated. Please use 'signames' instead. 
+2: W poleceniu 'FUN(X[[i]], ...)':
+  non-monotonic profile for cor_stimulusDisparity_m.(Intercept)|participantId
+3: W poleceniu 'nextpar(mat, cc, i, delta, lowcut, upcut)':
+  unexpected decrease in profile: using minstep
+4: W poleceniu 'nextpar(mat, cc, i, delta, lowcut, upcut)':
+  unexpected decrease in profile: using minstep
+5: W poleceniu 'FUN(X[[i]], ...)':
+  non-monotonic profile for sd_stimulusDisparity_m|participantId
+6: W poleceniu 'confint.thpr(pp, level = level, zeta = zeta)':
+  bad spline fit for cor_stimulusDisparity_m.(Intercept)|participantId: falling back to linear interpolation
+7: W poleceniu 'regularize.values(x, y, ties, missing(ties), na.rm = na.rm)':
+  zwijanie do unikalnych warto'sci 'x'
+8: W poleceniu 'confint.thpr(pp, level = level, zeta = zeta)':
+  bad spline fit for sd_stimulusDisparity_m|participantId: falling back to linear interpolation
+                                                        2.5 %     97.5 %
+sd_(Intercept)|participantId                       0.00000000 0.09558972
+cor_stimulusDisparity_m.(Intercept)|participantId -1.00000000 1.00000000
+sd_stimulusDisparity_m|participantId               0.09833745 0.30709745
+sigma                                              0.15544908 0.17284380
+(Intercept)                                       -0.03352219 0.05106306
+stimulusDisparity_m                                0.23881822 0.45189906
+soundTypeFlute                                    -0.02132567 0.04549376
+soundTypeSpeech                                   -0.03372201 0.03308290
+soundTypePink Noise                               -0.05858377 0.00823824
+
+==============================================================================
+1c. M0 RANDOM SLOPE JUSTIFICATION + R2
+==============================================================================
+Data: d
+Models:
+m0_ri: signedError_m ~ stimulusDisparity_m + soundType + (1 | participantId)
+m0: signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m | participantId)
+      npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)   
+m0_ri    7 -471.67 -439.38 242.83   -485.67                        
+m0       9 -479.64 -438.13 248.82   -497.64 11.971  2   0.002515 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+R2 (two independent routes):
+ var_fixed var_rand_A var_rand_B  var_resid      R2m_A      R2c_A      R2m_B 
+  0.002789   0.004405   0.004405   0.026936   0.081727   0.210797   0.081727 
+     R2c_B 
+  0.210797 
+
+R2 helper sanity check on the random-intercept model (var_rand should equal tau00 = 0.003596314 ):
+ var_fixed var_rand_A var_rand_B  var_resid      R2m_A      R2c_A      R2m_B 
+  0.003012   0.003596   0.003596   0.027750   0.087660   0.192330   0.087660 
+     R2c_B 
+  0.192330 
+
+==============================================================================
+2. TEST 1: disparity x soundType
+==============================================================================
+Type III (lmerTest anova, Satterthwaite):
+Type III Analysis of Variance Table with Satterthwaite's method
+                               Sum Sq Mean Sq NumDF  DenDF F value  Pr(>F)    
+stimulusDisparity_m           1.13757 1.13757     1  30.82 42.1959 3.1e-07 ***
+soundType                     0.01805 0.00602     3 706.05  0.2232  0.8803    
+stimulusDisparity_m:soundType 0.06518 0.02173     3 708.02  0.8059  0.4908    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Type III under contr.sum:
+Type III Analysis of Variance Table with Satterthwaite's method
+                               Sum Sq Mean Sq NumDF  DenDF F value  Pr(>F)    
+stimulusDisparity_m           1.13757 1.13757     1  30.82 42.1959 3.1e-07 ***
+soundType                     0.01805 0.00602     3 706.05  0.2232  0.8803    
+stimulusDisparity_m:soundType 0.06518 0.02173     3 708.02  0.8059  0.4908    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+ML LRT M0 vs M1:
+Data: d
+Models:
+m0_ml: signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m | participantId)
+m1_ml: signedError_m ~ stimulusDisparity_m * soundType + (1 + stimulusDisparity_m | participantId)
+      npar     AIC     BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+m0_ml    9 -510.47 -468.96 264.24   -528.47                    
+m1_ml   12 -506.91 -451.57 265.45   -530.91 2.437  3     0.4868
+
+emmeans default df class for this object:
+pbkrtest installed: TRUE 
+emtrends WITHOUT setting lmer.df (i.e. emmeans default):
+ soundType  stimulusDisparity_m.trend     SE  df lower.CL upper.CL t.ratio
+ Drum                           0.408 0.0856 157    0.239    0.577   4.769
+ Flute                          0.383 0.0978 221    0.190    0.575   3.914
+ Speech                         0.358 0.0892 185    0.182    0.534   4.015
+ Pink Noise                     0.245 0.0868 164    0.074    0.417   2.827
+ p.value
+ <0.0001
+  0.0001
+ <0.0001
+  0.0053
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+emtrends with Satterthwaite:
+ soundType  stimulusDisparity_m.trend     SE  df lower.CL upper.CL t.ratio
+ Drum                           0.408 0.0853 162   0.2397    0.577   4.785
+ Flute                          0.383 0.0973 227   0.1910    0.574   3.934
+ Speech                         0.358 0.0890 191   0.1827    0.534   4.025
+ Pink Noise                     0.245 0.0865 169   0.0746    0.416   2.837
+ p.value
+ <0.0001
+  0.0001
+ <0.0001
+  0.0051
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+
+CI widths: 0.3369, 0.3835, 0.351, 0.3416 
+mean half-width: 0.1766174 
+
+Pairwise slope contrasts (Tukey):
+ contrast            estimate    SE  df lower.CL upper.CL t.ratio p.value
+ Drum - Flute          0.0254 0.120 709   -0.283    0.334   0.212  0.9966
+ Drum - Speech         0.0499 0.113 705   -0.242    0.342   0.441  0.9714
+ Drum - Pink Noise     0.1627 0.111 708   -0.124    0.450   1.459  0.4629
+ Flute - Speech        0.0246 0.123 710   -0.293    0.342   0.199  0.9972
+ Flute - Pink Noise    0.1373 0.120 708   -0.173    0.448   1.140  0.6651
+ Speech - Pink Noise   0.1128 0.115 710   -0.183    0.408   0.982  0.7597
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+widest Tukey CI: 0.6350878 
+
+Pairwise unadjusted:
+ contrast            estimate    SE  df lower.CL upper.CL t.ratio p.value
+ Drum - Flute          0.0254 0.120 709  -0.2097    0.260   0.212  0.8323
+ Drum - Speech         0.0499 0.113 705  -0.1725    0.272   0.441  0.6596
+ Drum - Pink Noise     0.1627 0.111 708  -0.0562    0.382   1.459  0.1450
+ Flute - Speech        0.0246 0.123 710  -0.2175    0.267   0.199  0.8422
+ Flute - Pink Noise    0.1373 0.120 708  -0.0992    0.374   1.140  0.2548
+ Speech - Pink Noise   0.1128 0.115 710  -0.1127    0.338   0.982  0.3264
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+
+M1 R2:
+ var_fixed var_rand_A var_rand_B  var_resid      R2m_A      R2c_A      R2m_B 
+  0.002884   0.004386   0.004386   0.026959   0.084261   0.212391   0.084261 
+     R2c_B 
+  0.212391 
+  model singular max_abs_rel_grad vcov_min_eig vcov_cond  RE_min_eig  RE_cond
+1    M1    FALSE      1.05376e-06 9.236636e-05   375.277 0.001374529 26.56591
+  n_warn warns
+1      0      
+
+==============================================================================
+3. TEST 2: trial and trial x disparity
+==============================================================================
+RAW-disparity parameterisation:
+                                         Estimate  Std. Error        df
+(Intercept)                          0.0095456073 0.021522970  51.47355
+stimulusDisparity_m                  0.3445051711 0.053566269  30.37069
+trialSequence_c                     -0.0032229821 0.002386421 708.94193
+soundTypeFlute                       0.0118486171 0.017056919 686.91960
+soundTypeSpeech                     -0.0008991135 0.017047448 687.10303
+soundTypePink Noise                 -0.0248098295 0.017043528 687.17643
+stimulusDisparity_m:trialSequence_c  0.0088680396 0.005971175 710.54280
+                                        t value     Pr(>|t|)
+(Intercept)                          0.44350790 6.592571e-01
+stimulusDisparity_m                  6.43138258 3.973164e-07
+trialSequence_c                     -1.35055063 1.772704e-01
+soundTypeFlute                       0.69465167 4.875085e-01
+soundTypeSpeech                     -0.05274182 9.579529e-01
+soundTypePink Noise                 -1.45567452 1.459393e-01
+stimulusDisparity_m:trialSequence_c  1.48514147 1.379499e-01
+Type III Analysis of Variance Table with Satterthwaite's method
+                                     Sum Sq Mean Sq NumDF  DenDF F value
+stimulusDisparity_m                 1.11325 1.11325     1  30.37 41.3627
+trialSequence_c                     0.04909 0.04909     1 708.94  1.8240
+soundType                           0.13090 0.04363     3 688.68  1.6212
+stimulusDisparity_m:trialSequence_c 0.05936 0.05936     1 710.54  2.2056
+                                       Pr(>F)    
+stimulusDisparity_m                 3.973e-07 ***
+trialSequence_c                        0.1773    
+soundType                              0.1831    
+stimulusDisparity_m:trialSequence_c    0.1379    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+CENTRED-disparity parameterisation:
+                                     Estimate   Std. Error        df
+(Intercept)                      0.1400686150 0.0161931233  85.59677
+stimDisparity_c                  0.3445051697 0.0535662713  30.37070
+trialSequence_c                  0.0001368607 0.0008752363 701.62686
+soundTypeFlute                   0.0118486173 0.0170569188 686.91959
+soundTypeSpeech                 -0.0008991132 0.0170474483 687.10303
+soundTypePink Noise             -0.0248098295 0.0170435280 687.17642
+stimDisparity_c:trialSequence_c  0.0088680395 0.0059711750 710.54280
+                                    t value     Pr(>|t|)
+(Intercept)                      8.64988256 2.626808e-13
+stimDisparity_c                  6.43138231 3.973162e-07
+trialSequence_c                  0.15637001 8.757864e-01
+soundTypeFlute                   0.69465168 4.875085e-01
+soundTypeSpeech                 -0.05274181 9.579530e-01
+soundTypePink Noise             -1.45567452 1.459393e-01
+stimDisparity_c:trialSequence_c  1.48514145 1.379499e-01
+Type III Analysis of Variance Table with Satterthwaite's method
+                                 Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)
+stimDisparity_c                 1.11325 1.11325     1  30.37 41.3627 3.973e-07
+trialSequence_c                 0.00066 0.00066     1 701.63  0.0245    0.8758
+soundType                       0.13090 0.04363     3 688.68  1.6212    0.1831
+stimDisparity_c:trialSequence_c 0.05936 0.05936     1 710.54  2.2056    0.1379
+                                   
+stimDisparity_c                 ***
+trialSequence_c                    
+soundType                          
+stimDisparity_c:trialSequence_c    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+logLik raw vs centred (must be identical - same model): 239.5991 239.5991 
+
+Trial main effect at mean disparity, converted to cm over the 23-trial span:
+  b = 0.0001369 m/trial, SE = 0.0008752, t(701.63) = 0.156, p = 0.8758
+  per-trial CI (cm): [-0.1582, 0.1855]
+  over 23 trials (cm): 0.315, CI [-3.638, 4.267]
+
+Trial slope at the disparity extremes:
+ stimulusDisparity_m trialSequence_c.trend      SE  df lower.CL upper.CL
+                0.15              -0.00189 0.00159 707 -0.00501  0.00122
+                0.70               0.00298 0.00215 708 -0.00123  0.00720
+ t.ratio p.value
+  -1.192  0.2335
+   1.391  0.1646
+
+Results are averaged over the levels of: soundType 
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+
+Capture slope with trial in the model (raw and centred must agree):
+                     Estimate Std. Error       df  t value     Pr(>|t|)
+stimulusDisparity_m 0.3445052 0.05356627 30.37069 6.431383 3.973164e-07
+                 Estimate Std. Error      df  t value     Pr(>|t|)
+stimDisparity_c 0.3445052 0.05356627 30.3707 6.431382 3.973162e-07
+  CI [0.2395, 0.4495]; change from M0: -0.0020913 (-0.6034%)
+
+==============================================================================
+3b. IS THE ML LRT PARAMETERISATION-INVARIANT?
+==============================================================================
+M0(ML) vs main-effects+trial(ML):
+Data: d
+Models:
+m0_ml: signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m | participantId)
+m_trial_raw_ml: signedError_m ~ stimulusDisparity_m + trialSequence_c + soundType + (1 + stimulusDisparity_m | participantId)
+               npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)
+m0_ml             9 -510.47 -468.96 264.24   -528.47                     
+m_trial_raw_ml   10 -508.48 -462.36 264.24   -528.48 0.0063  1     0.9365
+
+logLik of the two interaction models under ML (identical?): 265.3437 265.3437 
+
+LRT dropping ONLY the trial main effect, RAW coding:
+Data: d
+Models:
+m2raw_notrial: signedError_m ~ stimulusDisparity_m + soundType + stimulusDisparity_m:trialSequence_c + (1 + stimulusDisparity_m | participantId)
+m2raw_ml: signedError_m ~ stimulusDisparity_m * trialSequence_c + soundType + (1 + stimulusDisparity_m | participantId)
+              npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)
+m2raw_notrial   10 -508.86 -462.73 264.43   -528.86                     
+m2raw_ml        11 -508.69 -457.95 265.34   -530.69 1.8321  1     0.1759
+
+LRT dropping ONLY the trial main effect, CENTRED coding:
+Data: d
+Models:
+m2c_notrial: signedError_m ~ stimDisparity_c + soundType + stimDisparity_c:trialSequence_c + (1 + stimDisparity_c | participantId)
+m2c_ml: signedError_m ~ stimDisparity_c * trialSequence_c + soundType + (1 + stimDisparity_c | participantId)
+            npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)
+m2c_notrial   10 -510.66 -464.54 265.33   -530.66                     
+m2c_ml        11 -508.69 -457.95 265.34   -530.69 0.0229  1     0.8796
+
+==============================================================================
+3c. RANDOM SLOPE FOR TRIAL
+==============================================================================
+ Groups        Name                Std.Dev.  Corr         
+ participantId (Intercept)         0.0456608              
+               stimulusDisparity_m 0.1828062 -0.512       
+               trialSequence_c     0.0034268 -0.220  0.056
+ Residual                          0.1623690              
+  model singular max_abs_rel_grad vcov_min_eig vcov_cond   RE_min_eig  RE_cond
+1  M2rs    FALSE     2.966492e-06 9.805145e-07  3067.017 1.111838e-05 3057.142
+  n_warn warns
+1      0      
+
+REML LRT M2 vs M2rs:
+Data: d
+Models:
+m2_raw: signedError_m ~ stimulusDisparity_m * trialSequence_c + soundType + (1 + stimulusDisparity_m | participantId)
+m2_rs: signedError_m ~ stimulusDisparity_m * trialSequence_c + soundType + (1 + stimulusDisparity_m + trialSequence_c | participantId)
+       npar     AIC     BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+m2_raw   11 -457.20 -406.47 239.60   -479.20                    
+m2_rs    14 -453.98 -389.42 240.99   -481.98 2.786  3     0.4258
+
+M2rs capture slope:
+                     Estimate Std. Error       df  t value     Pr(>|t|)
+stimulusDisparity_m 0.3475517 0.05253196 30.13332 6.616005 2.473518e-07
+M2rs interaction:
+                                       Estimate  Std. Error       df t value
+stimulusDisparity_m:trialSequence_c 0.008994599 0.005958739 707.2347 1.50948
+                                     Pr(>|t|)
+stimulusDisparity_m:trialSequence_c 0.1316227
+
+M2 R2:
+ var_fixed var_rand_A var_rand_B  var_resid      R2m_A      R2c_A      R2m_B 
+  0.002876   0.004433   0.004433   0.026914   0.084030   0.213556   0.084030 
+     R2c_B 
+  0.213556 
+M2rs R2:
+ var_fixed var_rand_A var_rand_B  var_resid      R2m_A      R2c_A      R2m_B 
+  0.002910   0.004946   0.004946   0.026364   0.085045   0.229585   0.085045 
+     R2c_B 
+  0.229585 
+
+REML LRT: disparity random slope still justified in M2:
+Data: d
+Models:
+m2_ri: signedError_m ~ stimulusDisparity_m * trialSequence_c + soundType + (1 | participantId)
+m2_raw: signedError_m ~ stimulusDisparity_m * trialSequence_c + soundType + (1 + stimulusDisparity_m | participantId)
+       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)   
+m2_ri     9 -449.38 -407.88 233.69   -467.38                        
+m2_raw   11 -457.20 -406.47 239.60   -479.20 11.814  2    0.00272 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+==============================================================================
+4. SUPPLEMENTARY: LEARNING ON UNSIGNED ERROR
+==============================================================================
+                        Estimate  Std. Error        df   t value     Pr(>|t|)
+(Intercept)          0.283742687 0.017052257  66.28898 16.639597 2.330577e-25
+trialSequence_c     -0.002094447 0.000819245 709.00000 -2.556558 1.077857e-02
+soundTypeFlute      -0.028104690 0.016017055 709.00000 -1.754673 7.974724e-02
+soundTypeSpeech     -0.027464048 0.016016658 709.00000 -1.714718 8.683397e-02
+soundTypePink Noise -0.032028755 0.016019845 709.00000 -1.999317 4.595522e-02
+Wald CI: [-0.003700, -0.000489]
+
+Predicted unsigned error at trial 1 and 24, AVERAGED over sound type (emmeans):
+ trialSequence_c emmean     SE df lower.CL upper.CL
+           -11.5  0.286 0.0168 63    0.252    0.320
+            11.5  0.238 0.0168 63    0.204    0.271
+
+Results are averaged over the levels of: soundType 
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+  trial1 = 28.59 cm, trial24 = 23.78 cm, change = -16.85%
+
+Prediction using the raw intercept (i.e. the Drum reference level only):
+  trial1 = 30.78 cm, trial24 = 25.97 cm, change = -15.65%
+
+==============================================================================
+4b. IS THE LEARNING EFFECT CONFOUNDED WITH STIMULUS DISPARITY?
+==============================================================================
+                        Estimate   Std. Error       df   t value     Pr(>|t|)
+(Intercept)          0.172875217 0.0220388300 169.7241  7.844120 4.637731e-13
+trialSequence_c     -0.002135908 0.0007867605 708.0048 -2.714813 6.792861e-03
+stimulusDisparity_m  0.287350494 0.0368611999 711.3992  7.795473 2.282556e-14
+soundTypeFlute      -0.022778076 0.0153967689 708.0115 -1.479406 1.394766e-01
+soundTypeSpeech     -0.024912587 0.0153846998 708.0063 -1.619309 1.058261e-01
+soundTypePink Noise -0.031911988 0.0153842864 708.0047 -2.074324 3.841009e-02
+
+Also with the by-participant disparity slope, matching the primary RE structure:
+                        Estimate   Std. Error        df   t value     Pr(>|t|)
+(Intercept)          0.174279666 0.0246297455  39.59221  7.075983 1.553920e-08
+trialSequence_c     -0.002075161 0.0007808375 699.44773 -2.657609 8.049418e-03
+stimulusDisparity_m  0.281654898 0.0476629772  28.14282  5.909301 2.291374e-06
+soundTypeFlute      -0.023115766 0.0152112523 685.53289 -1.519649 1.290602e-01
+soundTypeSpeech     -0.023082676 0.0151995859 685.79423 -1.518638 1.293144e-01
+soundTypePink Noise -0.031087929 0.0151994169 685.72604 -2.045337 4.120277e-02
+
+By-participant mean disparity across the session (trend?):
+                     Estimate   Std. Error    t value      Pr(>|t|)
+(Intercept)      0.3765322587 0.0112679871 33.4161067 4.222569e-150
+trialSequenceNum 0.0001870968 0.0007885948  0.2372534  8.125257e-01
+
+Distributional check on the supplementary Gaussian LMM:
+  skewness of unsigned error: 1.877581 
+  min unsigned error (m): 0.006043572 
+  residual skewness: 1.737191 
+  Shapiro-Wilk on residuals:
+
+	Shapiro-Wilk normality test
+
+data:  r
+W = 0.8845, p-value < 2.2e-16
+
+
+Log-transformed refit (robustness of the learning claim):
+                        Estimate  Std. Error      df    t value     Pr(>|t|)
+(Intercept)         -1.459599130 0.061013322  72.786 -23.922630 3.235717e-36
+trialSequence_c     -0.008200105 0.003068201 709.000  -2.672610 7.699383e-03
+soundTypeFlute      -0.099946670 0.059986386 709.000  -1.666156 9.612407e-02
+soundTypeSpeech     -0.084763769 0.059984898 709.000  -1.413085 1.580695e-01
+soundTypePink Noise -0.081775550 0.059996836 709.000  -1.362998 1.733159e-01
+
+==============================================================================
+5. CONVERGENCE SUMMARY ACROSS ALL FITS
+==============================================================================
+      model singular max_abs_rel_grad vcov_min_eig  vcov_cond   RE_min_eig
+         M0    FALSE     9.379685e-08 9.391500e-05   33.14077 1.344104e-03
+      M0_ri    FALSE     1.338056e-08 1.108859e-04   18.20668 3.596314e-03
+         M1    FALSE     1.053760e-06 9.236636e-05  375.27704 1.374529e-03
+     M1_sum    FALSE     7.761395e-08 3.163477e-05  280.27135 1.374529e-03
+     M2_raw    FALSE     4.945897e-07 6.676233e-07 4673.82503 1.409683e-03
+       M2_c    FALSE     3.296813e-07 7.616696e-07 3806.01237 1.350800e-03
+      M2_rs    FALSE     2.966492e-06 9.805145e-07 3067.01700 1.111838e-05
+      M2_ri    FALSE     1.332147e-08 6.811885e-07 2966.54008 3.622396e-03
+        Sup    FALSE     1.162999e-08 6.688820e-07  971.97990 5.039415e-03
+    Sup_adj    FALSE     1.289682e-09 6.168607e-07 2618.94063 5.121140e-03
+ Sup_adj_rs    FALSE     7.931993e-08 6.076622e-07 4348.95711 4.363084e-03
+    Sup_log    FALSE     3.111638e-09 9.381873e-06  961.87426 5.965077e-02
+     RE_cond n_warn warns
+   27.371796      0      
+    1.000000      0      
+   26.565908      0      
+   26.565934      0      
+   26.223071      0      
+   28.559080      0      
+ 3057.142339      0      
+    1.000000      0      
+    1.000000      0      
+    1.000000      0      
+    7.614777      0      
+    1.000000      0      
+
+==============================================================================
+6. HEADLINE NUMBER COMPARISON TABLE
+==============================================================================
+         quantity   reported    recomputed     abs_diff agrees
+   M0 b_disparity  0.3466000  0.3465964237 3.576336e-06   TRUE
+  M0 SE_disparity  0.0535100  0.0535140824 4.082434e-06   TRUE
+             M0 t  6.4767000  6.4767330000 3.300001e-05   TRUE
+            M0 df 30.5050000 30.5049898098 1.019024e-05   TRUE
+        M0 SD_int  0.0444900  0.0444904683 4.683474e-07   TRUE
+      M0 SD_slope  0.1901500  0.1901453425 4.657548e-06   TRUE
+          M0 corr -0.5560000 -0.5558979432 1.020568e-04  FALSE
+         M0 sigma  0.1641200  0.1641222609 2.260865e-06   TRUE
+           M0 R2m  0.0817300  0.0817270792 2.920802e-06   TRUE
+           M0 R2c  0.2108000  0.2107974852 2.514840e-06   TRUE
+             T1 F  0.8059000  0.8058654893 3.451067e-05   TRUE
+     T1 LRT chisq  2.4370000  2.4369912385 8.761469e-06   TRUE
+      T2c b_trial  0.0001369  0.0001368607 3.929632e-08   TRUE
+ T2 interaction b  0.0088680  0.0088680396 3.960724e-08   TRUE
+ T2 capture slope  0.3445100  0.3445051711 4.828939e-06   TRUE
+      Sup b_trial -0.0020940 -0.0020944474 4.473603e-07   TRUE
+
+R session:
+[1] "R version 4.4.1 (2024-06-14)"
+lme4 1.1.38 lmerTest 3.1.3 emmeans 2.0.1 

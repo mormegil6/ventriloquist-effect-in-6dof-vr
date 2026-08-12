@@ -1,0 +1,46 @@
+=== (a) SENSITIVITY OF THE WITHIN-PARTICIPANT CUE EFFECT TO RE STRUCTURE ===
+                            spec within_est_per10pp within_se_per10pp within_df
+          (1|pid)  [as reported]            0.73222           0.37682   708.008
+ (1+disparity|pid)  [primary RE]            0.76485           0.37401   707.819
+  (1+frac_within|pid)  [maximal]            0.72481           0.53298    29.001
+   (1+frac_within+disparity|pid)            0.68670           0.55378    28.508
+              (1|pid) + duration            0.81522           0.37611   706.890
+ within_p between_est_per10pp between_p singular warnings
+ 0.052393              1.4893   0.19523    FALSE     none
+ 0.041228              1.1951   0.24790    FALSE     none
+ 0.184335              1.8896   0.09306    FALSE     none
+ 0.225079              1.3065   0.19627    FALSE     none
+ 0.030532              1.7545   0.15412    FALSE     none
+
+-- LRT: is a by-participant slope for frac_within supported? (ML) --
+               model npar    AIC    BIC  logLik -2*log(L)  Chisq Df Pr(>Chisq)
+             (1|pid)    9 6348.2 6389.7 -3165.1    6330.2     NA NA         NA
+ (1+frac_within|pid)   11 6341.4 6392.1 -3159.7    6319.4 10.786  2  0.0045473
+
+-- sign test on the 31 per-participant correlations --
+positive in 21/31   binom.test p = 0.07075554598   median r = 0.08937386932
+one-sample t on Fisher-z of per-participant r: p = 0.08853228364
+
+=== (b) SENSITIVITY TO THE 55 DEG THRESHOLD ===
+ threshold_deg pooled_frac_samples mean_trial_frac  pooled_r   pooled_p
+            20             0.23794         0.26109 0.1446360 7.5155e-05
+            30             0.37966         0.41103 0.1619636 9.0087e-06
+            40             0.49596         0.52474 0.1481310 4.9904e-05
+            55             0.62723         0.64742 0.0982824 7.3014e-03
+            70             0.72732         0.74290 0.0595069 1.0484e-01
+            90             0.82726         0.83891 0.0060741 8.6863e-01
+ lmm_ri_within_per10pp   lmm_ri_p lmm_rs_within_per10pp  lmm_rs_p
+               1.32416 0.00043305              1.276606 0.0097384
+               1.37216 0.00011670              1.310151 0.0090747
+               1.17424 0.00111961              1.062658 0.0430751
+               0.73222 0.05239279              0.724810 0.1843347
+               0.36452 0.36636677              0.515478 0.3550456
+              -0.26470 0.57888433             -0.037975 0.9471973
+
+=== (c) CUE vs SOURCE ECCENTRICITY, MATCHED METRICS ===
+pooled over samples   : cue 62.72321251%   source 53.22649861%
+time-weighted pooled  : cue 62.68062223%   source 53.19040109%
+per-trial mean of the trial fractions : cue 64.74196799%   source 54.28852445%
+paired difference (cue - source), per trial: M = 0.1045344354  t(743) = 13.99538336  p = 1.131667948e-39
+participant-level paired difference: M = 0.1045344354  t(30) = 9.158587903  p = 3.40051177e-10  positive in 29/31
+NOTE: cue and source are on average 0.3788709685 m apart, so their eccentricities are not independent measures.

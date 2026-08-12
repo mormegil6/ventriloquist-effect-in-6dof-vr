@@ -1,0 +1,564 @@
+tolerance_deliverable_revision.R
+run: 2026-08-05 22:54:40 CEST
+R: R version 4.4.1 (2024-06-14)
+
+==============================================================================
+0. DATA
+==============================================================================
+trials: 744   participants: 31
+nominal disparity (cm): range 15-70, mean 37.89
+experienced angular disparity, time-weighted mean (deg): range 2.4-115.5, mean 42.25, median 40.54
+angular disparity at onset (deg): mean 28.76, median 22.18
+head-to-source distance, per-trial mean (m): mean 0.501, median 0.481
+sound type balance: Drum=186, Flute=186, Speech=186, Pink Noise=186
+
+==============================================================================
+1. CAPTURE OUTCOME DEFINITION
+==============================================================================
+agreement between geometric and ventriloquistBias > 0.5 criteria: 744/744  (identical events, as expected algebraically)
+         bias_gt_0.5
+geometric   0   1
+        0 482   0
+        1   0 262
+
+base rate, primary criterion (capture): 0.3522  (262/744 trials)
+base rate, softer criterion (bias > 0.25): 0.6022
+base rate, stricter criterion (bias > 0.75): 0.1465
+
+per-participant capture rate: min 0.083, median 0.333, max 0.792
+
+==============================================================================
+2. SIGNED-ERROR MIXED MODELS
+==============================================================================
+
+--- Model M1: signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m | participantId) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: 
+signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m |  
+    participantId)
+   Data: d
+Control: lmerControl(optimizer = "bobyqa")
+
+REML criterion at convergence: -497.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.6991 -0.4712 -0.0219  0.4487  5.4138 
+
+Random effects:
+ Groups        Name                Variance Std.Dev. Corr 
+ participantId (Intercept)         0.001979 0.04449       
+               stimulusDisparity_m 0.036155 0.19015  -0.56
+ Residual                          0.026936 0.16412       
+Number of obs: 744, groups:  participantId, 31
+
+Fixed effects:
+                      Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)          8.674e-03  2.145e-02  5.196e+01   0.404    0.688    
+stimulusDisparity_m  3.466e-01  5.351e-02  3.050e+01   6.477 3.43e-07 ***
+soundTypeFlute       1.204e-02  1.706e-02  6.888e+02   0.706    0.481    
+soundTypeSpeech     -2.502e-04  1.704e-02  6.892e+02  -0.015    0.988    
+soundTypePink Noise -2.507e-02  1.704e-02  6.895e+02  -1.471    0.142    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) stmlD_ sndTyF sndTyS
+stmlsDsprt_ -0.701                     
+soundTypFlt -0.431  0.036              
+sondTypSpch -0.411  0.015  0.499       
+sndTypPnkNs -0.398  0.001  0.500  0.499
+convergence messages M1: none
+
+--- Model M2: signedError_m ~ ang10 + soundType + (1 + ang10 | participantId), ang10 = deg/10 ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: signedError_m ~ ang10 + soundType + (1 + ang10 | participantId)
+   Data: d
+Control: lmerControl(optimizer = "bobyqa")
+
+REML criterion at convergence: -490.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.0473 -0.4894 -0.0823  0.4094  5.4452 
+
+Random effects:
+ Groups        Name        Variance  Std.Dev. Corr 
+ participantId (Intercept) 0.0038594 0.06212       
+               ang10       0.0002716 0.01648  -0.50
+ Residual                  0.0266612 0.16328       
+Number of obs: 744, groups:  participantId, 31
+
+Fixed effects:
+                      Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)           0.026152   0.021411  51.133827   1.221    0.228    
+ang10                 0.027395   0.004420  26.219136   6.198 1.43e-06 ***
+soundTypeFlute        0.010787   0.017043 702.154148   0.633    0.527    
+soundTypeSpeech      -0.001275   0.017070 706.073335  -0.075    0.940    
+soundTypePink Noise  -0.024692   0.017026 700.457503  -1.450    0.147    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) ang10  sndTyF sndTyS
+ang10       -0.647                     
+soundTypFlt -0.420  0.023              
+sondTypSpch -0.403  0.006  0.502       
+sndTypPnkNs -0.393 -0.007  0.501  0.503
+convergence messages M2: none
+Komunikat ostrzegawczy:
+W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.00207241 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+convergence messages M2 on raw per-degree scale: Model failed to converge with max|grad| = 0.00207241 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+
+--- Model M2b (sensitivity): onset angle instead of time-weighted mean ---
+                    Estimate Std. Error        df  t value Pr(>|t|)
+(Intercept)          0.10926    0.01664  83.97443  6.56475  0.00000
+angOnset10           0.01208    0.00335  25.26548  3.60674  0.00133
+soundTypeFlute       0.00414    0.01789 707.50252  0.23135  0.81711
+soundTypeSpeech     -0.00252    0.01789 708.06156 -0.14075  0.88811
+soundTypePink Noise -0.02920    0.01790 707.40872 -1.63161  0.10321
+convergence messages M2b: none
+
+--- Proportional-scaling check: ventriloquistBias ~ disp_cm + (1 | participantId) ---
+            Estimate Std. Error       df  t value Pr(>|t|)
+(Intercept) 0.348528   0.060390 220.3025 5.771337 0.000000
+disp_cm     0.000268   0.001295 718.4453 0.207169 0.835937
+
+==============================================================================
+3. LISTENER PROFILES
+==============================================================================
+
+Metric model (per metre of disparity):
+  population slope        : 0.3466  (34.66 cm displacement per 100 cm of offset)
+  random-slope SD (tau1)  : 0.1901
+  random-intercept SD     : 0.0445   intercept-slope r: -0.556
+  10th pct listener slope : 0.1029 (resistant)
+  90th pct listener slope : 0.5903 (susceptible)
+
+fitted per-listener slopes (BLUPs), n = 31: min 0.107, 10th pct 0.183, median 0.316, 90th pct 0.543, max 0.726
+(BLUPs are shrunk toward the mean, so their spread is narrower than the fitted random-effect distribution used for the table.)
+
+==============================================================================
+4. PARAMETRIC BOOTSTRAP
+==============================================================================
+metric model: 2000 parametric bootstrap replicates, 104 discarded (singular/failed refit), 1896 retained
+angular model: 2000 parametric bootstrap replicates, 14 discarded (singular/failed refit), 1986 retained
+
+==============================================================================
+5. (A) PREDICTED-DISPLACEMENT LOOKUP TABLES
+==============================================================================
+
+--- Table A1: nominal disparity (metric model M1) ---
+   disparity_cm displacement_avg_cm displacement_avg_lo_cm
+1            15               5.734                  3.174
+2            20               7.467                  5.080
+3            25               9.200                  6.968
+4            30              10.933                  8.699
+5            35              12.666                 10.286
+6            40              14.399                 11.831
+7            45              16.132                 13.345
+8            50              17.865                 14.743
+9            55              19.598                 16.094
+10           60              21.331                 17.343
+11           65              23.064                 18.719
+12           70              24.797                 20.067
+   displacement_avg_hi_cm displacement_p10_cm displacement_p90_cm
+1                   8.216               5.249               6.220
+2                   9.776               5.763               9.171
+3                  11.422               6.278              12.123
+4                  13.125               6.792              15.074
+5                  14.964               7.307              18.026
+6                  16.892               7.822              20.977
+7                  18.926               8.336              23.928
+8                  20.944               8.851              26.880
+9                  23.019               9.365              29.831
+10                 25.184               9.880              32.782
+11                 27.384              10.394              35.734
+12                 29.538              10.909              38.685
+   traversed_avg_pct traversed_p10_pct traversed_p90_pct ang_median_deg
+1             38.229            34.991            41.467         17.699
+2             37.337            28.816            45.857         24.908
+3             36.801            25.111            48.491         28.288
+4             36.444            22.641            50.247         34.907
+5             36.189            20.877            51.502         42.559
+6             35.998            19.554            52.442         42.437
+7             35.849            18.525            53.174         50.285
+8             35.730            17.701            53.759         50.692
+9             35.633            17.028            54.238         59.181
+10            35.552            16.466            54.637         56.646
+11            35.483            15.991            54.975         66.461
+12            35.424            15.584            55.265         67.885
+
+--- Table A2: egocentric angular disparity (angular model M2) ---
+   angular_disparity_deg displacement_avg_cm displacement_avg_lo_cm
+1                     20               7.715                  4.991
+2                     25               9.085                  6.504
+3                     30              10.454                  7.993
+4                     35              11.824                  9.341
+5                     40              13.194                 10.633
+6                     45              14.564                 11.876
+7                     50              15.933                 13.011
+8                     55              17.303                 14.089
+9                     60              18.673                 15.149
+10                    65              20.043                 16.286
+11                    70              21.412                 17.341
+   displacement_avg_hi_cm displacement_p10_cm displacement_p10_lo_cm
+1                  10.323               7.459                  0.346
+2                  11.618               7.772                  1.185
+3                  12.925               8.086                  1.871
+4                  14.344               8.400                  2.567
+5                  15.829               8.714                  3.021
+6                  17.292               9.027                  3.441
+7                  18.863               9.341                  3.812
+8                  20.500               9.655                  3.891
+9                  22.138               9.968                  3.961
+10                 23.853              10.282                  3.968
+11                 25.543              10.596                  3.989
+   displacement_p10_hi_cm displacement_p90_cm displacement_p90_lo_cm
+1                  13.406               7.971                  1.834
+2                  13.549              10.397                  4.538
+3                  13.777              12.823                  6.929
+4                  13.997              15.248                  9.333
+5                  14.464              17.674                 11.499
+6                  14.868              20.100                 13.772
+7                  15.433              22.526                 16.007
+8                  16.083              24.952                 18.196
+9                  16.777              27.377                 20.313
+10                 17.535              29.803                 22.315
+11                 18.306              32.229                 24.330
+   displacement_p90_hi_cm n_trials_within_2p5deg
+1                  15.158                     61
+2                  17.053                     81
+3                  19.049                     70
+4                  21.179                     58
+5                  23.418                     65
+6                  25.680                     64
+7                  28.102                     58
+8                  30.673                     60
+9                  33.306                     39
+10                 36.110                     33
+11                 39.119                     28
+
+--- Empirical nominal-to-angular crosswalk ---
+   disparity_cm n_trials ang_mean_deg ang_median_deg ang_q25_deg ang_q75_deg
+1            15       48        19.63          17.70       14.28       21.04
+2            20       78        25.68          24.91       18.37       30.79
+3            25       88        30.15          28.29       22.73       37.39
+4            30       68        37.57          34.91       25.39       49.84
+5            35      142        42.18          42.56       28.77       53.22
+6            40       82        42.43          42.44       34.36       50.36
+7            45       44        49.87          50.28       38.77       59.17
+8            50       48        52.80          50.69       43.68       64.75
+9            55       40        59.70          59.18       45.56       73.49
+10           60       46        58.00          56.65       47.92       68.90
+11           65       30        65.27          66.46       48.40       84.16
+12           70       30        69.01          67.88       56.94       78.02
+   angOnset_median_deg
+1                11.10
+2                14.47
+3                17.17
+4                19.87
+5                23.80
+6                22.70
+7                24.25
+8                30.20
+9                40.81
+10               33.35
+11               34.60
+12               44.23
+
+Sensitivity (population intercept retained, slope shifted only), metric model:
+  15 cm: p10 2.08 cm, p90 9.39 cm
+  40 cm: p10 4.65 cm, p90 24.15 cm
+  70 cm: p10 7.74 cm, p90 41.85 cm
+
+==============================================================================
+6. (B) CAPTURE-PROBABILITY MODELS
+==============================================================================
+
+--- B1: capture ~ angular disparity (per 10 deg, centred) ---
+formula: capture ~ ang10c + (1 + ang10c | participantId)
+               Estimate Std. Error   z value     Pr(>|z|)
+(Intercept) -0.69370464 0.17120073 -4.051996 5.078256e-05
+ang10c       0.06834191 0.06500653  1.051308 2.931170e-01
+attr(,"ddf")
+[1] "asymptotic"
+
+Conditional model:
+ Groups        Name        Std.Dev. Corr  
+ participantId (Intercept) 0.80984        
+               ang10c      0.23840  0.813 
+convergence code: 0 | message: both X-convergence and relative convergence (5) | positive-definite Hessian: TRUE
+
+--- B2: capture ~ nominal disparity (per 10 cm, centred) ---
+formula: capture ~ disp10c + (1 + disp10c | participantId)
+                Estimate Std. Error     z value     Pr(>|z|)
+(Intercept) -0.690209749  0.1624410 -4.24898762 2.147388e-05
+disp10c     -0.004743114  0.0644009 -0.07364981 9.412890e-01
+attr(,"ddf")
+[1] "asymptotic"
+
+Conditional model:
+ Groups        Name        Std.Dev. Corr  
+ participantId (Intercept) 0.77130        
+               disp10c     0.15032  0.552 
+convergence code: 0 | message: relative convergence (4) | positive-definite Hessian: TRUE
+
+--- B0: capture ~ 1 + (1 | participantId) ---
+              Estimate Std. Error   z value     Pr(>|z|)
+(Intercept) -0.6884898  0.1607704 -4.282442 1.848536e-05
+attr(,"ddf")
+[1] "asymptotic"
+
+Conditional model:
+ Groups        Name        Std.Dev.
+ participantId (Intercept) 0.76272 
+convergence code: 0 | pdHess: TRUE
+
+Likelihood-ratio tests against the disparity-free model B0:
+Data: d
+Models:
+g_null: capture ~ 1 + (1 | participantId), zi=~0, disp=~1
+g_ang: capture ~ ang10c + (1 + ang10c | participantId), zi=~0, disp=~1
+       Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)    
+g_null  2 925.81 935.04 -460.91   921.81                             
+g_ang   5 913.71 936.77 -451.85   903.71 18.105      3  0.0004185 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Data: d
+Models:
+g_null: capture ~ 1 + (1 | participantId), zi=~0, disp=~1
+g_nom: capture ~ disp10c + (1 + disp10c | participantId), zi=~0, disp=~1
+       Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
+g_null  2 925.81 935.04 -460.91   921.81                         
+g_nom   5 930.08 953.14 -460.04   920.08 1.7284      3     0.6306
+
+Decomposition: fixed slope only (1 df), then random slope given the fixed slope (2 df).
+Angular:
+Data: d
+Models:
+g_null: capture ~ 1 + (1 | participantId), zi=~0, disp=~1
+g_ang_ri: capture ~ ang10c + (1 | participantId), zi=~0, disp=~1
+         Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)  
+g_null    2 925.81 935.04 -460.91   921.81                           
+g_ang_ri  3 922.24 936.07 -458.12   916.24 5.5737      1    0.01823 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Data: d
+Models:
+g_ang_ri: capture ~ ang10c + (1 | participantId), zi=~0, disp=~1
+g_ang: capture ~ ang10c + (1 + ang10c | participantId), zi=~0, disp=~1
+         Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)   
+g_ang_ri  3 922.24 936.07 -458.12   916.24                            
+g_ang     5 913.71 936.77 -451.85   903.71 12.531      2   0.001901 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Nominal:
+Data: d
+Models:
+g_null: capture ~ 1 + (1 | participantId), zi=~0, disp=~1
+g_nom_ri: capture ~ disp10c + (1 | participantId), zi=~0, disp=~1
+         Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
+g_null    2 925.81 935.04 -460.91   921.81                         
+g_nom_ri  3 927.75 941.58 -460.87   921.75 0.0637      1     0.8007
+Data: d
+Models:
+g_nom_ri: capture ~ disp10c + (1 | participantId), zi=~0, disp=~1
+g_nom: capture ~ disp10c + (1 + disp10c | participantId), zi=~0, disp=~1
+         Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
+g_nom_ri  3 927.75 941.58 -460.87   921.75                         
+g_nom     5 930.08 953.14 -460.04   920.08 1.6646      2      0.435
+Variance-component tests sit on a parameter-space boundary, so these p-values are conservative.
+
+Quadratic angular term (checks for a threshold-like rise at large angles):
+               Estimate Std. Error   z value     Pr(>|z|)
+(Intercept) -0.76794124 0.18450623 -4.162143 3.152754e-05
+ang10c       0.05104941 0.06599838  0.773495 4.392295e-01
+I(ang10c^2)  0.02060987 0.01869064  1.102684 2.701643e-01
+attr(,"ddf")
+[1] "asymptotic"
+Data: d
+Models:
+g_ang: capture ~ ang10c + (1 + ang10c | participantId), zi=~0, disp=~1
+g_ang_q: capture ~ ang10c + I(ang10c^2) + (1 + ang10c | participantId), zi=~0, disp=~1
+        Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
+g_ang    5 913.71 936.77 -451.85   903.71                         
+g_ang_q  6 914.48 942.16 -451.24   902.48 1.2218      1      0.269
+
+DHARMa checks, model B1:
+
+	Asymptotic one-sample Kolmogorov-Smirnov test
+
+data:  simulationOutput$scaledResiduals
+D = 0.034786, p-value = 0.3289
+alternative hypothesis: two-sided
+
+
+	DHARMa nonparametric dispersion test via sd of residuals fitted vs.
+	simulated
+
+data:  simulationOutput
+dispersion = 1.0045, p-value = 0.996
+alternative hypothesis: two.sided
+
+
+--- 50% and 75% crossing points ---
+ci_bounded: 1 = bounded Fieller interval, 0 = unbounded (slope not separable from zero)
+Caveat: the percentile-listener intervals treat the fitted random-effect SDs and
+correlation as known, propagating only fixed-effect uncertainty, so they are
+narrower than a fully propagated interval would be. A parametric bootstrap of the
+random-slope logistic models is not usable here: only about half the replicates
+return a positive-definite Hessian, and discarding the rest would select on the
+very variance components being estimated.
+        model         predictor unit        listener probability crossing_point
+1  B1 angular angular disparity  deg         average        0.50         143.76
+2  B1 angular angular disparity  deg   p10_resistant        0.50         -53.99
+3  B1 angular angular disparity  deg p90_susceptible        0.50          31.38
+4  B1 angular angular disparity  deg         average        0.75         304.51
+5  B1 angular angular disparity  deg   p10_resistant        0.75        -115.04
+6  B1 angular angular disparity  deg p90_susceptible        0.75          66.08
+7  B2 nominal nominal disparity   cm         average        0.50       -1417.30
+8  B2 nominal nominal disparity   cm   p10_resistant        0.50        -113.36
+9  B2 nominal nominal disparity   cm p90_susceptible        0.50           8.50
+10 B2 nominal nominal disparity   cm         average        0.75       -3733.52
+11 B2 nominal nominal disparity   cm   p10_resistant        0.75        -212.34
+12 B2 nominal nominal disparity   cm p90_susceptible        0.75         116.74
+     ci_lo  ci_hi ci_bounded observed_max within_tested_range
+1     -Inf    Inf          0        115.5               FALSE
+2  -256.97 -17.50          1        115.5               FALSE
+3    21.86  41.91          1        115.5                TRUE
+4     -Inf    Inf          0        115.5               FALSE
+5  -465.26 -54.16          1        115.5               FALSE
+6    52.80  93.78          1        115.5                TRUE
+7     -Inf    Inf          0         70.0               FALSE
+8     -Inf    Inf          0         70.0               FALSE
+9     -Inf    Inf          0         70.0                TRUE
+10    -Inf    Inf          0         70.0               FALSE
+11    -Inf    Inf          0         70.0               FALSE
+12    -Inf    Inf          0         70.0               FALSE
+
+--- Capture probability by listener percentile (model B0, disparity-invariant) ---
+bootstrap replicates for B0: 2000 requested, 2000 retained
+  listener_percentile              label capture_probability  ci_lo  ci_hi
+1                  10   10th (resistant)              0.1590 0.1039 0.2430
+2                  50      50th (median)              0.3344 0.2692 0.4053
+3                  90 90th (susceptible)              0.5717 0.4559 0.6725
+
+listener percentile whose capture probability reaches 50%: 81.7%
+listener percentile whose capture probability reaches 75%: 99%
+(i.e. the 50%/75% thresholds are crossed by moving along the listener axis, not along the disparity axis.)
+
+==============================================================================
+7. EMPIRICAL CAPTURE PROPORTIONS BY DISPARITY BIN
+==============================================================================
+                                metric bin_label   n  k p_capture  ci_lo  ci_hi
+1               nominal disparity (cm)   [15,25) 164 60    0.3659 0.2921 0.4445
+2               nominal disparity (cm)   [25,35) 200 68    0.3400 0.2747 0.4102
+3               nominal disparity (cm)   [35,45) 170 59    0.3471 0.2758 0.4237
+4               nominal disparity (cm)   [45,55)  78 28    0.3590 0.2534 0.4756
+5               nominal disparity (cm)   [55,70] 132 47    0.3561 0.2747 0.4441
+6  experienced angular disparity (deg)    [0,20)  96 32    0.3333 0.2404 0.4369
+7  experienced angular disparity (deg)   [20,30) 152 50    0.3289 0.2550 0.4097
+8  experienced angular disparity (deg)   [30,40) 120 42    0.3500 0.2652 0.4424
+9  experienced angular disparity (deg)   [40,50) 130 36    0.2769 0.2021 0.3622
+10 experienced angular disparity (deg)   [50,60) 104 37    0.3558 0.2643 0.4557
+11 experienced angular disparity (deg)  [60,Inf) 142 65    0.4577 0.3739 0.5433
+   p_soft_gt0.25 p_strict_gt0.75 median_ang_deg
+1         0.5793          0.2073        22.4110
+2         0.5800          0.1250        36.2090
+3         0.6529          0.1588        43.0896
+4         0.6410          0.0769        48.4748
+5         0.5758          0.1288        64.4415
+6         0.4792          0.2604        15.6384
+7         0.5395          0.1908        25.1017
+8         0.6083          0.1500        34.7936
+9         0.5846          0.0769        44.8307
+10        0.6731          0.1250        54.7019
+11        0.7113          0.0986        69.7997
+
+==============================================================================
+8. ROBUSTNESS ACROSS CRITERIA
+==============================================================================
+                                      criterion base_rate           predictor
+1 bias > 0.50 (primary; = closer to visual cue)   0.35215 angular, per 10 deg
+2 bias > 0.50 (primary; = closer to visual cue)   0.35215  nominal, per 10 cm
+3                          bias > 0.25 (softer)   0.60215 angular, per 10 deg
+4                          bias > 0.25 (softer)   0.60215  nominal, per 10 cm
+5                        bias > 0.75 (stricter)   0.14651 angular, per 10 deg
+6                        bias > 0.75 (stricter)   0.14651  nominal, per 10 cm
+  intercept    slope slope_se  slope_z slope_p slope_ci_lo slope_ci_hi
+1  -0.69370  0.06834  0.06501  1.05131 0.29312    -0.05907     0.19575
+2  -0.69021 -0.00474  0.06440 -0.07365 0.94129    -0.13097     0.12148
+3   0.52859  0.20816  0.05744  3.62378 0.00029     0.09557     0.32074
+4   0.49521  0.05447  0.06693  0.81392 0.41569    -0.07670     0.18565
+5  -2.11967 -0.28803  0.09641 -2.98747 0.00281    -0.47700    -0.09906
+6  -2.08961 -0.26732  0.11533 -2.31793 0.02045    -0.49337    -0.04128
+  converged
+1      TRUE
+2      TRUE
+3      TRUE
+4      TRUE
+5      TRUE
+6      TRUE
+
+==============================================================================
+9. OUTPUT FILES
+==============================================================================
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/tolerance_lookup_nominal.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/tolerance_lookup_angular.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/tolerance_nominal_angular_crosswalk.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/capture_model_coefficients.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/capture_crossing_points.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/capture_probability_by_listener.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/capture_empirical_by_bin.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/capture_criterion_robustness.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/tolerance_lmm_fixed_effects.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/tolerance_lmm_random_effects.csv
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/tolerance_deliverable_log.txt
+
+==============================================================================
+SESSION INFO
+==============================================================================
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS 15.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] C
+
+time zone: Europe/Warsaw
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] tidyr_1.3.2    dplyr_1.1.4    DHARMa_0.4.7   glmmTMB_1.1.13 lmerTest_3.1-3
+[6] lme4_1.1-38    Matrix_1.7-4  
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.6        compiler_4.4.1      tidyselect_1.2.1   
+ [4] Rcpp_1.1.1          splines_4.4.1       scales_1.4.0       
+ [7] boot_1.3-32         TH.data_1.1-5       lattice_0.22-7     
+[10] ggplot2_4.0.1       R6_2.6.1            generics_0.1.4     
+[13] rbibutils_2.4       MASS_7.3-65         tibble_3.3.1       
+[16] nloptr_2.2.1        minqa_1.2.8         pillar_1.11.1      
+[19] RColorBrewer_1.1-3  TMB_1.9.19          rlang_1.1.7        
+[22] multcomp_1.4-29     S7_0.2.1            estimability_1.5.1 
+[25] cli_3.6.5           withr_3.0.2         magrittr_2.0.4     
+[28] mgcv_1.9-4          emmeans_2.0.1       Rdpack_2.6.4       
+[31] grid_4.4.1          xtable_1.8-4        mvtnorm_1.3-3      
+[34] sandwich_3.1-1      lifecycle_1.0.5     nlme_3.1-168       
+[37] reformulas_0.4.3.1  vctrs_0.6.5         glue_1.8.0         
+[40] farver_2.1.2        numDeriv_2016.8-1.1 codetools_0.2-20   
+[43] zoo_1.8-15          survival_3.8-3      purrr_1.2.1        
+[46] tools_4.4.1         pkgconfig_2.0.3    

@@ -1,0 +1,468 @@
+
+==============================================================================
+ANGULAR DISPARITY RE-ANALYSIS OF THE PRIMARY MODEL
+==============================================================================
+Run: 2026-08-05 22:51:40 | R version 4.4.1 (2024-06-14)
+
+PRE-SPECIFICATION (stated before fitting)
+  Primary predictor summary : angular disparity at trial ONSET (angDisp_onset_deg)
+  Secondary                 : time-weighted mean angular disparity (angDisp_mean_deg)
+  Primary response          : angular response displacement at the onset head pose
+
+  Why onset is primary:
+   (i)   Exogeneity. The onset geometry follows from the stimulus placement and
+         from whatever pose the listener happens to hold when the trial starts.
+         It is not shaped by where the listener subsequently chooses to walk.
+         The time-weighted mean is a function of the trajectory, and the
+         trajectory may itself be driven by the percept under study, so a slope
+         on it mixes a stimulus effect with self-selected sampling.
+   (ii)  Frame consistency. An angular response measure must be evaluated from
+         some head position. Onset is the only pose available on every trial
+         that is independent of the response, so predictor and response are
+         defined in one and the same geometric frame.
+   (iii) Comparability. Onset angular disparity is the quantity the
+         fixed-listener ventriloquism literature manipulates, so it places the
+         present slope on the same axis as prior work.
+  The time-weighted mean is reported alongside throughout, since it is the
+  summary that embodies the 'changes over time' half of the reviewer's point.
+
+==============================================================================
+STEP 0: DATA
+==============================================================================
+Trials: 744 | participants: 31
+Trajectory samples: 251666
+
+==============================================================================
+STEP 1: ANGULAR RESPONSE DISPLACEMENT
+==============================================================================
+Let H be a head position and u_s, u_c, u_r the unit vectors from H towards
+the true source, the visual cue and the response placement. Let t be the unit
+vector in the (u_s, u_c) plane, orthogonal to u_s and pointing towards u_c:
+
+   angular disparity      theta_D = atan2(|u_s x u_c|, u_s . u_c)
+   angular response shift theta_R = atan2(u_r . t,     u_r . u_s)
+
+theta_R is 0 deg when the response lies in the source direction and equals
+theta_D when it lies in the cue direction, so theta_R / theta_D is the angular
+analogue of the bias proportion and d(theta_R)/d(theta_D) the angular analogue
+of the published displacement slope. The out-of-plane component of the response
+direction is discarded, exactly as the published signed error discards the
+orthogonal error component.
+
+Three evaluation frames are computed: the first logged head pose (onset,
+primary), the last logged head pose (sensitivity), and the time-weighted
+average over all samples of the trial (matched partner of the time-weighted
+mean angular disparity).
+
+Reconstruction check, onset angular disparity recomputed here vs the prepared
+column: max absolute difference = 0 deg
+Trials with onset angular disparity below 0.5 deg (projection axis ill-conditioned): 0
+
+Descriptives (angles in degrees, distances in centimetres):
+              measure  mean    sd median       min   max
+    angDisp_onset_deg 28.76 23.08 22.177    0.5620 146.7
+     angDisp_mean_deg 42.25 20.07 40.536    2.3556 115.5
+    angDisp_final_deg 34.57 25.35 27.451    0.9612 164.8
+    angResp_onset_deg 10.30 24.93  8.021 -144.0524 177.7
+     angResp_mean_deg 17.16 23.11 15.907  -95.2609 128.7
+    angResp_final_deg 15.76 36.25 11.417 -178.7855 174.9
+ stimulusDisparity_cm 37.89 14.88 36.000   15.0000  70.0
+       signedError_cm 13.67 18.48 12.097  -54.0378 100.5
+
+Angular bias proportion at onset: mean 0.341, median 0.397, SD 1.056
+Angular bias proportion, time-weighted: mean 0.394, median 0.438, SD 0.731
+Note: these per-trial ratios are heavy tailed because the denominator can be
+small; the model slope, not the ratio, is the quantity to report.
+
+==============================================================================
+STEP 2: WITHIN-TRIAL VARIATION OF ANGULAR DISPARITY
+==============================================================================
+Within-trial range angDisp_max - angDisp_min, degrees, n = 744 trials:
+  mean 91.1  SD 45.5 | min 0.2  Q05 23.2  Q25 51.6  median 87.7  Q75 132.6  Q95 161.1  max 177.6
+  trials with range >  30 deg: 669 (89.9%)
+  trials with range >  60 deg: 513 (69.0%)
+  trials with range >  90 deg: 359 (48.3%)
+  trials with range > 120 deg: 241 (32.4%)
+  ratio of within-trial range to the onset value: median 3.36, IQR 1.86-6.29
+  within-trial range as a multiple of the between-trial SD of the nominal
+  predictor expressed at onset (SD = 23.1 deg): median 3.80
+
+Correlation of nominal metric disparity with each angular summary.
+r_within_participant centres both variables on their participant means.
+    angular_summary pearson_r  ci_lo  ci_hi   p_value r_squared spearman_rho
+  angDisp_onset_deg    0.4501 0.3908 0.5056 2.207e-38   0.20255       0.4963
+   angDisp_mean_deg    0.6572 0.6143 0.6962 3.449e-93   0.43191       0.6562
+ angDisp_median_deg    0.6574 0.6146 0.6964 2.829e-93   0.43221       0.6687
+    angDisp_min_deg    0.4719 0.4140 0.5259 1.618e-42   0.22265       0.4304
+    angDisp_max_deg    0.3943 0.3318 0.4533 4.447e-29   0.15544       0.3993
+  angDisp_range_deg    0.3041 0.2374 0.3679 2.201e-17   0.09248       0.3132
+  angDisp_final_deg    0.4971 0.4409 0.5493 1.101e-47   0.24708       0.5616
+ r_within_participant
+               0.4529
+               0.7006
+               0.6841
+               0.4921
+               0.4444
+               0.3468
+               0.5242
+
+Correlation between the two angular summaries: r = 0.535
+Head-to-source distance at onset vs onset angular disparity: r = -0.524
+Mean head-to-source distance vs mean angular disparity: r = -0.396
+
+==============================================================================
+STEP 3: MODEL FITS
+==============================================================================
+Random-effects structure selection (pre-specified ladder; a structure is
+accepted when the REML and the ML fit are both non-singular and warning free):
+
+Response = signedError_m (metres, positive towards the cue):
+  [A_nominal] stimDisp_cm + soundType + (1 + stimDisp_cm | participantId) REML ok=TRUE  ML ok=TRUE  
+  [A_onset] angDisp_onset_cm + soundType + (1 + angDisp_onset_cm | participantId) REML ok=TRUE  ML ok=TRUE  
+  [A_timemean] angDisp_mean_cm + soundType + (1 + angDisp_mean_cm | participantId) REML ok=TRUE  ML ok=TRUE  
+
+Response = angResp_onset_deg (degrees, positive towards the cue):
+  [B_nominal] stimDisp_cm + soundType + (1 + stimDisp_cm | participantId) REML ok=FALSE ML ok=FALSE boundary (singular) fit: see help('isSingular')
+  [B_nominal] stimDisp_cm + soundType + (1 + stimDisp_cm || participantId) REML ok=TRUE  ML ok=TRUE  
+  [B_onset] angDisp_onset_cm + soundType + (1 + angDisp_onset_cm | participantId) REML ok=FALSE ML ok=FALSE boundary (singular) fit: see help('isSingular')
+  [B_onset] angDisp_onset_cm + soundType + (1 + angDisp_onset_cm || participantId) REML ok=TRUE  ML ok=TRUE  
+  [B_timemean] angDisp_mean_cm + soundType + (1 + angDisp_mean_cm | participantId) REML ok=FALSE ML ok=TRUE  boundary (singular) fit: see help('isSingular') 
+  [B_timemean] angDisp_mean_cm + soundType + (1 + angDisp_mean_cm || participantId) REML ok=TRUE  ML ok=TRUE  
+
+Common structure adopted within each response set (the most restrictive one
+that any model in the set required, so that information criteria compare
+fixed effects only):
+  set A (metric response) : ladder level 1
+  set B (angular response): ladder level 2
+
+Final convergence report:
+  A0_metric_resp_nominal         REML ok=TRUE  ML ok=TRUE  
+  A1_metric_resp_ang_onset       REML ok=TRUE  ML ok=TRUE  
+  A2_metric_resp_ang_timemean    REML ok=TRUE  ML ok=TRUE  
+  B0_ang_resp_nominal            REML ok=TRUE  ML ok=TRUE  
+  B1_ang_resp_ang_onset          REML ok=TRUE  ML ok=TRUE  
+  B2_ang_resp_ang_timemean       REML ok=TRUE  ML ok=TRUE  
+  B2m_angmean_resp_ang_timemean  REML ok=TRUE  ML ok=TRUE  
+  A0pub_published_uncentred      REML ok=TRUE  ML ok=TRUE  
+
+Fixed effects (REML, Satterthwaite df, Wald 95% CI):
+                         model          response                term   estimate
+        A0_metric_resp_nominal     signedError_m         (Intercept)  0.1400000
+        A0_metric_resp_nominal     signedError_m         stimDisp_cm  0.3466000
+        A0_metric_resp_nominal     signedError_m      soundTypeFlute  0.0120400
+        A0_metric_resp_nominal     signedError_m     soundTypeSpeech -0.0002502
+        A0_metric_resp_nominal     signedError_m soundTypePink Noise -0.0250700
+      A1_metric_resp_ang_onset     signedError_m         (Intercept)  0.1440000
+      A1_metric_resp_ang_onset     signedError_m    angDisp_onset_cm  0.0012080
+      A1_metric_resp_ang_onset     signedError_m      soundTypeFlute  0.0041390
+      A1_metric_resp_ang_onset     signedError_m     soundTypeSpeech -0.0025180
+      A1_metric_resp_ang_onset     signedError_m soundTypePink Noise -0.0292000
+   A2_metric_resp_ang_timemean     signedError_m         (Intercept)  0.1419000
+   A2_metric_resp_ang_timemean     signedError_m     angDisp_mean_cm  0.0027400
+   A2_metric_resp_ang_timemean     signedError_m      soundTypeFlute  0.0107900
+   A2_metric_resp_ang_timemean     signedError_m     soundTypeSpeech -0.0012750
+   A2_metric_resp_ang_timemean     signedError_m soundTypePink Noise -0.0246900
+           B0_ang_resp_nominal angResp_onset_deg         (Intercept)  9.1060000
+           B0_ang_resp_nominal angResp_onset_deg         stimDisp_cm 24.3900000
+           B0_ang_resp_nominal angResp_onset_deg      soundTypeFlute  3.6240000
+           B0_ang_resp_nominal angResp_onset_deg     soundTypeSpeech  1.9630000
+           B0_ang_resp_nominal angResp_onset_deg soundTypePink Noise -0.8542000
+         B1_ang_resp_ang_onset angResp_onset_deg         (Intercept)  9.2570000
+         B1_ang_resp_ang_onset angResp_onset_deg    angDisp_onset_cm  0.3359000
+         B1_ang_resp_ang_onset angResp_onset_deg      soundTypeFlute  3.0470000
+         B1_ang_resp_ang_onset angResp_onset_deg     soundTypeSpeech  2.6200000
+         B1_ang_resp_ang_onset angResp_onset_deg soundTypePink Noise -0.8898000
+      B2_ang_resp_ang_timemean angResp_onset_deg         (Intercept)  9.1660000
+      B2_ang_resp_ang_timemean angResp_onset_deg     angDisp_mean_cm  0.3230000
+      B2_ang_resp_ang_timemean angResp_onset_deg      soundTypeFlute  3.8220000
+      B2_ang_resp_ang_timemean angResp_onset_deg     soundTypeSpeech  2.3960000
+      B2_ang_resp_ang_timemean angResp_onset_deg soundTypePink Noise -0.5083000
+ B2m_angmean_resp_ang_timemean  angResp_mean_deg         (Intercept) 16.2300000
+ B2m_angmean_resp_ang_timemean  angResp_mean_deg     angDisp_mean_cm  0.4294000
+ B2m_angmean_resp_ang_timemean  angResp_mean_deg      soundTypeFlute  1.8470000
+ B2m_angmean_resp_ang_timemean  angResp_mean_deg     soundTypeSpeech  1.4140000
+ B2m_angmean_resp_ang_timemean  angResp_mean_deg soundTypePink Noise -0.1451000
+     A0pub_published_uncentred     signedError_m         (Intercept)  0.0086740
+     A0pub_published_uncentred     signedError_m stimulusDisparity_m  0.3466000
+     A0pub_published_uncentred     signedError_m      soundTypeFlute  0.0120400
+     A0pub_published_uncentred     signedError_m     soundTypeSpeech -0.0002502
+     A0pub_published_uncentred     signedError_m soundTypePink Noise -0.0250700
+       se     df        t         p      ci_lo     ci_hi
+ 0.016170  86.00  8.65600 2.464e-13  0.1083000  0.171700
+ 0.053510  30.50  6.47700 3.431e-07  0.2417000  0.451500
+ 0.017060 688.80  0.70580 4.806e-01 -0.0213900  0.045470
+ 0.017040 689.20 -0.01468 9.883e-01 -0.0336600  0.033160
+ 0.017040 689.50 -1.47100 1.418e-01 -0.0584700  0.008334
+ 0.016660  90.46  8.64200 1.841e-13  0.1113000  0.176700
+ 0.000335  25.27  3.60700 1.334e-03  0.0005517  0.001865
+ 0.017890 707.50  0.23130 8.171e-01 -0.0309300  0.039200
+ 0.017890 708.10 -0.14070 8.881e-01 -0.0375800  0.032550
+ 0.017900 707.40 -1.63200 1.032e-01 -0.0642800  0.005877
+ 0.017020  75.39  8.33500 2.649e-12  0.1085000  0.175300
+ 0.000442  26.22  6.19800 1.428e-06  0.0018730  0.003606
+ 0.017040 702.20  0.63290 5.270e-01 -0.0226200  0.044190
+ 0.017070 706.10 -0.07470 9.405e-01 -0.0347300  0.032180
+ 0.017030 700.50 -1.45000 1.474e-01 -0.0580600  0.008677
+ 1.908000 217.80  4.77300 3.333e-06  5.3670000 12.850000
+ 6.457000  32.54  3.77700 6.412e-04 11.7300000 37.040000
+ 2.526000 694.10  1.43500 1.519e-01 -1.3270000  8.574000
+ 2.524000 694.30  0.77780 4.369e-01 -2.9840000  6.910000
+ 2.523000 694.60 -0.33850 7.351e-01 -5.8000000  4.092000
+ 1.767000 238.50  5.23800 3.564e-07  5.7940000 12.720000
+ 0.065960  32.35  5.09200 1.479e-05  0.2066000  0.465200
+ 2.377000 696.20  1.28200 2.003e-01 -1.6120000  7.707000
+ 2.379000 697.10  1.10100 2.712e-01 -2.0430000  7.282000
+ 2.379000 697.10 -0.37410 7.085e-01 -5.5520000  3.772000
+ 1.847000 224.10  4.96300 1.371e-06  5.5470000 12.790000
+ 0.061300  31.15  5.26900 9.793e-06  0.2028000  0.443100
+ 2.447000 699.80  1.56200 1.188e-01 -0.9744000  8.619000
+ 2.453000 704.50  0.97650 3.292e-01 -2.4130000  7.204000
+ 2.445000 698.50 -0.20790 8.354e-01 -5.3010000  4.284000
+ 2.042000  70.65  7.94800 2.147e-11 12.2300000 20.240000
+ 0.067200  29.27  6.39000 5.275e-07  0.2977000  0.561100
+ 1.965000 692.60  0.94020 3.475e-01 -2.0040000  5.698000
+ 1.972000 696.10  0.71690 4.737e-01 -2.4520000  5.279000
+ 1.962000 690.60 -0.07396 9.411e-01 -3.9900000  3.700000
+ 0.021450  51.96  0.40440 6.876e-01 -0.0333600  0.050710
+ 0.053510  30.50  6.47700 3.431e-07  0.2417000  0.451500
+ 0.017060 688.80  0.70580 4.806e-01 -0.0213900  0.045470
+ 0.017040 689.20 -0.01468 9.883e-01 -0.0336600  0.033160
+ 0.017040 689.50 -1.47100 1.418e-01 -0.0584700  0.008334
+
+Type III F tests (Satterthwaite):
+  A0_metric_resp_nominal:
+        term Sum Sq Mean Sq NumDF DenDF F value    Pr(>F)
+ stimDisp_cm 1.1299 1.12992     1  30.5  41.948 3.431e-07
+   soundType 0.1351 0.04504     3 690.7   1.672 1.717e-01
+  A1_metric_resp_ang_onset:
+             term Sum Sq Mean Sq NumDF  DenDF F value   Pr(>F)
+ angDisp_onset_cm 0.3854 0.38541     1  25.27  13.009 0.001334
+        soundType 0.1269 0.04229     3 707.87   1.427 0.233507
+  A2_metric_resp_ang_timemean:
+            term Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)
+ angDisp_mean_cm 1.0242  1.0242     1  26.22  38.415 1.428e-06
+       soundType 0.1236  0.0412     3 699.55   1.545 2.015e-01
+  B0_ang_resp_nominal:
+        term Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)
+ stimDisp_cm   8436  8435.9     1  32.54  14.262 0.0006412
+   soundType   2245   748.5     3 695.79   1.265 0.2852209
+  B1_ang_resp_ang_onset:
+             term Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)
+ angDisp_onset_cm  13340 13340.0     1  32.35  25.930 1.479e-05
+        soundType   2039   679.6     3 697.65   1.321 2.664e-01
+  B2_ang_resp_ang_timemean:
+            term Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)
+ angDisp_mean_cm  15242 15242.2     1  31.15  27.765 9.793e-06
+       soundType   2290   763.5     3 697.78   1.391 2.444e-01
+  B2m_angmean_resp_ang_timemean:
+            term  Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)
+ angDisp_mean_cm 14316.8 14316.8     1  29.27 40.8274 5.275e-07
+       soundType   548.4   182.8     3 690.36  0.5213 6.677e-01
+  A0pub_published_uncentred:
+                term Sum Sq Mean Sq NumDF DenDF F value    Pr(>F)
+ stimulusDisparity_m 1.1299 1.12992     1  30.5  41.948 3.431e-07
+           soundType 0.1351 0.04504     3 690.7   1.672 1.717e-01
+
+==============================================================================
+STEP 4: NOMINAL METRIC VERSUS EXPERIENCED ANGULAR PREDICTOR
+==============================================================================
+Information criteria come from the ML fits and are comparable only WITHIN a
+response scale. Models A0/A1/A2 share signedError_m; B0/B1/B2 share
+angResp_onset_deg. Within a set the three models are non-nested, so AIC, BIC
+and R2 are the comparison; likelihood-ratio tests inside models holding both
+predictors are given afterwards.
+
+                         model          response           predictor   n df
+        A0_metric_resp_nominal     signedError_m         stimDisp_cm 744  9
+      A1_metric_resp_ang_onset     signedError_m    angDisp_onset_cm 744  9
+   A2_metric_resp_ang_timemean     signedError_m     angDisp_mean_cm 744  9
+           B0_ang_resp_nominal angResp_onset_deg         stimDisp_cm 744  8
+         B1_ang_resp_ang_onset angResp_onset_deg    angDisp_onset_cm 744  8
+      B2_ang_resp_ang_timemean angResp_onset_deg     angDisp_mean_cm 744  8
+ B2m_angmean_resp_ang_timemean  angResp_mean_deg     angDisp_mean_cm 744  8
+     A0pub_published_uncentred     signedError_m stimulusDisparity_m 744  9
+  logLik    AIC    BIC R2_marginal R2_conditional ICC_intercept resid_sd
+   264.2 -510.5 -469.0     0.08173        0.21080       0.11806   0.1641
+   232.6 -447.3 -405.8     0.02671        0.14452       0.10960   0.1721
+   263.0 -508.0 -466.5     0.08895        0.24449       0.14156   0.1633
+ -3436.6 6889.2 6926.1     0.02492        0.05323       0.02332  24.3204
+ -3397.0 6810.1 6847.0     0.09898        0.18335       0.01753  22.6816
+ -3415.7 6847.3 6884.2     0.07060        0.12280       0.01971  23.4301
+ -3277.8 6571.6 6608.5     0.14026        0.33906       0.16107  18.7261
+   264.2 -510.5 -469.0     0.08173        0.21080       0.06845   0.1641
+ dAIC_within_response dBIC_within_response
+            3.070e-12            3.070e-12
+            6.321e+01            6.321e+01
+            2.434e+00            2.434e+00
+            7.913e+01            7.913e+01
+            0.000e+00            0.000e+00
+            3.723e+01            3.723e+01
+            0.000e+00            0.000e+00
+            0.000e+00            0.000e+00
+
+Likelihood-ratio tests inside models containing BOTH predictors (ML fits,
+random structure held fixed within each comparison).
+
+  Set A: onset angular disparity added to nominal metric disparity
+    reduced: signedError_m ~ stimDisp_cm + soundType + (1 + stimDisp_cm |     reduced:     participantId)
+    full   : signedError_m ~ stimDisp_cm + angDisp_onset_cm + soundType +     full   :     (1 + stimDisp_cm | participantId)
+   model npar    AIC    BIC logLik -2*log(L)   Chisq Df Pr(>Chisq)
+ reduced    9 -510.5 -469.0  264.2    -528.5      NA NA         NA
+    full   10 -508.6 -462.4  264.3    -528.6 0.09539  1     0.7574
+
+  Set A: time-weighted mean angular disparity added to nominal metric disparity
+    reduced: signedError_m ~ stimDisp_cm + soundType + (1 + stimDisp_cm |     reduced:     participantId)
+    full   : signedError_m ~ stimDisp_cm + angDisp_mean_cm + soundType + (1 +     full   :     stimDisp_cm | participantId)
+   model npar    AIC    BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+ reduced    9 -510.5 -469.0  264.2    -528.5    NA NA         NA
+    full   10 -520.8 -474.7  270.4    -540.8 12.35  1  0.0004422
+
+  Set A: nominal metric disparity added to onset angular disparity
+    reduced: signedError_m ~ angDisp_onset_cm + soundType + (1 + angDisp_onset_cm |     reduced:     participantId)
+    full   : signedError_m ~ angDisp_onset_cm + stimDisp_cm + soundType +     full   :     (1 + angDisp_onset_cm | participantId)
+   model npar    AIC    BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+ reduced    9 -447.3 -405.8  232.6    -465.3    NA NA         NA
+    full   10 -501.2 -455.1  260.6    -521.2 55.93  1  7.499e-14
+
+  Set B: onset angular disparity added to nominal metric disparity
+    reduced: angResp_onset_deg ~ stimDisp_cm + soundType + (1 + stimDisp_cm ||     reduced:     participantId)
+    full   : angResp_onset_deg ~ stimDisp_cm + angDisp_onset_cm + soundType +     full   :     (1 + stimDisp_cm || participantId)
+   model npar  AIC  BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+ reduced    8 6889 6926  -3437      6873    NA NA         NA
+    full    9 6843 6884  -3412      6825 48.42  1  3.441e-12
+
+  Set B: nominal metric disparity added to onset angular disparity
+    reduced: angResp_onset_deg ~ angDisp_onset_cm + soundType + (1 + angDisp_onset_cm ||     reduced:     participantId)
+    full   : angResp_onset_deg ~ angDisp_onset_cm + stimDisp_cm + soundType +     full   :     (1 + angDisp_onset_cm || participantId)
+   model npar  AIC  BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)
+ reduced    8 6810 6847  -3397      6794     NA NA         NA
+    full    9 6812 6853  -3397      6794 0.1087  1     0.7416
+
+  Set B: time-weighted mean angular disparity added to onset angular disparity
+    reduced: angResp_onset_deg ~ angDisp_onset_cm + soundType + (1 + angDisp_onset_cm ||     reduced:     participantId)
+    full   : angResp_onset_deg ~ angDisp_onset_cm + angDisp_mean_cm + soundType +     full   :     (1 + angDisp_onset_cm || participantId)
+   model npar  AIC  BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+ reduced    8 6810 6847  -3397      6794    NA NA         NA
+    full    9 6803 6844  -3392      6785  9.32  1   0.002266
+
+==============================================================================
+STEP 5: CAPTURE SLOPES WITH CONFIDENCE INTERVALS
+==============================================================================
+
+A0pub published: signed error (m) per m of nominal disparity
+  beta = 0.34660 m per m, SE = 0.05351, t(30.5) = 6.48, p = 3.43e-07
+  95% CI Wald          [0.24171, 0.45148]
+  95% CI Satterthwaite [0.23738, 0.45581]
+  95% CI profile       [0.23882, 0.45190]
+
+A1: signed error (m) per deg of onset angular disparity
+  beta = 0.00121 m per deg, SE = 0.00034, t(25.3) = 3.61, p = 0.00133
+  95% CI Wald          [0.00055, 0.00187]
+  95% CI Satterthwaite [0.00052, 0.00190]
+  95% CI profile       [0.00055, 0.00191]
+
+A2: signed error (m) per deg of time-weighted mean angular disparity
+  beta = 0.00274 m per deg, SE = 0.00044, t(26.2) = 6.20, p = 1.43e-06
+  95% CI Wald          [0.00187, 0.00361]
+  95% CI Satterthwaite [0.00183, 0.00365]
+  95% CI profile       [0.00184, 0.00361]
+
+B0: angular response (deg) per m of nominal disparity
+  beta = 24.38598 deg per m, SE = 6.45721, t(32.5) = 3.78, p = 0.000641
+  95% CI Wald          [11.73008, 37.04188]
+  95% CI Satterthwaite [11.24169, 37.53026]
+  95% CI profile       [11.35811, 37.07084]
+
+B1 PRIMARY: angular response (deg) per deg of onset angular disparity
+  beta = 0.33588 deg per deg, SE = 0.06596, t(32.3) = 5.09, p = 1.48e-05
+  95% CI Wald          [0.20660, 0.46515]
+  95% CI Satterthwaite [0.20158, 0.47017]
+  95% CI profile       [0.20599, 0.46806]
+
+B2: angular response at onset (deg) per deg of time-weighted mean angular disparity
+  beta = 0.32298 deg per deg, SE = 0.06130, t(31.1) = 5.27, p = 9.79e-06
+  95% CI Wald          [0.20284, 0.44312]
+  95% CI Satterthwaite [0.19799, 0.44797]
+  95% CI profile       [0.20103, 0.44426]
+
+B2m MATCHED: time-weighted angular response (deg) per deg of time-weighted mean angular disparity
+  beta = 0.42936 deg per deg, SE = 0.06720, t(29.3) = 6.39, p = 5.27e-07
+  95% CI Wald          [0.29766, 0.56106]
+  95% CI Satterthwaite [0.29198, 0.56673]
+  95% CI profile       [0.29408, 0.56172]
+
+Per-participant slopes for the primary angular model B1:
+  min -0.192, Q25 0.228, median 0.344, Q75 0.466, max 0.887, SD 0.225
+  random-effect SDs: participantId = 3.0300, participantId.1 = 0.2875
+
+Random-slope justification for B1 (REML LR test against a random-intercept model):
+            model npar  AIC  BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+ random intercept    7 6832 6864  -3409      6818    NA NA         NA
+               B1    8 6802 6839  -3393      6786 32.19  1  1.399e-08
+
+==============================================================================
+STEP 6: ROBUSTNESS
+==============================================================================
+Primary angular slope under alternative specifications:
+  full sample (B1)                               n = 744  beta = +0.3359  SE = 0.0660  t(32.3) =  5.09  p = 1.48e-05  clean = TRUE
+  onset angular disparity <= 90 deg              n = 721  beta = +0.3844  SE = 0.0674  t(33.5) =  5.71  p = 2.17e-06  clean = TRUE
+  onset angular disparity <= 60 deg              n = 672  beta = +0.3790  SE = 0.0638  t(20.5) =  5.94  p = 7.41e-06  clean = TRUE
+  excluding the 6 revisited trials               n = 738  beta = +0.3371  SE = 0.0659  t(32.5) =  5.12  p = 1.37e-05  clean = TRUE
+  final-pose frame (response and disparity)      n = 744  beta = +0.4681  SE = 0.1055  t(29.7) =  4.44  p = 0.000116  clean = TRUE
+  matched time-weighted frame (B2m)              n = 744  beta = +0.4294  SE = 0.0672  t(29.3) =  6.39  p = 5.27e-07  clean = TRUE
+
+Trials retained by the restrictions above: <=90 deg 721, <=60 deg 672, of 744
+
+Residual diagnostics for the primary angular model B1 (DHARMa, 1000 simulations):
+  KS uniformity : D = 0.1342, p = 4.552e-12
+  dispersion    : ratio = 0.9960, p = 0.92
+  outliers      : p = 0
+Comparison, same diagnostics for the published metric model A0pub:
+  KS uniformity : D = 0.0753, p = 0.0004364
+  dispersion    : ratio = 0.9928, p = 0.938
+Both responses have heavier tails than Gaussian; the angular response more so,
+because a near approach to the source can place the response direction far from
+the source direction. The two checks below establish that the slope does not
+depend on the Gaussian assumption.
+
+Heavy-tail check 1: Student-t response via glmmTMB. Three specifications are
+attempted. A fit is usable only if the TMB Hessian is positive definite
+(sdr$pdHess); a non-positive-definite Hessian yields a degenerate covariance
+matrix whose standard errors must not be reported.
+  student_t_random_slope           pdHess = FALSE: non-positive-definite Hessian, standard
+                                   errors are degenerate and are NOT reported. Point estimate
+                                   only, beta = 0.3717 deg/deg.
+  student_t_random_slope_BFGS      pdHess = FALSE: non-positive-definite Hessian, standard
+                                   errors are degenerate and are NOT reported. Point estimate
+                                   only, beta = 0.3733 deg/deg.
+  student_t_random_intercept_only  pdHess = TRUE | beta = 0.3205, SE = 0.0273, z = 11.74, p = <1e-16, 95% CI [0.2670, 0.3740]
+  Caution: the random-intercept-only Student-t model omits between-participant
+  slope variation, which is the dominant contributor to the slope standard error
+  in this design, so its interval is not comparable with the primary model's and
+  its point estimate alone should be read. The cluster bootstrap below is the
+  assumption-free check.
+
+Heavy-tail check 2: participant-level (cluster) bootstrap of the primary slope,
+1000 resamples of participants with replacement, percentile interval.
+  successful resamples: 1000 of 1000
+  bootstrap mean 0.3360, SD 0.0683, 95% percentile CI [0.2018, 0.4788]
+  resamples with a slope <= 0: 0 (0.00%)
+
+==============================================================================
+STEP 7: OUTPUT
+==============================================================================
+Files written to /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision:
+  angular_primary_log.txt
+  angular_primary_trial_level.csv
+  angular_primary_descriptives.csv
+  angular_primary_coefficients.csv
+  angular_primary_model_comparison.csv
+  angular_primary_lrt.csv
+  angular_primary_slopes.csv
+  angular_primary_participant_slopes.csv
+  angular_primary_within_trial_variation.csv
+  angular_primary_predictor_correlations.csv
+  angular_primary_robustness.csv
+  angular_primary_heavytail_checks.csv
+
+Done.

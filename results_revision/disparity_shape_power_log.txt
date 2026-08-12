@@ -1,0 +1,54 @@
+Power / sensitivity check for the disparity-shape null results
+Run: 2026-08-05 23:59:35 
+
+observed maximised LRT: 2.4312 
+
+== 1. Null bootstrap, independent seed (B = 500) ==
+time: 1.63 min
+null quantiles 50/90/95/99: 1.8757 4.8124 6.1532 10.4629 
+bootstrap p: 0.3892 
+fraction of argmax at a grid edge: 0.288 
+
+== 2. Power of the breakpoint test against true broken-stick data ==
+Alternatives have a breakpoint at 0.40 m; the response is simulated with the
+random-effect and residual variances estimated from the observed linear LMM.
+Rejection uses the 95th percentile of the null bootstrap above (crit = 6.153 ).
+
+slope drops 25% at 0.40 m | median max LRT 2.018 | power at crit 0.085 | time 1.27 min
+slope drops 50% at 0.40 m | median max LRT 3.785 | power at crit 0.282 | time 1.3 min
+slope drops to zero at 0.40 m (full saturation) | median max LRT 14.29 | power at crit 0.912 | time 1.33 min
+
+                                        scenario slope_before slope_after   B
+                       slope drops 25% at 0.40 m         0.40        0.30 400
+                       slope drops 50% at 0.40 m         0.46        0.23 400
+ slope drops to zero at 0.40 m (full saturation)         0.55        0.00 400
+ median_maxLRT power_at_null95 median_argmax_m mean_signal_drop_cm
+         2.018          0.0850            0.39                 3.0
+         3.785          0.2825            0.38                 6.9
+        14.290          0.9125            0.40                16.5
+
+signed error at 0.70 m implied by each alternative vs the fitted straight line:
+  slope drops 25% at 0.40 m                        24.37 cm (line: 25.14 cm, difference -0.77 cm)
+  slope drops 50% at 0.40 m                        23.08 cm (line: 25.14 cm, difference -2.06 cm)
+  slope drops to zero at 0.40 m (full saturation)  18.05 cm (line: 25.14 cm, difference -7.09 cm)
+
+== 3. Minimum detectable effects ==
+quadratic term SE: 0.2771 
+MDE (80% power, alpha .05): 0.7765  -> mid-range departure from the line: 5.87 cm
+95% CI bound on the quadratic term implies a departure of up to 6.33 cm
+(the fitted linear rise across 0.15-0.70 m is 19.08 cm)
+
+bias-ratio slope SE: 0.1295 
+MDE (80% power): 0.3627 per m -> 19.95 percentage points across the tested range
+Computing profile confidence intervals ...
+95% profile CI across the range: -12.48 15.45 percentage points, against a mean capture of 35.87 %
+i.e. the capture fraction could fall from 42.1 % to 29.6 % across the range and still lie inside the CI
+
+                             test        se mde_80pct
+   quadratic term on signed error 0.2771172 0.7764823
+ slope of bias ratio on disparity 0.1294542 0.3627307
+                mde_in_units
+ 5.87 cm mid-range departure
+   19.95 pp across the range
+
+Done: 2026-08-06 00:05:08 

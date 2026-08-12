@@ -1,0 +1,171 @@
+=== Follow-ups: can the elevation effect be produced without an HRTF? ===
+Run date: 2026-08-10 19:48:21
+Trials: 744  participants: 31
+
+--- 1. Auditory elevation weight within behavioural quartiles ---
+Q1 is the least movement / least proximity / least tilt quartile.
+                  moderator               subset       measure   n b_source
+    exploration path length       path length Q1  world_metres 186  0.41772
+    exploration path length       path length Q1 head_elev_deg 186  0.21208
+    exploration path length       path length Q2  world_metres 186  0.55361
+    exploration path length       path length Q2 head_elev_deg 186  0.24368
+    exploration path length       path length Q3  world_metres 186  0.33570
+    exploration path length       path length Q3 head_elev_deg 186  0.19506
+    exploration path length       path length Q4  world_metres 186  0.40578
+    exploration path length       path length Q4 head_elev_deg 186  0.31467
+ closest approach to source  closest approach Q1  world_metres 186  0.64302
+ closest approach to source  closest approach Q1 head_elev_deg 186  0.33344
+ closest approach to source  closest approach Q2  world_metres 186  0.73095
+ closest approach to source  closest approach Q2 head_elev_deg 186  0.35209
+ closest approach to source  closest approach Q3  world_metres 186  0.38525
+ closest approach to source  closest approach Q3 head_elev_deg 186  0.17687
+ closest approach to source  closest approach Q4  world_metres 186  0.14893
+ closest approach to source  closest approach Q4 head_elev_deg 186  0.14780
+    vertical head excursion head height range Q1  world_metres 186  0.06606
+    vertical head excursion head height range Q1 head_elev_deg 186  0.04749
+    vertical head excursion head height range Q2  world_metres 186  0.33897
+    vertical head excursion head height range Q2 head_elev_deg 186  0.21601
+    vertical head excursion head height range Q3  world_metres 186  0.50095
+    vertical head excursion head height range Q3 head_elev_deg 186  0.38780
+    vertical head excursion head height range Q4  world_metres 186  0.56635
+    vertical head excursion head height range Q4 head_elev_deg 186  0.27581
+                  head roll      head roll SD Q1  world_metres 186  0.43223
+                  head roll      head roll SD Q1 head_elev_deg 186  0.22891
+                  head roll      head roll SD Q2  world_metres 186  0.36169
+                  head roll      head roll SD Q2 head_elev_deg 186  0.22228
+                  head roll      head roll SD Q3  world_metres 186  0.40409
+                  head roll      head roll SD Q3 head_elev_deg 186  0.19748
+                  head roll      head roll SD Q4  world_metres 186  0.45669
+                  head roll      head roll SD Q4 head_elev_deg 186  0.32328
+                 head pitch     head pitch SD Q1  world_metres 186  0.25880
+                 head pitch     head pitch SD Q1 head_elev_deg 186  0.14675
+                 head pitch     head pitch SD Q2  world_metres 186  0.45199
+                 head pitch     head pitch SD Q2 head_elev_deg 186  0.27492
+                 head pitch     head pitch SD Q3  world_metres 186  0.47226
+                 head pitch     head pitch SD Q3 head_elev_deg 186  0.27508
+                 head pitch     head pitch SD Q4  world_metres 186  0.47883
+                 head pitch     head pitch SD Q4 head_elev_deg 186  0.29425
+    ci_lo  ci_hi  p_source
+  0.29374 0.5417 4.350e-10
+  0.12105 0.3031 9.172e-06
+  0.41394 0.6933 5.601e-13
+  0.14443 0.3429 3.228e-06
+  0.22553 0.4459 1.343e-08
+  0.10536 0.2848 3.348e-05
+  0.26890 0.5427 2.721e-08
+  0.20691 0.4224 4.208e-08
+  0.55653 0.7295 2.678e-32
+  0.23219 0.4347 9.484e-10
+  0.63088 0.8310 1.131e-31
+  0.26132 0.4429 1.476e-12
+  0.27028 0.5002 5.135e-10
+  0.09205 0.2617 6.570e-05
+ -0.01153 0.3094 7.055e-02
+  0.02585 0.2698 1.860e-02
+ -0.04968 0.1818 2.649e-01
+ -0.04149 0.1365 2.970e-01
+  0.22409 0.4538 3.234e-08
+  0.12520 0.3068 6.168e-06
+  0.39320 0.6087 1.417e-16
+  0.31104 0.4646 8.833e-19
+  0.42657 0.7061 1.976e-13
+  0.16048 0.3911 5.414e-06
+  0.28982 0.5746 1.350e-08
+  0.13478 0.3230 3.822e-06
+  0.23496 0.4884 8.146e-08
+  0.12829 0.3163 6.767e-06
+  0.28009 0.5281 1.377e-09
+  0.10510 0.2899 4.345e-05
+  0.33396 0.5794 8.908e-12
+  0.21583 0.4307 1.754e-08
+  0.17423 0.3434 1.082e-08
+  0.07917 0.2143 3.373e-05
+  0.33225 0.5717 5.763e-12
+  0.18473 0.3651 1.199e-08
+  0.34386 0.6007 1.453e-11
+  0.17963 0.3705 6.265e-08
+  0.31119 0.6465 7.909e-08
+  0.15987 0.4286 2.870e-05
+
+
+--- 1b. Conjunction subset: little walking, never approached closely, little roll ---
+       measure                                 subset   n n_participants
+  world_metres little walking + distant + little roll 111             23
+ head_elev_deg little walking + distant + little roll 111             23
+ b_source   ci_lo  ci_hi  p_source   b_cue
+   0.3938 0.20059 0.5871 0.0001186 0.29854
+   0.2039 0.07216 0.3356 0.0030245 0.07273
+
+
+--- 2. Continuous moderation of the vertical auditory weight (world metres) ---
+slope_p10 / slope_p90: auditory weight at the 10th and 90th percentile of the moderator.
+  moderator b_interaction p_interaction slope_p10 slope_p10_lo slope_p10_hi
+   log_path       0.02496     3.080e-01   0.37893      0.28260       0.4753
+  log_close      -0.13663     4.174e-09   0.64506      0.54550       0.7446
+ log_yrange       0.20617     6.130e-18   0.06297     -0.03338       0.1593
+     roll_z       0.07083     6.489e-04   0.35523      0.28267       0.4278
+    pitch_z       0.08941     1.099e-04   0.31848      0.23781       0.3991
+ slope_p90 slope_p90_lo slope_p90_hi
+    0.4408       0.3612       0.5204
+    0.2985       0.2263       0.3707
+    0.5842       0.5108       0.6576
+    0.5005       0.4201       0.5808
+    0.5444       0.4542       0.6346
+
+
+--- 3. Auditory weight by sound type ---
+      axis     subset   n b_source  ci_lo  ci_hi  p_source
+  vertical       Drum 186   0.3750 0.2327 0.5172 6.493e-07
+ lateral x       Drum 186   0.7558 0.6570 0.8547 6.904e-33
+   depth z       Drum 186   0.5240 0.4186 0.6295 5.033e-18
+  vertical      Flute 186   0.4351 0.2988 0.5713 2.865e-09
+ lateral x      Flute 186   0.5845 0.4778 0.6911 3.525e-21
+   depth z      Flute 186   0.5736 0.4539 0.6934 2.481e-17
+  vertical     Speech 186   0.3801 0.2690 0.4912 2.497e-10
+ lateral x     Speech 186   0.6773 0.5664 0.7881 1.229e-24
+   depth z     Speech 186   0.6477 0.5173 0.7780 2.613e-18
+  vertical Pink Noise 186   0.4407 0.3246 0.5568 4.203e-12
+ lateral x Pink Noise 186   0.6990 0.5808 0.8173 1.978e-23
+   depth z Pink Noise 186   0.6636 0.5451 0.7821 7.362e-22
+
+Sound type x source interaction, vertical axis:
+Type III Analysis of Variance Table with Satterthwaite's method
+                  Sum Sq Mean Sq NumDF  DenDF  F value Pr(>F)    
+sound_y           4.7527  4.7527     1 726.56 158.8836 <2e-16 ***
+soundType         0.1175  0.0392     3 719.33   1.3094 0.2702    
+flash_y           8.1846  8.1846     1 719.37 273.6108 <2e-16 ***
+sound_y:soundType 0.1403  0.0468     3 719.84   1.5630 0.1970    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Sound type x source interaction, lateral axis:
+Type III Analysis of Variance Table with Satterthwaite's method
+                   Sum Sq Mean Sq NumDF DenDF  F value Pr(>F)    
+sound_x           11.1769 11.1769     1   735 595.0235 <2e-16 ***
+soundType          0.0096  0.0032     3   735   0.1709 0.9161    
+flash_x            3.4645  3.4645     1   735 184.4364 <2e-16 ***
+sound_x:soundType  0.0041  0.0014     3   735   0.0727 0.9746    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Vertical auditory weight per sound type (emtrends):
+ soundType  sound_y.trend     SE  df lower.CL upper.CL
+ Drum               0.398 0.0492 727    0.302    0.495
+ Flute              0.495 0.0512 723    0.394    0.595
+ Speech             0.389 0.0496 723    0.291    0.486
+ Pink Noise         0.369 0.0507 718    0.269    0.468
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- 4. Median-plane vs lateral sources ---
+       measure                       subset   n b_source  ci_lo  ci_hi
+  world_metres source near the median plane 372   0.3910 0.3014 0.4806
+ head_elev_deg source near the median plane 372   0.2416 0.1724 0.3107
+  world_metres               source lateral 372   0.4507 0.3567 0.5447
+ head_elev_deg               source lateral 372   0.2454 0.1756 0.3151
+  p_source
+ 3.280e-16
+ 3.138e-11
+ 6.165e-19
+ 2.408e-11
+

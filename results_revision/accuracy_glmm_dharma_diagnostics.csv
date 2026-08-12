@@ -1,0 +1,8 @@
+"model","test","statistic","p_value"
+"Gamma(log) glmmTMB","KS uniformity",0.0473333333333333,0.0713127965613485
+"Gamma(log) glmmTMB","dispersion",1.10147190152222,0.468
+"Gamma(log) glmmTMB","outliers (bootstrap)",4,0.396
+"Gamma(log) glmmTMB","quantile deviations",NA,0.506091009606963
+"lognormal(log) glmmTMB","KS uniformity",0.0429247311827957,0.128888300155276
+"lognormal(log) glmmTMB","dispersion",0.963273986294439,0.828
+"lognormal(log) glmmTMB","outliers (bootstrap)",3,0.884

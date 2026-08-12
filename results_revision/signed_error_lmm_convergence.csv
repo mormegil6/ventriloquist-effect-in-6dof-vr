@@ -1,0 +1,3 @@
+"model","optimizer","n_warnings","warnings","max_abs_gradient","theta_hessian_min_eigen","vcov_condition_number","vcov_min_eigen","is_singular"
+"(a)/(b) sound type","nloptwrap",0,"none",6.81421852277708e-05,5.03929383724797,33.1405509802843,9.39150367472405e-05,FALSE
+"(c) spatial configuration","nloptwrap",0,"none",1.91960225492949e-06,497.337173461914,26.1915172091179,8.00004794631513e-05,FALSE

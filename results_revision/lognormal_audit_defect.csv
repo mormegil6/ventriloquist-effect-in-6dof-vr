@@ -1,0 +1,4 @@
+"quantity","sd_log_y","glmmTMB_lognormal","correct_lognormal"
+"sigma (log scale)",0.628677043919102,16.1603591561624,0.549426573650111
+"logLik (y scale)",NA,-2941.99179138365,-2927.8401056748
+"AIC (y scale)",NA,5909.98358276731,5881.68021134959

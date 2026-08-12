@@ -1,0 +1,252 @@
+Independent verification of the disparity-shape analysis
+Run: 2026-08-05 23:54:58 
+R: R version 4.4.1 (2024-06-14) | mgcv 1.9.4 | lme4 1.1.38 | quantreg 6.1 
+
+== A. Data integrity ==
+rows: 744  participants: 31  soundType levels: 4 
+NAs in model variables:
+      signedError_m stimulusDisparity_m   ventriloquistBias           soundType 
+                  0                   0                   0                   0 
+      participantId   angDisp_onset_deg    angDisp_mean_deg 
+                  0                   0                   0 
+distinct disparity values: 56  range 0.150-0.700 m
+bias ratio == signedError / disparity?  max abs deviation: 0 
+trials per published bin:
+
+ Short (15-30cm) Medium (30-40cm)   Long (40-70cm) 
+             238              246              260 
+trials per participant: min 24  max 24 
+mean bias %: 35.869  SD: 54.639 
+bias range: -2.349 3.491 
+
+    disparityRange   n disp_mean signed_mean_cm bias_mean_pct bias_med_pct
+1  Short (15-30cm) 238   0.22000         7.9337        35.046       34.053
+2 Medium (30-40cm) 246   0.35154        13.5559        38.275       33.987
+3   Long (40-70cm) 260   0.55015        19.0292        34.346       34.529
+  bias_sd_pct
+1      74.898
+2      48.068
+3      35.171
+
+== B. GAMM smooth vs linear ==
+REML smooth: edf = 1  Ref.df = 1  F = 43.216  p = 0 
+       model df   logLik       AIC       BIC
+ GAMM smooth 10 264.2363 -508.4726 -462.3522
+ GAMM linear  9 264.2363 -510.4726 -468.9643
+gam() cross-check: edf = 1.1279  AIC smooth -528.659  AIC linear -528.821  dAIC 0.161 
+
+smooth sensitivity (gam with RE smooths, REML):
+             spec   edf      F p    AIC
+           tp k=6 1.128 38.466 0 -528.7
+          tp k=10 1.122 38.876 0 -528.7
+          tp k=20 1.118 39.132 0 -528.7
+          cr k=10 1.120 41.794 0 -528.7
+ ts k=10 (shrink) 1.214  9.846 0 -528.5
+AIC of the matching linear gam: -528.821 
+
+== C. Parametric shapes and curvature that is NOT excluded ==
+     model df   logLik       AIC       BIC singular dAIC_vs_best
+    linear  9 264.2363 -510.4726 -468.9643    FALSE    1.4936984
+ quadratic 10 264.7942 -509.5883 -463.4679    FALSE    2.3780144
+       log  9 264.9832 -511.9663 -470.4580    FALSE    0.0000000
+      sqrt  9 264.9308 -511.8615 -470.3531    FALSE    0.1048285
+quadratic term (ML fit):
+      Estimate Std. Error     df t value Pr(>|t|)
+disp2  -0.2934    0.27712 652.64 -1.0588   0.2901
+LRT linear vs quadratic: chisq = 1.1157  p = 0.29085 
+
+quadratic coefficient 95% Wald CI: -0.8365 to 0.2497 
+implied max deviation from the straight line over 0.15-0.70 m (mid-range sag):
+  at CI lower bound: 6.33 cm   at point estimate: 2.22 cm   at CI upper bound: -1.89 cm 
+for reference the fitted linear rise across the range is 19.08 cm 
+
+max |fitted - linear fitted| across the range (population level):
+  quadratic 1.71 cm 
+  log 2.82 cm 
+  sqrt 1.36 cm 
+
+linear LMM (REML, lmerTest):
+                       Estimate Std. Error      df   t value   Pr(>|t|)
+(Intercept)          0.00867384   0.021447  51.956  0.404433 6.8755e-01
+stimulusDisparity_m  0.34659650   0.053514  30.505  6.476754 3.4312e-07
+soundTypeFlute       0.01203889   0.017058 688.845  0.705767 4.8057e-01
+soundTypeSpeech     -0.00025018   0.017045 689.250 -0.014678 9.8829e-01
+soundTypePink Noise -0.02506854   0.017042 689.522 -1.470967 1.4176e-01
+Computing profile confidence intervals ...
+                        2.5 %   97.5 %
+(Intercept)         -0.033522 0.051063
+stimulusDisparity_m  0.238818 0.451899
+
+== D. Segmented LMM ==
+logLik linear: 264.2363 
+profile range: 264.2666 to 265.4519 (span 1.1853) 
+best breakpoint: 0.28  logLik 265.4519  LRT 2.4312 
+second best: 0.2  logLik 265.4492 
+dAIC (segmented - linear): -0.4312  dBIC: 4.1808 
+any singular in grid: FALSE 
+segmented coefficients at the best breakpoint:
+                       Estimate Std. Error     df   t value  Pr(>|t|)
+(Intercept)         -0.06181757   0.049507 377.64 -1.248657 0.2125642
+stimulusDisparity_m  0.64535897   0.196997 559.06  3.275992 0.0011182
+hinge               -0.35725906   0.227694 634.56 -1.569034 0.1171386
+soundTypeFlute       0.01090430   0.017001 692.57  0.641391 0.5214811
+soundTypeSpeech     -0.00064588   0.016972 692.77 -0.038056 0.9696539
+soundTypePink Noise -0.02563228   0.016970 693.13 -1.510420 0.1313920
+slope before 0.64536  slope after 0.2881 
+
+-- conditioning checks on the linear LMM --
+random-effect SDs: 0.04449 0.19014  correlation: -0.55589 
+RE covariance eigenvalues: 0.03679 0.0013441 
+RE covariance condition number: 27.372 
+theta (Cholesky): 0.27108 -0.64403 0.96305 
+isSingular: FALSE 
+fixed-effect vcov eigenvalues: 0.003112 0.0006985 0.0001456 0.0001453 9.392e-05 
+fixed-effect vcov condition number: 33.141 
+
+-- optimizer agreement (linear LMM, REML) --
+   optimizer  logLik    slope  se_slope  intercept se_intercept    sd_int
+      bobyqa 248.819 0.346596 0.0535141 0.00867386    0.0214470 0.0444905
+ Nelder_Mead 248.819 0.346596 0.0535140 0.00867385    0.0214470 0.0444903
+   nloptwrap 248.819 0.346597 0.0535139 0.00867384    0.0214469 0.0444898
+ sd_slope singular
+ 0.190145    FALSE
+ 0.190145    FALSE
+ 0.190144    FALSE
+
+-- optimizer agreement (segmented LMM at the best breakpoint, ML) --
+   optimizer  logLik   slope1     hinge se_hinge singular
+      bobyqa 265.452 0.645359 -0.357259 0.227693    FALSE
+ Nelder_Mead 265.452 0.645359 -0.357259 0.227693    FALSE
+   nloptwrap 265.452 0.645359 -0.357259 0.227694    FALSE
+
+== E. Proportionality ==
+                    Estimate Std. Error     df t value   Pr(>|t|)
+(Intercept)         0.348528    0.06039 220.30 5.77134 2.6491e-08
+stimulusDisparity_m 0.026819    0.12945 718.45 0.20717 8.3594e-01
+Computing profile confidence intervals ...
+                       2.5 %  97.5 %
+(Intercept)          0.23039 0.46669
+stimulusDisparity_m -0.22691 0.28085
+singular: FALSE  participant SD: 0.16469 
+slope across 0.55 m: 1.475 pp; CI across 0.55 m: -12.48 15.446 pp
+
+same model + soundType (the signed-error models include it; this one does not):
+                    Estimate Std. Error     df t value Pr(>|t|)
+stimulusDisparity_m 0.036985    0.12954 715.43 0.28551  0.77533
+
+same model + by-participant random slope:
+boundary (singular) fit: see help('isSingular')
+                    Estimate Std. Error     df t value Pr(>|t|)
+stimulusDisparity_m 0.042812    0.14356 61.562 0.29822  0.76654
+singular: TRUE 
+
+trimmed at -0.4286 / 1.1761  n = 668 
+                    Estimate Std. Error     df t value   Pr(>|t|)
+(Intercept)          0.30484   0.040899 147.71  7.4535 7.0915e-12
+stimulusDisparity_m  0.10178   0.079226 639.86  1.2847 1.9936e-01
+Computing profile confidence intervals ...
+trimmed slope 95% profile CI: -0.05369 to 0.25708 
+Komunikaty ostrzegawcze:
+1: W poleceniu 'rq.fit.br(x, y, tau = tau, ...)': Solution may be nonunique
+2: W poleceniu 'rq.fit.br(x, y, tau = tau, ...)': Solution may be nonunique
+3: W poleceniu 'rq.fit.br(x, y, tau = tau, ...)': Solution may be nonunique
+
+quantile regression with participant fixed effects (xy bootstrap SE, R = 2000):
+  tau     slope      se        t          p   ci_low   ci_high
+ 0.25  0.405210 0.11737  3.45240 0.00058847  0.17516  0.635256
+ 0.50  0.038247 0.12011  0.31842 0.75026007 -0.19718  0.273670
+ 0.75 -0.262983 0.10986 -2.39371 0.01693701 -0.47832 -0.047649
+
+bias medians by quintile:
+  disp_quintile   n   med  mean    sd
+1   [0.15,0.24] 164 35.33 33.83 79.36
+2   (0.24,0.33] 144 29.46 37.96 58.11
+3   (0.33,0.38] 148 36.22 35.24 47.02
+4   (0.38,0.52] 142 35.41 36.29 37.29
+5    (0.52,0.7] 146 33.80 36.33 35.83
+
+== F. Residual structure of the linear LMM (bootstrap null adequacy) ==
+residual SD by disparity tertile:
+[0.15,0.3]  (0.3,0.4]  (0.4,0.7] 
+    0.1536     0.1616     0.1664 
+Levene-type test (abs residual ~ disparity, OLS):
+                       Estimate Std. Error t value   Pr(>|t|)
+(Intercept)            0.081080   0.011545  7.0230 4.9137e-12
+df$stimulusDisparity_m 0.079439   0.028365  2.8006 5.2336e-03
+residual skewness: 0.447  excess kurtosis: 4.2955 
+Shapiro-Wilk on residuals: W = 0.94008  p = 9.655e-17 
+
+== G. Angular disparity ==
+           variable    mean     sd      min     q05     q25  median     q75
+1 angDisp_onset_deg  28.758 23.081 0.561990  6.1659 14.2579  22.177  35.762
+2  angDisp_mean_deg  42.252 20.070 2.355641 14.9231 25.9714  40.536  55.049
+3   angDisp_min_deg  12.996 10.467 0.026106  1.0689  5.2352  10.875  18.621
+4   angDisp_max_deg 104.061 47.654 5.380797 30.7362 62.2042 104.739 148.422
+      q95     max pct_over_30 pct_over_15
+1  73.677 146.683      32.124      72.446
+2  77.265 115.501      66.667      94.892
+3  32.261  82.746       6.586      34.543
+4 173.295 179.079      95.161      99.866
+
+by published bin (onset):
+    disparityRange   n onset_med onset_pct30 mean_med mean_pct30
+1  Short (15-30cm) 238     15.25       10.08    24.89      31.93
+2 Medium (30-40cm) 246     22.68       27.64    42.49      75.61
+3   Long (40-70cm) 260     33.68       56.54    56.57      90.00
+
+correlations: onset r = 0.4501  Spearman 0.4963 | trial mean r = 0.6572  Spearman 0.6562 
+
+secondary GAMM on onset angular disparity:
+                        edf Ref.df      F    p-value
+s(angDisp_onset_deg) 2.7372 2.7372 12.109 1.1049e-06
+ angDisp_onset_deg fit_cm se_cm
+                 5  8.953 2.046
+                10 10.463 1.808
+                15 11.948 1.703
+                20 13.384 1.687
+                25 14.749 1.706
+                30 16.033 1.746
+                35 17.229 1.804
+                40 18.324 1.869
+                45 19.302 1.929
+                50 20.139 1.993
+                55 20.810 2.071
+                60 21.295 2.164
+                65 21.577 2.263
+                70 21.651 2.362
+                75 21.519 2.463
+                80 21.192 2.573
+                85 20.686 2.698
+                90 20.022 2.836
+                95 19.218 2.981
+               100 18.296 3.130
+
+bias ratio vs angular disparity (does capture fall at large angles?):
+                   Estimate Std. Error      df t value   Pr(>|t|)
+(Intercept)       0.3425159 0.04281964  63.866 7.99904 3.2803e-11
+angDisp_onset_deg 0.0005624 0.00084676 732.034 0.66418 5.0678e-01
+                  Estimate Std. Error     df t value   Pr(>|t|)
+(Intercept)      0.2729797  0.0552580 145.85  4.9401 2.1133e-06
+angDisp_mean_deg 0.0020285  0.0010032 741.48  2.0220 4.3536e-02
+
+bias ratio median by onset-angle bin:
+      abin   n disp_mean bias_med bias_mean signed_mean_cm
+1   (0,15] 205    0.2966    34.57     32.49          9.828
+2  (15,30] 300    0.3585    33.30     34.40         12.302
+3  (30,45] 115    0.4473    35.64     40.37         17.983
+4  (45,60]  52    0.4885    38.88     45.67         20.601
+5 (60,200]  72    0.5096    33.56     37.36         18.416
+
+signed error ~ disparity + s(onset angle), both in the model:
+                                         edf  Ref.df       F  p-value
+s(angDisp_onset_deg)                  2.5453  3.1355 2.58989 0.050862
+s(participantId)                      2.5636 30.0000 0.18322 0.328048
+s(participantId,stimulusDisparity_m) 22.0621 30.0000 3.98134 0.000000
+                      Estimate Std. Error   t value   Pr(>|t|)
+(Intercept)          0.0212611   0.022134  0.960558 3.3710e-01
+stimulusDisparity_m  0.3146387   0.054716  5.750401 1.3215e-08
+soundTypeFlute       0.0109424   0.017055  0.641604 5.2134e-01
+soundTypeSpeech     -0.0014519   0.017015 -0.085326 9.3203e-01
+soundTypePink Noise -0.0250040   0.017038 -1.467555 1.4267e-01
+
+Done: 2026-08-05 23:55:08 

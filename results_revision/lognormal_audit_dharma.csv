@@ -1,0 +1,4 @@
+"model","test","statistic","p_value"
+"Gaussian LMM on log(error), REML","KS uniformity",0.0404731182795699,0.174649642438796
+"Gaussian LMM on log(error), REML","dispersion",0.987441580006,0.882
+"Gaussian LMM on log(error), REML","outliers (bootstrap)",5,0.212

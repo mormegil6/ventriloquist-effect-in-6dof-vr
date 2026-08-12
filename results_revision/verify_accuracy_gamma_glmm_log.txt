@@ -1,0 +1,435 @@
+Independent verification of the Analysis 2 accuracy GLMMs
+Run date: 2026-08-05 23:03:49 
+R: R version 4.4.1 (2024-06-14) 
+glmmTMB: 1.1.13 | lme4: 1.1.38 | emmeans: 2.0.1 | DHARMa: 0.4.7 
+
+==============================================================================
+1. Data integrity and centring
+==============================================================================
+Rows in source file: 744 | rows used: 744 | dropped: 0 
+Participants: 31 | trials per participant: min 24 max 24 
+Response min: 0.6043572 (strictly positive: TRUE )
+Reference levels: soundType = Drum | azimuthSector = Front | elevationCategory = Below 
+
+Centring checks
+  mean(stimDisparity_c) = 1.716071e-18 | max|stimDisparity_c - (stimulusDisparity_m - mean)| = 0 
+  mean(trialSequence_c) = 0 | max|trialSequence_c - (trialSequenceNum - 12.5)| = 0 
+  trialSequenceNum range: 1 24 
+  stimulusDisparity_m range (m): 0.15 0.7 
+
+Design balance, soundType x participant (should be 6 each if fully crossed):
+
+  6 
+124 
+
+soundType by azimuthSector:
+            
+             Front Right Back Left
+  Drum          38    52   50   46
+  Flute         52    56   46   32
+  Speech        44    36   48   58
+  Pink Noise    42    52   48   44
+
+Mean stimulus disparity (m) by soundType (confounding check):
+      Drum      Flute     Speech Pink Noise 
+   0.38581    0.36720    0.37699    0.38548 
+
+==============================================================================
+2. glmmTMB Gamma(log) refit and Hessian conditioning
+==============================================================================
+convergence: 0 | message: relative convergence (4) | pdHess: TRUE 
+warnings: <none> 
+logLik: -2912.541 | AIC: 5851.082 | df: 13 
+max abs gradient at optimum: 0.0009531417 
+vcov eigenvalues: min 7.262804e-06 max 0.01718661 | condition number: 2366.388 
+                     term    estimate         se          z           p
+1             (Intercept)  3.23080597 0.07348942 43.9628737 0.00000e+00
+2         stimDisparity_c  1.16796029 0.13064800  8.9397488 3.90056e-19
+3          soundTypeFlute -0.06056776 0.05401408 -1.1213328 2.62146e-01
+4         soundTypeSpeech -0.06294299 0.05411930 -1.1630414 2.44813e-01
+5     soundTypePink Noise -0.09895143 0.05366466 -1.8438844 6.52000e-02
+6         trialSequence_c -0.00931408 0.00271696 -3.4281242 6.07767e-04
+7      azimuthSectorRight -0.00982027 0.05539708 -0.1772706 8.59296e-01
+8       azimuthSectorBack  0.02749602 0.05639117  0.4875945 6.25837e-01
+9       azimuthSectorLeft  0.00153024 0.05646684  0.0270997 9.78380e-01
+10 elevationCategoryLevel  0.04760949 0.04909754  0.9696920 3.32200e-01
+11 elevationCategoryAbove  0.05798497 0.05179249  1.1195632 2.62900e-01
+       ci_low     ci_high
+1   3.0867694  3.37484258
+2   0.9118949  1.42402567
+3  -0.1664334  0.04529789
+4  -0.1690149  0.04312889
+5  -0.2041322  0.00622937
+6  -0.0146392 -0.00398893
+7  -0.1183966  0.09875601
+8  -0.0830286  0.13802069
+9  -0.1091427  0.11220322
+10 -0.0486199  0.14383889
+11 -0.0435264  0.15949638
+SE range: 0.002716961 0.130648000 | max/min: 48.09 
+
+Likelihood-profile 95% CIs (disparity and trial sequence):
+                     2.5 %      97.5 %
+stimDisparity_c  0.9119478  1.42493251
+trialSequence_c -0.0146497 -0.00398146
+
+==============================================================================
+3. lme4::glmer across optimisers
+==============================================================================
+
+-- optimiser: bobyqa --
+warnings: Model failed to converge with max|grad| = 0.0232695 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting. 
+logLik: -2901.986 | AIC: 5829.972 | RE SD: 0.1951209 | sigma(): 0.5448718 
+SE range: 0.002092307 0.003717989 | max/min: 1.78 
+intercept: b = 3.229535 SE = 0.003572223 t = 904.0688 
+max abs difference in point estimates vs glmmTMB: 0.00614118 
+
+-- optimiser: default (nloptwrap) --
+warnings: <none> 
+logLik: -2901.972 | AIC: 5829.944 | RE SD: 0.195487 | sigma(): 0.5452425 
+SE range: 0.002683093 0.129051235 | max/min: 48.1 
+intercept: b = 3.220141 SE = 0.07897494 t = 40.77421 
+max abs difference in point estimates vs glmmTMB: 0.01066546 
+
+-- optimiser: Nelder_Mead --
+warnings: <none> 
+logLik: -2901.972 | AIC: 5829.944 | RE SD: 0.195491 | sigma(): 0.5452423 
+SE range: 0.002683092 0.129051353 | max/min: 48.1 
+intercept: b = 3.220136 SE = 0.07897619 t = 40.77351 
+max abs difference in point estimates vs glmmTMB: 0.01066974 
+
+Tukey contrasts from the bobyqa fit (the published pathology):
+ contrast              estimate          SE  df z.ratio p.value
+ Drum - Flute        0.06241418 0.003717989 Inf  16.787 <0.0001
+ Drum - Speech       0.06445607 0.003561456 Inf  18.098 <0.0001
+ Drum - Pink Noise   0.10038662 0.003642837 Inf  27.557 <0.0001
+ Flute - Speech      0.00204189 0.005152515 Inf   0.396  0.9789
+ Flute - Pink Noise  0.03797243 0.005187299 Inf   7.320 <0.0001
+ Speech - Pink Noise 0.03593055 0.005069807 Inf   7.087 <0.0001
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Results are given on the log (not the response) scale. 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+==============================================================================
+4. Calibration of glmmTMB sigma() for the Gamma family
+==============================================================================
+true shape = 0.75 | glmmTMB sigma() = 1.1651 | 1/sigma() = 0.8583 | empirical CV = 1.1656 | 1/sqrt(shape) = 1.1547 
+true shape = 2 | glmmTMB sigma() = 0.7112 | 1/sigma() = 1.406 | empirical CV = 0.7063 | 1/sqrt(shape) = 0.7071 
+true shape = 5 | glmmTMB sigma() = 0.4439 | 1/sigma() = 2.253 | empirical CV = 0.4461 | 1/sqrt(shape) = 0.4472 
+Komunikaty ostrzegawcze:
+1: W poleceniu 'glmmTMB(y_sim ~ x_sim, family = Gamma(link = "log"))':
+  use of the 'data' argument is recommended
+2: W poleceniu 'glmmTMB(y_sim ~ x_sim, family = Gamma(link = "log"))':
+  use of the 'data' argument is recommended
+3: W poleceniu 'glmmTMB(y_sim ~ x_sim, family = Gamma(link = "log"))':
+  use of the 'data' argument is recommended
+
+Fitted model: sigma() = 0.5138005 | 1/sigma() = 1.946281 
+Var of (y - mu)/mu on the real data = 0.2802685 -> implied shape = 3.568007 
+
+The calibration above shows sigma() = 1/sqrt(shape), so the Gamma shape is
+1/sigma()^2 = 3.788008 , not sigma() = 0.5138005 .
+
+Nakagawa delta-method R2 under each candidate reading of sigma():
+shape = sigma() [as reported]      shape=0.5138 trigamma=4.7115  R2m=0.0075 R2c=0.0201 ICC=0.0127
+shape = 1/sigma()                  shape=1.9463 trigamma=0.6674  R2m=0.0472 R2c=0.1263 ICC=0.0830
+shape = 1/sigma()^2 [correct]      shape=3.7880 trigamma=0.3019  R2m=0.0905 R2c=0.2421 ICC=0.1667
+shape from Pearson residual var    shape=3.5680 trigamma=0.3232  R2m=0.0859 R2c=0.2298 ICC=0.1574
+
+==============================================================================
+5. Omnibus tests: Wald (joint_tests) and likelihood ratio
+==============================================================================
+ model term        df1 df2 F.ratio  Chisq p.value
+ stimDisparity_c     1 Inf  79.919 79.919 <0.0001
+ soundType           3 Inf   1.168  3.504  0.3203
+ trialSequence_c     1 Inf  11.752 11.752  0.0006
+ azimuthSector       3 Inf   0.169  0.507  0.9173
+ elevationCategory   2 Inf   0.716  1.432  0.4888
+
+
+Likelihood-ratio tests:
+              term df     Chisq           p
+   stimDisparity_c  1 77.399736 1.39634e-18
+         soundType  3  3.516006 3.18692e-01
+   trialSequence_c  1 11.655433 6.40153e-04
+     azimuthSector  3  0.508398 9.17043e-01
+ elevationCategory  2  1.423740 4.90726e-01
+
+==============================================================================
+6. Estimated marginal means and Tukey contrasts
+==============================================================================
+EMMs, link scale:
+ soundType    emmean         SE  df asymp.LCL asymp.UCL z.ratio p.value
+ Drum       3.270806 0.05830498 Inf  3.156530  3.385081  56.098 <0.0001
+ Flute      3.210238 0.05841578 Inf  3.095745  3.324731  54.955 <0.0001
+ Speech     3.207863 0.05874296 Inf  3.092729  3.322997  54.608 <0.0001
+ Pink Noise 3.171854 0.05828057 Inf  3.057626  3.286082  54.424 <0.0001
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+EMMs, cm:
+ soundType  response       SE  df asymp.LCL asymp.UCL null z.ratio p.value
+ Drum       26.33254 1.535318 Inf  23.48895  29.52039    1  56.098 <0.0001
+ Flute      24.78498 1.447834 Inf  22.10370  27.79151    1  54.955 <0.0001
+ Speech     24.72618 1.452489 Inf  22.03712  27.74337    1  54.608 <0.0001
+ Pink Noise 23.85167 1.390089 Inf  21.27699  26.73790    1  54.424 <0.0001
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Confidence level used: 0.95 
+Intervals are back-transformed from the log scale 
+Tests are performed on the log scale 
+
+Tukey contrasts, link scale:
+ contrast              estimate         SE  df   asymp.LCL asymp.UCL z.ratio
+ Drum - Flute        0.06056776 0.05401408 Inf -0.07819613 0.1993316   1.121
+ Drum - Speech       0.06294299 0.05411930 Inf -0.07609122 0.2019772   1.163
+ Drum - Pink Noise   0.09895143 0.05366466 Inf -0.03891479 0.2368176   1.844
+ Flute - Speech      0.00237523 0.05469505 Inf -0.13813810 0.1428886   0.043
+ Flute - Pink Noise  0.03838367 0.05392115 Inf -0.10014147 0.1769088   0.712
+ Speech - Pink Noise 0.03600844 0.05408901 Inf -0.10294794 0.1749648   0.666
+ p.value
+  0.6763
+  0.6502
+  0.2528
+  1.0000
+  0.8924
+  0.9100
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+Tukey contrasts, ratio scale:
+ contrast               ratio         SE  df asymp.LCL asymp.UCL null z.ratio
+ Drum / Flute        1.062440 0.05738670 Inf 0.9247830  1.220587    1   1.121
+ Drum / Speech       1.064966 0.05763522 Inf 0.9267317  1.223820    1   1.163
+ Drum / Pink Noise   1.104013 0.05924647 Inf 0.9618327  1.267210    1   1.844
+ Flute / Speech      1.002378 0.05482512 Inf 0.8709784  1.153601    1   0.043
+ Flute / Pink Noise  1.039130 0.05603107 Inf 0.9047094  1.193522    1   0.712
+ Speech / Pink Noise 1.036665 0.05607216 Inf 0.9021739  1.191204    1   0.666
+ p.value
+  0.6763
+  0.6502
+  0.2528
+  1.0000
+  0.8924
+  0.9100
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+Intervals are back-transformed from the log scale 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Tests are performed on the log scale 
+
+Disparity per 10 cm: 12.389% [9.5477,15.3041]
+Learning per trial: -0.92708% [-1.45326,-0.3981]
+Cumulative over 23 increments (trial 1 -> 24): -19.2832% [-28.5878,-8.7663]
+
+==============================================================================
+7. DHARMa diagnostics, and the source of the difference between fits
+==============================================================================
+glmmTMB Gamma                KS D=0.04733 p=0.07131 | disp ratio=1.1015 p=0.4680 | outliers=4 p=0.3720 | quantiles p=0.5061
+glmer Gamma bobyqa           KS D=0.06610 p=0.00300 | disp ratio=0.7523 p=0.2100 | outliers=2 p=1.0000 | quantiles p=0.0100
+glmer Gamma nloptwrap        KS D=0.06860 p=0.00182 | disp ratio=0.7596 p=0.2100 | outliers=2 p=1.0000 | quantiles p=0.0036
+
+Why the DHARMa results differ between packages:
+  max abs difference in fixed-effect estimates (glmer bobyqa vs glmmTMB): 0.00614118 
+  glmmTMB RE SD: 0.2457361 | implied Gamma shape: 3.788008 
+  glmer bobyqa RE SD: 0.1951209 | implied shape: 3.368305 
+  glmer nloptwrap RE SD: 0.195487 | implied shape: 3.363726 
+  The nloptwrap fit converges cleanly yet still fails the KS test, so the
+  failing uniformity test tracks the lme4 fit itself, not the convergence warning.
+  glmer sigma() (nloptwrap): 0.5452425 
+  observed CV of y/fitted (glmmTMB): 0.5294039 
+
+KS uniformity across seeds:
+     seed glmmTMB_D glmmTMB_p  glmer_D   glmer_p
+        1  0.046097  0.084687 0.068968 0.0016873
+        7  0.041108  0.161727 0.068688 0.0017868
+       42  0.040065  0.183395 0.070280 0.0012858
+      999  0.040882  0.166236 0.069032 0.0016651
+ 20260805  0.047333  0.071313 0.066097 0.0030046
+
+==============================================================================
+8. Random-slope extensions
+==============================================================================
+
+-- slope: trialSequence_c --
+  convergence: 0 | pdHess: TRUE | AIC: 5854.231 | warnings: <none> 
+                      estimate        se       z          p
+stimDisparity_c      1.1678977 0.1305040  8.9491 3.5828e-19
+trialSequence_c     -0.0091638 0.0030287 -3.0256 2.4812e-03
+soundTypeFlute      -0.0602838 0.0540278 -1.1158 2.6451e-01
+soundTypeSpeech     -0.0684513 0.0545209 -1.2555 2.0930e-01
+soundTypePink Noise -0.0988267 0.0536799 -1.8410 6.5616e-02
+  LRT vs random-intercept model: Chisq = 0.8512 df = 2 p = 0.65338 
+  soundType omnibus: F = 1.186 p = 0.31319 
+
+-- slope: stimDisparity_c --
+  convergence: 0 | pdHess: TRUE | AIC: 5850.053 | warnings: <none> 
+                      estimate        se       z          p
+stimDisparity_c      1.1585171 0.1595750  7.2600 3.8705e-13
+trialSequence_c     -0.0093439 0.0027029 -3.4570 5.4627e-04
+soundTypeFlute      -0.0549158 0.0536598 -1.0234 3.0612e-01
+soundTypeSpeech     -0.0589816 0.0538270 -1.0958 2.7318e-01
+soundTypePink Noise -0.0926224 0.0533824 -1.7351 8.2728e-02
+  LRT vs random-intercept model: Chisq = 5.0293 df = 2 p = 0.080893 
+  soundType omnibus: F = 1.031 p = 0.37757 
+
+-- slope: soundType --
+  convergence: 0 | pdHess: TRUE | AIC: 5852.45 | warnings: <none> 
+                      estimate        se       z          p
+stimDisparity_c      1.1603512 0.1276759  9.0883 1.0064e-19
+trialSequence_c     -0.0089646 0.0027125 -3.3049 9.5016e-04
+soundTypeFlute      -0.0723955 0.0701527 -1.0320 3.0209e-01
+soundTypeSpeech     -0.0682328 0.0574881 -1.1869 2.3527e-01
+soundTypePink Noise -0.1020215 0.0584601 -1.7451 8.0959e-02
+  LRT vs random-intercept model: Chisq = 16.6324 df = 9 p = 0.054794 
+  soundType omnibus: F = 1.146 p = 0.32901 
+
+==============================================================================
+9. Precision of a sound-type contrast
+==============================================================================
+SE of the Drum - Pink Noise log contrast: 0.05366466 
+Tukey critical value (4 means, df = Inf): 2.569032 
+Minimum detectable effect at 80% power, unadjusted: 0.1503461 -> ratio 1.162236 ( 16.2 % )
+Minimum detectable effect at 80% power, Tukey-adjusted: 0.1830315 -> ratio 1.200852 ( 20.1 % )
+Observed Drum - Pink Noise: 0.09895143 
+Simultaneous Tukey CI on the ratio scale spans: 0.9618 to 1.2672 
+
+==============================================================================
+10. Robustness across error families
+==============================================================================
+lognormal: convergence 0 | pdHess TRUE | logLik -2941.992 | AIC 5909.984 
+                          estimate         se         z           p
+(Intercept)             3.27438745 0.05674294 57.705635 0.00000e+00
+stimDisparity_c         0.70241530 0.09723869  7.223619 5.06218e-13
+soundTypeFlute         -0.06995616 0.04222355 -1.656804 9.75590e-02
+soundTypeSpeech        -0.04653799 0.04129178 -1.127052 2.59720e-01
+soundTypePink Noise    -0.05134403 0.04200191 -1.222421 2.21548e-01
+trialSequence_c        -0.00353352 0.00213931 -1.651707 9.85942e-02
+azimuthSectorRight     -0.02332399 0.04336322 -0.537875 5.90663e-01
+azimuthSectorBack       0.02247296 0.04410497  0.509533 6.10378e-01
+azimuthSectorLeft       0.03552658 0.04477153  0.793508 4.27482e-01
+elevationCategoryLevel  0.01636528 0.03808920  0.429657 6.67445e-01
+elevationCategoryAbove  0.05127188 0.04045561  1.267362 2.05026e-01
+
+lognormal Tukey contrasts:
+ contrast                ratio         SE  df asymp.LCL asymp.UCL null z.ratio
+ Drum / Flute        1.0724612 0.04528312 Inf 0.9622149  1.195339    1   1.657
+ Drum / Speech       1.0476379 0.04325883 Inf 0.9421961  1.164880    1   1.127
+ Drum / Pink Noise   1.0526850 0.04421478 Inf 0.9450096  1.172629    1   1.222
+ Flute / Speech      0.9768539 0.04133126 Inf 0.8762399  1.089021    1  -0.553
+ Flute / Pink Noise  0.9815600 0.04181736 Inf 0.8798002  1.095090    1  -0.437
+ Speech / Pink Noise 1.0048176 0.04191465 Inf 0.9027065  1.118479    1   0.115
+ p.value
+  0.3468
+  0.6728
+  0.6125
+  0.9456
+  0.9721
+  0.9995
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+Intervals are back-transformed from the log scale 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Tests are performed on the log scale 
+
+Gaussian LMM on log(error):
+                          estimate        se      df         t           p
+(Intercept)             3.09399038 0.0771546 166.566 40.101155 1.72085e-87
+stimDisparity_c         1.15122346 0.1383345 706.960  8.322028 4.45471e-16
+soundTypeFlute         -0.07479006 0.0576357 703.110 -1.297633 1.94839e-01
+soundTypeSpeech        -0.07490168 0.0578515 703.292 -1.294724 1.95840e-01
+soundTypePink Noise    -0.07901660 0.0574645 703.048 -1.375050 1.69554e-01
+trialSequence_c        -0.00818694 0.0029508 703.262 -2.774477 5.67578e-03
+azimuthSectorRight     -0.01989196 0.0590578 713.653 -0.336822 7.36350e-01
+azimuthSectorBack       0.02256892 0.0605401 720.771  0.372793 7.09412e-01
+azimuthSectorLeft       0.01951552 0.0608588 716.263  0.320669 7.48555e-01
+elevationCategoryLevel  0.04466258 0.0522468 727.839  0.854838 3.92922e-01
+elevationCategoryAbove  0.06293203 0.0551425 716.531  1.141262 2.54142e-01
+
+log-LMM Tukey contrasts:
+ contrast               ratio         SE     df  lower.CL upper.CL null t.ratio
+ Drum / Flute        1.077658 0.06211190 703.09 0.9290123 1.250087    1   1.298
+ Drum / Speech       1.077778 0.06235190 703.27 0.9285988 1.250923    1   1.295
+ Drum / Pink Noise   1.082222 0.06218949 703.03 0.9333589 1.254828    1   1.375
+ Flute / Speech      1.000112 0.05815896 703.39 0.8610165 1.161677    1   0.002
+ Flute / Pink Noise  1.004236 0.05789058 703.08 0.8656941 1.164948    1   0.073
+ Speech / Pink Noise 1.004123 0.05790341 703.17 0.8655547 1.164876    1   0.071
+ p.value
+  0.5647
+  0.5666
+  0.5155
+  1.0000
+  0.9999
+  0.9999
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+Intervals are back-transformed from the log scale 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Tests are performed on the log scale 
+
+AIC comparability check
+  glmmTMB Gamma: 5851.082 | glmer Gamma bobyqa: 5829.972 | glmer Gamma nloptwrap: 5829.944 
+  glmmTMB lognormal: 5909.984 | Gaussian LMM on log(error) (REML): 1349.298 
+
+Session info:
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS 15.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] C
+
+time zone: Europe/Warsaw
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] DHARMa_0.4.7   emmeans_2.0.1  glmmTMB_1.1.13 lmerTest_3.1-3 lme4_1.1-38   
+[6] Matrix_1.7-4   dplyr_1.1.4   
+
+loaded via a namespace (and not attached):
+ [1] tidyr_1.3.2         sandwich_3.1-1      generics_0.1.4     
+ [4] lattice_0.22-7      digest_0.6.39       magrittr_2.0.4     
+ [7] grid_4.4.1          estimability_1.5.1  RColorBrewer_1.1-3 
+[10] iterators_1.0.14    fastmap_1.2.0       mvtnorm_1.3-3      
+[13] foreach_1.5.2       doParallel_1.0.17   plyr_1.8.9         
+[16] backports_1.5.0     survival_3.8-3      promises_1.5.0     
+[19] multcomp_1.4-29     mgcv_1.9-4          purrr_1.2.1        
+[22] scales_1.4.0        TH.data_1.1-5       codetools_0.2-20   
+[25] numDeriv_2016.8-1.1 shiny_1.12.1        reformulas_0.4.3.1 
+[28] Rdpack_2.6.4        cli_3.6.5           rlang_1.1.7        
+[31] rbibutils_2.4       splines_4.4.1       otel_0.2.0         
+[34] pbkrtest_0.5.5      parallel_4.4.1      tools_4.4.1        
+[37] nloptr_2.2.1        minqa_1.2.8         ggplot2_4.0.1      
+[40] httpuv_1.6.16       boot_1.3-32         broom_1.0.11       
+[43] mime_0.13           vctrs_0.6.5         R6_2.6.1           
+[46] qgam_2.0.0          zoo_1.8-15          lifecycle_1.0.5    
+[49] MASS_7.3-65         pkgconfig_2.0.3     later_1.4.5        
+[52] pillar_1.11.1       gtable_0.3.6        glue_1.8.0         
+[55] Rcpp_1.1.1          tibble_3.3.1        tidyselect_1.2.1   
+[58] farver_2.1.2        xtable_1.8-4        htmltools_0.5.9    
+[61] nlme_3.1-168        TMB_1.9.19          compiler_4.4.1     
+[64] S7_0.2.1           
+
+Done.

@@ -1,0 +1,20 @@
+"model","group","term1","term2","variance","sd_or_cor"
+"M0 baseline","participantId","(Intercept)","",0.00197940177376677,0.0444904683473525
+"M0 baseline","participantId","stimulusDisparity_m","",0.0361552512560981,0.190145342451763
+"M0 baseline","participantId","(Intercept)","stimulusDisparity_m",-0.00470270500325037,-0.555897943165047
+"M0 baseline","Residual",NA,"",0.0269361165113638,0.16412226086477
+"M1 disparity x soundType","participantId","(Intercept)","",0.00202039223083201,0.0449487734074248
+"M1 disparity x soundType","participantId","stimulusDisparity_m","",0.0358697582816085,0.189393131558693
+"M1 disparity x soundType","participantId","(Intercept)","stimulusDisparity_m",-0.00472008329386339,-0.554456644853824
+"M1 disparity x soundType","Residual",NA,"",0.0269591414635021,0.164192391612712
+"M2 trial","participantId","(Intercept)","",0.00207761474643494,0.045580859430631
+"M2 trial","participantId","stimulusDisparity_m","",0.0362982788729104,0.190521071991815
+"M2 trial","participantId","(Intercept)","stimulusDisparity_m",-0.00482733986205157,-0.555881665107291
+"M2 trial","Residual",NA,"",0.0269143690910323,0.16405599376747
+"M2 with random trial slope","participantId","(Intercept)","",0.0020849117210338,0.0456608335560555
+"M2 with random trial slope","participantId","stimulusDisparity_m","",0.0334181235500718,0.182806245927408
+"M2 with random trial slope","participantId","trialSequence_c","",1.17432268452545e-05,0.00342683919162462
+"M2 with random trial slope","participantId","(Intercept)","stimulusDisparity_m",-0.0042731441865056,-0.511932476496291
+"M2 with random trial slope","participantId","(Intercept)","trialSequence_c",-3.44508932822969e-05,-0.220172425451483
+"M2 with random trial slope","participantId","stimulusDisparity_m","trialSequence_c",3.50386516480067e-05,0.0559322937777275
+"M2 with random trial slope","Residual",NA,"",0.0263637080273783,0.162369048859006

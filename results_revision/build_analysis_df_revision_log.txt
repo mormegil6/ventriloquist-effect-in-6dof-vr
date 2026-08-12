@@ -1,0 +1,369 @@
+=== Build revision analysis dataset ===
+Run date: 2026-08-05 22:30:51
+R version: R version 4.4.1 (2024-06-14)
+
+Sessions found: 31 (participants P001..P031)
+Trials loaded from JSON: 744
+Trajectory samples loaded from CSV: 251666
+
+--- Session pairing validation ---
+ participantId                                 json_file
+          P001 LocalizationTestData_20250829_123440.json
+          P002 LocalizationTestData_20250829_130449.json
+          P003 LocalizationTestData_20250829_155728.json
+          P004 LocalizationTestData_20250829_162952.json
+          P005 LocalizationTestData_20250829_170046.json
+          P006 LocalizationTestData_20250901_114342.json
+          P007 LocalizationTestData_20250901_115936.json
+          P008 LocalizationTestData_20250902_123240.json
+          P009 LocalizationTestData_20250902_135209.json
+          P010 LocalizationTestData_20250902_141521.json
+          P011 LocalizationTestData_20250904_114115.json
+          P012 LocalizationTestData_20250904_121410.json
+          P013 LocalizationTestData_20250904_124503.json
+          P014 LocalizationTestData_20250905_123607.json
+          P015 LocalizationTestData_20250905_125056.json
+          P016 LocalizationTestData_20250905_130245.json
+          P017 LocalizationTestData_20250905_131336.json
+          P018 LocalizationTestData_20250908_101535.json
+          P019 LocalizationTestData_20250908_103017.json
+          P020 LocalizationTestData_20250908_124341.json
+          P021 LocalizationTestData_20250908_130826.json
+          P022 LocalizationTestData_20250908_133419.json
+          P023 LocalizationTestData_20250908_140359.json
+          P024 LocalizationTestData_20250909_110637.json
+          P025 LocalizationTestData_20250909_114954.json
+          P026 LocalizationTestData_20250909_123047.json
+          P027 LocalizationTestData_20250909_130055.json
+          P028 LocalizationTestData_20250909_132554.json
+          P029 LocalizationTestData_20250911_115754.json
+          P030 LocalizationTestData_20250911_125055.json
+          P031 LocalizationTestData_20250911_131404.json
+                                 csv_file stamp_diff_s json_levels csv_levels
+ OculusTrajectoryData_20250829_123423.csv           17          24         24
+ OculusTrajectoryData_20250829_130449.csv            0          24         24
+ OculusTrajectoryData_20250829_155728.csv            0          24         24
+ OculusTrajectoryData_20250829_162943.csv            9          24         24
+ OculusTrajectoryData_20250829_170046.csv            0          24         24
+ OculusTrajectoryData_20250901_114342.csv            0          24         24
+ OculusTrajectoryData_20250901_115936.csv            0          24         24
+ OculusTrajectoryData_20250902_123240.csv            0          24         24
+ OculusTrajectoryData_20250902_135209.csv            0          24         24
+ OculusTrajectoryData_20250902_141521.csv            0          24         24
+ OculusTrajectoryData_20250904_114115.csv            0          24         24
+ OculusTrajectoryData_20250904_121410.csv            0          24         24
+ OculusTrajectoryData_20250904_124503.csv            0          24         24
+ OculusTrajectoryData_20250905_123607.csv            0          24         24
+ OculusTrajectoryData_20250905_125056.csv            0          24         24
+ OculusTrajectoryData_20250905_130245.csv            0          24         24
+ OculusTrajectoryData_20250905_131336.csv            0          24         24
+ OculusTrajectoryData_20250908_101535.csv            0          24         24
+ OculusTrajectoryData_20250908_103017.csv            0          24         24
+ OculusTrajectoryData_20250908_124342.csv           -1          24         24
+ OculusTrajectoryData_20250908_130826.csv            0          24         24
+ OculusTrajectoryData_20250908_133419.csv            0          24         24
+ OculusTrajectoryData_20250908_140359.csv            0          24         24
+ OculusTrajectoryData_20250909_110637.csv            0          24         24
+ OculusTrajectoryData_20250909_114954.csv            0          24         24
+ OculusTrajectoryData_20250909_123047.csv            0          24         24
+ OculusTrajectoryData_20250909_130055.csv            0          24         24
+ OculusTrajectoryData_20250909_132555.csv           -1          24         24
+ OculusTrajectoryData_20250911_115754.csv            0          24         24
+ OculusTrajectoryData_20250911_125055.csv            0          24         24
+ OculusTrajectoryData_20250911_131404.csv            0          24         24
+ csv_samples n_revisited_trials median_dur_diff_s max_abs_dur_diff_s dur_cor
+        9178                  0           -0.1179             0.1844  1.0000
+       11912                  0           -0.1115             0.2081  1.0000
+       10026                  2           -0.1060            82.7455  0.6397
+        6196                  0           -0.1118             0.1808  1.0000
+        8893                  0           -0.1238             0.2073  1.0000
+        8108                  0           -0.1139             0.1934  1.0000
+        6588                  0           -0.1125             0.2032  1.0000
+        8395                  2           -0.1207           171.3052  0.4790
+        8970                  0           -0.1115             0.1937  1.0000
+        7738                  0           -0.1111             0.1955  1.0000
+        6701                  0           -0.1111             0.1813  1.0000
+       10146                  0           -0.1136             0.1939  1.0000
+        4824                  0           -0.1073             0.2137  1.0000
+        7386                  0           -0.1248             0.1932  1.0000
+        4217                  0           -0.1047             0.2083  1.0000
+        4449                  0           -0.1118             0.1667  1.0000
+        4545                  0           -0.1108             0.2084  1.0000
+        5254                  0           -0.1105             0.1976  1.0000
+        6990                  0           -0.1226             0.1805  1.0000
+        7377                  0           -0.1125             0.2085  1.0000
+        4324                  0           -0.1098             0.2088  1.0000
+        6759                  0           -0.1183             0.1972  1.0000
+       11110                  0           -0.1131             0.2103  1.0000
+        6750                  0           -0.1177             0.1810  1.0000
+       15031                  0           -0.1111             0.1944  1.0000
+       17230                  0           -0.1190             0.1800  1.0000
+        6096                  0           -0.1109             0.1666  1.0000
+        9401                  0           -0.1188             0.2080  1.0000
+        5402                  0           -0.1122             0.1841  1.0000
+       12659                  2           -0.1056           102.1872  0.7144
+        9011                  0           -0.1175             0.1939  1.0000
+ max_abs_matched_dur_diff_s levels_match duration_ok matched_duration_ok
+                     0.1844         TRUE        TRUE                TRUE
+                     0.2081         TRUE        TRUE                TRUE
+                     0.2085         TRUE       FALSE                TRUE
+                     0.1808         TRUE        TRUE                TRUE
+                     0.2073         TRUE        TRUE                TRUE
+                     0.1934         TRUE        TRUE                TRUE
+                     0.2032         TRUE        TRUE                TRUE
+                     0.1963         TRUE       FALSE                TRUE
+                     0.1937         TRUE        TRUE                TRUE
+                     0.1955         TRUE        TRUE                TRUE
+                     0.1813         TRUE        TRUE                TRUE
+                     0.1939         TRUE        TRUE                TRUE
+                     0.2137         TRUE        TRUE                TRUE
+                     0.1932         TRUE        TRUE                TRUE
+                     0.2083         TRUE        TRUE                TRUE
+                     0.1667         TRUE        TRUE                TRUE
+                     0.2084         TRUE        TRUE                TRUE
+                     0.1976         TRUE        TRUE                TRUE
+                     0.1805         TRUE        TRUE                TRUE
+                     0.2085         TRUE        TRUE                TRUE
+                     0.2088         TRUE        TRUE                TRUE
+                     0.1972         TRUE        TRUE                TRUE
+                     0.2103         TRUE        TRUE                TRUE
+                     0.1810         TRUE        TRUE                TRUE
+                     0.1944         TRUE        TRUE                TRUE
+                     0.1800         TRUE        TRUE                TRUE
+                     0.1666         TRUE        TRUE                TRUE
+                     0.2080         TRUE        TRUE                TRUE
+                     0.1841         TRUE        TRUE                TRUE
+                     0.1949         TRUE       FALSE                TRUE
+                     0.1939         TRUE        TRUE                TRUE
+
+Pairs failing the level-set check:                         0
+Pairs failing the duration check (all samples per level):  3
+Pairs failing the duration check (matched run only):       0
+Filename timestamp offset JSON-CSV (s): median 0.0, range -1.0 to 17.0
+Trajectory duration minus levelTime (s), all 744 trials: median -0.112, IQR -0.149 to -0.082, range -0.214 to 171.305
+Same, using only the levelTime-matched run: median -0.112, range -0.214 to -0.013
+
+--- Trials whose level is revisited later in the session ---
+Trials affected: 6 in 3 sessions; extra runs: 8
+ participantId level run_id run_start run_end run_duration run_samples
+          P003    14     14     854.7   891.2       36.512         330
+          P003    15     15     891.3   950.2       58.891         531
+          P003    14     16     950.3   974.0       23.686         217
+          P003    15     17     974.1  1004.2       30.115         272
+          P008    10     10     417.0   474.5       57.440         518
+          P008    11     11     474.6   566.2       91.590         843
+          P008    10     12     566.3   645.8       79.549         717
+          P008    11     13     645.9   671.6       25.666         232
+          P030     1      1     427.4   457.2       29.778         269
+          P030     2      2     457.3   460.4        3.112          29
+          P030     1      3     460.6   513.6       52.998         478
+          P030     2      4     513.7   514.8        1.109          11
+          P030     1      5     515.0   559.5       44.577         403
+          P030     2      6     559.6   592.0       32.316         292
+ levelTime run_dur_diff is_matched_run
+     36.57     -0.05575           TRUE
+     30.17     28.71851          FALSE
+     36.57    -12.88175          FALSE
+     30.17     -0.05749           TRUE
+     57.55     -0.11090           TRUE
+     25.72     65.86820          FALSE
+     57.55     21.99810          FALSE
+     25.72     -0.05580           TRUE
+     29.90     -0.12282           TRUE
+     32.51    -29.39893          FALSE
+     29.90     23.09718          FALSE
+     32.51    -31.40193          FALSE
+     29.90     14.67618          FALSE
+     32.51     -0.19493           TRUE
+
+
+--- Orthogonal error ---
+Trials where sqrt(participantError^2 - signedError^2) would be NaN: 0
+Max |vector orthogonal error - sqrt-form| over the 744 valid trials: 7.475e-07 m
+Max |soundToFlash_length - stimulusDisparity_m|: 1.192e-07 m
+
+--- Head forward vector validation (quaternion vs Euler) ---
+Angular difference (deg) over 251666 samples: median 0.0001, mean 0.0001, p99 0.0001, max 0.0002
+Quaternion norm: min 0.999999, max 1.000001
+
+--- Revisited trials: pooled vs levelTime-matched-run summaries ---
+ participantId trialSequenceNum angDisp_mean_deg dist_mean_m cueEcc_mean_deg
+          P003               14            29.49      0.5450           39.91
+          P003               15            40.60      0.4900           22.80
+          P008               10            44.48      0.7341           59.49
+          P008               11            22.76      0.6139           69.37
+          P030                1            11.33      0.5339           36.30
+          P030                2            15.58      0.6672           28.97
+ frac_time_cue_within_55deg angDisp_mean_deg_matched dist_mean_m_matched
+                     0.6685                    34.72              0.4995
+                     0.8530                    43.97              0.4514
+                     0.6210                    54.82              0.5732
+                     0.3687                    29.62              0.5687
+                     0.9208                    11.29              0.4313
+                     0.8976                    15.18              0.6726
+ cueEcc_mean_deg_matched frac_time_cue_within_55deg_matched
+                   41.97                             0.5856
+                   16.86                             0.9081
+                   49.12                             0.6794
+                   49.98                             0.6165
+                   34.38                             1.0000
+                   28.33                             0.8972
+
+
+--- Inter-trial gaps (last sample of trial n to first sample of trial n+1) ---
+Run-based: n = 721 gaps across 31 sessions
+median 0.1110 s, IQR 0.1110 to 0.1120 s (IQR width 0.0010), range 0.1000 to 0.1810 s, mean 0.1108 s
+Level-ordered (all samples of a level pooled): n = 713, median 0.1110 s, range -171.250 to 0.123 s, negative gaps: 3
+Within-run sampling interval: median 0.1110 s, IQR 0.1110 to 0.1110, p99 0.1140, max 0.3540
+
+--- Merge check ---
+Rows: 744 | with trajectory metrics: 744 | with angular metrics: 744
+
+--- Validation against published descriptives ---
+                              check published recomputed matches
+                           n trials       744        744    TRUE
+                     n participants        31         31    TRUE
+           mean unsigned error (cm)      26.2       26.2    TRUE
+             SD unsigned error (cm)      17.0       17.0    TRUE
+         median unsigned error (cm)      22.3       22.3    TRUE
+             mean signed error (cm)      13.7       13.7    TRUE
+               SD signed error (cm)      18.5       18.5    TRUE
+           mean bias proportion (%)      35.9       35.9    TRUE
+             SD bias proportion (%)      54.6       54.6    TRUE
+               mean path length (m)      8.36       8.36    TRUE
+                 SD path length (m)      6.21       6.21    TRUE
+ per-participant mean path, min (m)       4.6        4.6    TRUE
+ per-participant mean path, max (m)      22.0       22.0    TRUE
+          distinct disparity values        56         56    TRUE
+
+Crosstab soundType x disparityRange:
+  soundType Short (15-30cm) Medium (30-40cm) Long (40-70cm)
+       Drum              60               62             64
+      Flute              62               58             66
+     Speech              58               64             64
+ Pink Noise              58               62             66
+
+responseTime_s: min 1.212, max 230.749, median 29.966, mean 37.009
+Distinct stimulusDisparity_m values: 56 (range 0.150 to 0.700 m)
+
+--- Summary statistics: new trial-level measures ---
+                    measure   n     mean      sd       min       q25   median
+          angDisp_onset_deg 744  28.7577 23.0805  0.561990  14.25793  22.1767
+           angDisp_mean_deg 744  42.2523 20.0696  2.355641  25.97145  40.5363
+         angDisp_median_deg 744  37.2869 20.1003  2.410465  21.84123  33.8586
+            angDisp_min_deg 744  12.9959 10.4671  0.026106   5.23517  10.8752
+            angDisp_max_deg 744 104.0615 47.6544  5.380797  62.20425 104.7392
+                dist_mean_m 744   0.5005  0.1569  0.171912   0.38825   0.4805
+                 dist_min_m 744   0.1735  0.1367  0.003998   0.07239   0.1430
+            dist_at_onset_m 744   0.7047  0.2967  0.078169   0.48676   0.6758
+    frac_samples_under_0p5m 744   0.5554  0.2605  0.000000   0.38276   0.5947
+  frac_samples_under_0p574m 744   0.6546  0.2469  0.000000   0.50215   0.7027
+            cueEcc_mean_deg 744  49.2023 17.8324  8.164089  37.01393  48.7074
+           cueEcc_onset_deg 744  69.7766 39.3400  3.605544  38.60098  62.9266
+          cueEcc_median_deg 744  41.9933 20.7385  5.747747  26.51348  38.6313
+             cueEcc_min_deg 744   6.1023  7.7291  0.021162   1.71916   3.4505
+             cueEcc_max_deg 744 128.1872 34.4296 15.481015 103.28380 133.3905
+ frac_time_cue_within_55deg 744   0.6474  0.1963  0.000000   0.51627   0.6484
+            srcEcc_mean_deg 744  59.4528 18.4875 12.149793  46.35668  58.7034
+           srcEcc_onset_deg 744  66.8123 39.0666  1.691678  36.15299  59.6260
+          srcEcc_median_deg 744  52.9711 22.4793  6.998458  36.40228  50.4856
+             srcEcc_min_deg 744   8.7466 10.5210  0.098088   2.50681   5.4845
+             srcEcc_max_deg 744 140.5651 29.3655 34.303987 125.40366 145.9129
+ frac_time_src_within_55deg 744   0.5429  0.2002  0.000000   0.40874   0.5452
+      q75     max
+  35.7625 146.683
+  55.0494 115.501
+  48.4843 126.175
+  18.6207  82.746
+ 148.4218 179.079
+   0.5874   1.203
+   0.2304   1.119
+   0.8906   1.613
+   0.7596   1.000
+   0.8372   1.000
+  60.6714 132.176
+  99.1541 179.709
+  53.1184 134.227
+   8.5017 129.463
+ 155.8899 179.709
+   0.8040   1.000
+  70.8147 147.386
+  94.1976 179.190
+  65.8551 147.459
+  11.3401 144.574
+ 164.2089 179.893
+   0.6844   1.000
+
+--- Summary statistics: movement measures (Step 2) ---
+               measure   n      mean        sd        min       q25     median
+     total_path_length 744 8.362e+00 6.206e+00  2.542e-02   4.45924  6.686e+00
+   horizontal_movement 744 7.337e+00 5.438e+00  2.103e-02   3.86538  5.829e+00
+     vertical_movement 744 2.433e+00 2.136e+00  1.224e-02   0.91300  1.833e+00
+    total_yaw_rotation 744 8.728e+02 6.551e+02  4.080e+00 411.76801  6.972e+02
+  total_pitch_rotation 744 2.819e+03 2.847e+03  5.643e+00 840.95179  2.075e+03
+               x_range 744 1.055e+00 4.443e-01  1.291e-02   0.77391  1.007e+00
+               y_range 744 4.719e-01 2.995e-01  1.115e-02   0.19248  4.440e-01
+               z_range 744 9.468e-01 4.072e-01  7.126e-03   0.65185  9.127e-01
+    exploration_volume 744 5.894e-01 7.375e-01  1.025e-06   0.12984  3.244e-01
+   trajectory_duration 744 3.785e+01 2.818e+01  1.003e+00  19.64025  2.997e+01
+             n_samples 744 3.383e+02 2.400e+02  1.000e+01 178.75000  2.715e+02
+         movement_rate 744 2.272e-01 6.418e-02  2.534e-02   0.18204  2.292e-01
+ participant_mean_rate 744 2.272e-01 4.069e-02  1.288e-01   0.21210  2.272e-01
+  trial_rate_deviation 744 5.969e-19 4.963e-02 -2.088e-01  -0.03056 -1.364e-03
+       q75       max
+ 1.021e+01 4.609e+01
+ 8.967e+00 4.391e+01
+ 3.286e+00 1.672e+01
+ 1.138e+03 5.420e+03
+ 3.958e+03 3.465e+04
+ 1.281e+00 5.186e+00
+ 7.297e-01 1.389e+00
+ 1.191e+00 3.058e+00
+ 8.155e-01 5.623e+00
+ 4.478e+01 2.306e+02
+ 4.042e+02 2.081e+03
+ 2.723e-01 4.367e-01
+ 2.601e-01 2.976e-01
+ 3.047e-02 1.754e-01
+
+--- Summary statistics: core trial measures (Step 1) ---
+             measure   n    mean      sd       min      q25  median     q75
+ stimulusDisparity_m 744  0.3789  0.1488  0.150000  0.26000  0.3600  0.4900
+  participantError_m 744  0.2618  0.1702  0.006044  0.14815  0.2229  0.3254
+ participantError_cm 744 26.1843 17.0236  0.604357 14.81464 22.2872 32.5443
+       signedError_m 744  0.1367  0.1848 -0.540378  0.03079  0.1210  0.2248
+   orthogonalError_m 744  0.1638  0.1339  0.005337  0.07793  0.1274  0.1977
+   ventriloquistBias 744  0.3587  0.5464 -2.349468  0.09109  0.3415  0.5862
+      responseTime_s 744 37.0086 25.8800  1.211517 19.74190 29.9665 44.3849
+      max
+   0.7000
+   1.2564
+ 125.6395
+   1.0048
+   0.9022
+   3.4908
+ 230.7486
+
+Correlation stimulusDisparity_m with angDisp_mean_deg: r = 0.657
+Correlation dist_mean_m with angDisp_mean_deg: r = -0.396
+Trials with any sample closer than 0.574 m to the source: 734 (98.7%)
+Trials where the cue was outside 55 deg of head forward for the whole trial: 1
+
+--- Files written ---
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/analysis_df_revision.rds (274 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/analysis_df_revision.csv (885 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/trajectory_samples_angular.rds (17383 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/validation_published_descriptives.csv (1 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/summary_new_measures.csv (3 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/summary_movement_measures.csv (2 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/summary_core_measures.csv (1 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/session_pairing_report.csv (8 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/trajectory_runs.csv (68 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/revisited_trials_sensitivity.csv (1 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/inter_trial_gaps.csv (62 KB)
+  /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/build_analysis_df_revision_log.txt (22 KB)
+
+Final frame columns (76):
+participantId, trialConditionId, trialSequenceNum, soundType, disparityRange, azimuthSector, elevationCategory, stimulusDisparity_m, flashAzimuth_deg, flashElevation_deg, responseTime_s, participantError_m, response_x, response_y, response_z, sound_x, sound_y, sound_z, flash_x, flash_y, flash_z, soundToFlash_x, soundToFlash_y, soundToFlash_z, soundToFlash_length, soundToFlash_unit_x, soundToFlash_unit_y, soundToFlash_unit_z, soundToResponse_x, soundToResponse_y, soundToResponse_z, signedError_m, orthogonalError_m, ventriloquistBias, participantError_cm, total_path_length, horizontal_movement, vertical_movement, total_yaw_rotation, total_pitch_rotation, x_range, y_range, z_range, exploration_volume, trajectory_duration, n_samples, movement_rate, angDisp_onset_deg, angDisp_mean_deg, angDisp_median_deg, angDisp_min_deg, angDisp_max_deg, dist_mean_m, dist_min_m, dist_at_onset_m, frac_samples_under_0p5m, frac_samples_under_0p574m, cueEcc_mean_deg, cueEcc_onset_deg, cueEcc_median_deg, cueEcc_min_deg, cueEcc_max_deg, frac_time_cue_within_55deg, srcEcc_mean_deg, srcEcc_onset_deg, srcEcc_median_deg, srcEcc_min_deg, srcEcc_max_deg, frac_time_src_within_55deg, n_time_blocks, trial_has_revisit, participant_mean_rate, trial_rate_deviation, obs_id, stimDisparity_c, trialSequence_c
+
+Done.

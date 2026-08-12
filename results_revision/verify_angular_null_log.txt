@@ -1,0 +1,85 @@
+
+==============================================================================
+GEOMETRIC NULL FOR THE ANGULAR RE-ANALYSIS
+==============================================================================
+Run: 2026-08-05 23:13:01 | R version 4.4.1 (2024-06-14)
+
+==============================================================================
+G1: GEOMETRY AND THE ANGULAR PIPELINE
+==============================================================================
+In-line component reproduces signedError_m to 0 m
+Rebuilt angular response, mean 10.2955 deg, SD 24.9280 deg
+Observed: angular slope 0.3359 (SE 0.0660, t 5.09); dAIC(nominal - angular) = +79.13
+
+==============================================================================
+G2: PERMUTATION NULL FOR THE ANGULAR SLOPE
+==============================================================================
+The in-line metric displacement is permuted among the trials of the same
+participant. This destroys every relation between the response and the
+stimulus while preserving each head pose, each source and cue position, the
+orthogonal scatter and the participant's own distribution of signed errors.
+A capture effect of exactly zero therefore holds by construction, on both
+scales. The metric model is shown alongside as the control.
+
+Null distribution over 300 within-participant permutations:
+  angular slope (deg/deg)          : mean +0.2443, SD 0.0487, 2.5%..97.5% [+0.1484, +0.3291]
+  angular t statistic              : mean +3.7474, SD 0.8400, 2.5%..97.5% [+2.3030, +5.6285]
+  dAIC (nominal - angular)         : mean +68.8236, SD 21.6458, 2.5%..97.5% [+29.7330, +115.6784]
+  metric slope, control (m/m)      : mean +0.0033, SD 0.0454, 2.5%..97.5% [-0.0836, +0.0932]
+  metric t statistic, control      : mean +0.0707, SD 0.9881, 2.5%..97.5% [-1.8512, +2.0929]
+
+  permutations with an angular slope >= the observed 0.3359 : 5 of 300 (p = 0.0199)
+  permutations with dAIC >= the observed +79.13            : 90 of 300 (p = 0.3023)
+  permutations with a metric slope >= the observed 0.3466  : 0 of 300
+
+==============================================================================
+G3: GENERATIVE PLACEBOS WITH A KNOWN METRIC TRUTH
+==============================================================================
+  metric truth 0.347 x disparity               angular slope +0.3465 (SE 0.0471, t  7.36)  dAIC   +87.0
+  constant shift = mean signed error           angular slope +0.2421 (SE 0.0528, t  4.59)  dAIC   +89.0
+  constant shift = 0 (no capture)              angular slope -0.0690 (SE 0.0359, t -1.92)  dAIC   +34.3
+  metric truth with slope 0 (intercept only)   angular slope -0.0379 (SE 0.0315, t -1.20)  dAIC    +6.4
+  metric truth doubled (0.693 x disparity)     angular slope +0.7557 (SE 0.0382, t 19.78)  dAIC  +384.4
+  OBSERVED DATA                                angular slope +0.3359 (SE 0.0660, t  5.09)  dAIC   +79.1
+
+==============================================================================
+G4: THE SCALE-CROSSING RESULT -- EXPERIENCED ANGLE OR LISTENING DISTANCE?
+==============================================================================
+On the METRIC response the response carries no 1/d factor, so the reported
+chi2(1) = 12.35 for adding the time-weighted angle to nominal separation is
+not vulnerable to the shared-denominator problem. It is however vulnerable to
+a simpler reading: the time-weighted angle is largely a function of how close
+the listener stood. The tests below add distance instead of, and alongside,
+the angle.
+  + time-weighted angular disparity                    chi2(1) = 12.3451  p = 0.0004422  dAIC  -10.35
+  + mean head-to-source distance                       chi2(1) = 40.7947  p = 1.691e-10  dAIC  -38.79
+  + inverse mean head-to-source distance               chi2(1) = 19.3027  p = 1.115e-05  dAIC  -17.30
+  + inverse distance AND time-weighted angle           chi2(2) = 60.0747  p = 9.014e-14  dAIC  -56.07
+
+Angle added on top of nominal separation AND inverse distance:
+  chi2(1) = 40.7720, p = 1.711e-10
+Inverse distance added on top of nominal separation AND the angle:
+  chi2(1) = 47.7297, p = 4.892e-12
+
+==============================================================================
+G5: THE PRIMARY ANGULAR SLOPE RESTRICTED BY ONSET LISTENING DISTANCE
+==============================================================================
+  onset distance >= 0.00 m : n = 744, beta = +0.3359, SE = 0.0660, t(32.3) =  5.09, p = 0.0000, SD(angDisp) =  23.1
+  onset distance >= 0.30 m : n = 683, beta = +0.3175, SE = 0.0540, t(22.4) =  5.88, p = 0.0000, SD(angDisp) =  19.7
+  onset distance >= 0.50 m : n = 550, beta = +0.2647, SE = 0.0599, t(29.4) =  4.42, p = 0.0001, SD(angDisp) =  15.3
+  onset distance >= 0.75 m : n = 305, beta = +0.1714, SE = 0.0911, t(293.7) =  1.88, p = 0.0608, SD(angDisp) =  10.2
+  onset distance >= 1.00 m : n = 132, beta = +0.5717, SE = 0.1683, t(124.4) =  3.40, p = 0.0009, SD(angDisp) =   7.8
+
+==============================================================================
+G6: PREDICTED RESPONSE AT ZERO ANGULAR DISPARITY
+==============================================================================
+                term Estimate Std. Error      df  t value   Pr(>|t|)
+         (Intercept)  0.25266     1.9947 734.003  0.12667 8.9924e-01
+   angDisp_onset_deg  0.31161     0.0545  60.607  5.71751 3.5267e-07
+      soundTypeFlute  2.90538     2.3634 714.190  1.22931 2.1936e-01
+     soundTypeSpeech  2.56838     2.3641 714.939  1.08640 2.7767e-01
+ soundTypePink Noise -1.26044     2.3646 714.500 -0.53305 5.9416e-01
+Uncentred intercept = 0.2527 deg (p = 0.8992): the fitted line does not pass
+through the origin, so a proportional reading of the slope is an approximation.
+
+Done.

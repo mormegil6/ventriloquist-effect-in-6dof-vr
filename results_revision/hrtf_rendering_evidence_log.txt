@@ -1,0 +1,138 @@
+=== Auditory elevation and front/back evidence for the rendering path ===
+Run date: 2026-08-10 19:48:17
+R version: R version 4.4.1 (2024-06-14)
+
+Trials: 744  participants: 31
+
+--- Design check: source position vs cue displacement ---
+ axis r_source_vs_cueOffset r_source_vs_cuePosition
+    x              -0.02960                  0.7924
+    y              -0.03145                  0.7390
+    z               0.01903                  0.7997
+
+
+Trajectory samples: 251666
+Head-frame basis check (quaternion vs Euler forward): median 0.000 deg, p99 0.099 deg
+Trials with head-frame geometry: 744
+
+--- 1. Head-referenced cue weights (direction cosines) ---
+b_source = auditory weight, b_cue = visual weight; 1 = full reliance.
+ frame                             axis b_source ci_lo_source ci_hi_source
+ onset    vertical (uy = sin elevation)   0.4240       0.3667       0.4813
+ onset lateral (ux = sin lateral angle)   0.6654       0.6162       0.7146
+ onset                  front/back (uz)   0.6668       0.6190       0.7147
+    tw    vertical (uy = sin elevation)   0.2482       0.1988       0.2976
+    tw lateral (ux = sin lateral angle)   0.4490       0.4014       0.4966
+    tw                  front/back (uz)   0.3176       0.2665       0.3686
+ final    vertical (uy = sin elevation)   0.2118       0.1595       0.2641
+ final lateral (ux = sin lateral angle)   0.4330       0.3836       0.4825
+ final                  front/back (uz)   0.3023       0.2480       0.3565
+   p_source  b_cue ci_lo_cue ci_hi_cue dR2m_source
+  4.472e-42 0.4317    0.3772    0.4863     0.07927
+ 1.978e-109 0.3267    0.2767    0.3768     0.13510
+ 5.107e-114 0.3066    0.2593    0.3538     0.14350
+  1.424e-21 0.2746    0.2166    0.3325     0.09609
+  4.600e-63 0.1957    0.1507    0.2407     0.27766
+  2.796e-31 0.4792    0.4214    0.5370     0.09539
+  7.770e-15 0.2577    0.1929    0.3226     0.07218
+  7.679e-56 0.1925    0.1413    0.2437     0.24840
+  7.433e-26 0.5217    0.4570    0.5864     0.06189
+
+
+--- 1b. Head-referenced elevation in degrees ---
+ frame b_source ci_lo_source ci_hi_source  p_source  b_cue dR2m_source
+ onset   0.4113       0.3545       0.4680 1.203e-40 0.4386     0.07567
+    tw   0.2452       0.1964       0.2940 1.423e-21 0.2800     0.09558
+ final   0.1986       0.1469       0.2503 1.481e-13 0.2751     0.06513
+
+
+--- 2. World-frame cue weights (metres) ---
+            model b_source ci_lo_source ci_hi_source  p_source  b_cue ci_lo_cue
+ world vertical y   0.4160       0.3518       0.4802 1.428e-33 0.4072    0.3587
+  world lateral x   0.6842       0.6297       0.7387 3.923e-98 0.3092    0.2651
+    world depth z   0.6108       0.5505       0.6711 1.265e-70 0.3526    0.3051
+ ci_hi_cue dR2m_source R2m_full
+    0.4557     0.07087   0.6795
+    0.3534     0.14027   0.8277
+    0.4001     0.10627   0.7996
+
+
+Random-slope model for world vertical (response_y ~ sound_y + flash_y):
+            Estimate Std. Error     df t value  Pr(>|t|)
+(Intercept)   0.2616    0.04132  31.28    6.33 4.626e-07
+sound_y       0.4176    0.03436 113.52   12.15 2.820e-22
+flash_y       0.4056    0.02469 724.98   16.43 8.617e-52
+SD of participant-specific sound_y slopes: 0.0604
+Per-participant OLS slopes on sound_y: median 0.446, IQR [0.227, 0.616], 30 of 31 positive
+
+--- 3a. Subsets by cue displacement in elevation ---
+                                                           model   n b_source
+ cue on the opposite side of the head from the source (vertical) 202   0.4937
+                                 cue on the same side (vertical) 542   0.4141
+                                 large vertical cue displacement 367   0.4483
+                                 small vertical cue displacement 377   0.2544
+ ci_lo_source ci_hi_source  p_source  b_cue
+       0.4034       0.5841 1.949e-21 0.4861
+       0.3173       0.5109 4.614e-16 0.3953
+       0.3616       0.5350 1.915e-21 0.3895
+       0.1019       0.4068 1.182e-03 0.5590
+
+
+--- 3b. Displacement of the response from the cue towards the true source (m) ---
+Positive = the response moved from the cue in the direction of the source.
+ axis   n mean_pull_towards_source_m   ci_lo  ci_hi     t         p
+    x 575                    0.10472 0.08889 0.1205 12.97 8.561e-14
+    y 575                    0.14997 0.13148 0.1685 15.90 2.536e-16
+    z 575                    0.09707 0.08099 0.1132 11.83 7.555e-13
+
+
+--- 4a. Front/back reversal rates (source vs response, head frame) ---
+ frame                              subset   n reversal_rate   ci_lo   ci_hi
+ onset                          all trials 744       0.09274 0.07288 0.11590
+ onset cue on the opposite front/back side  94       0.40426 0.30423 0.51048
+ final                          all trials 744       0.06452 0.04795 0.08463
+ final cue on the opposite front/back side  47       0.63830 0.48520 0.77329
+
+
+--- 4b. Front/back conflict trials (onset frame) ---
+  n followed_source followed_cue
+ 94          0.5957       0.4043
+
+
+Fraction of trial time the source was in front of the head: mean 0.768 (SD 0.167)
+Trials with the source behind the head for >50% of the trial: 50 of 744
+
+--- 5. Head-tilt moderation of the auditory vertical weight ---
+Roll model:
+                 Estimate Std. Error     df t value  Pr(>|t|)
+(Intercept)      1.507125   0.009789  29.12 153.966 6.079e-44
+sound_y_c        0.411601   0.032625 731.75  12.616 3.698e-33
+roll_c           0.009032   0.008011 347.19   1.127 2.603e-01
+flash_y_c        0.404860   0.024610 723.34  16.451 6.748e-52
+sound_y_c:roll_c 0.070831   0.020681 737.14   3.425 6.489e-04
+Pitch model:
+                  Estimate Std. Error     df  t value  Pr(>|t|)
+(Intercept)       1.505216   0.010319  28.61 145.8615 1.211e-42
+sound_y_c         0.424423   0.032439 728.77  13.0836 2.758e-35
+pitch_c           0.005999   0.006936 650.12   0.8648 3.874e-01
+flash_y_c         0.379470   0.025362 724.25  14.9623 2.653e-44
+sound_y_c:pitch_c 0.089411   0.022993 738.72   3.8887 1.099e-04
+              term estimate      se         p   ci_lo  ci_hi
+  sound_y_c:roll_c  0.07083 0.02068 0.0006489 0.03030 0.1114
+ sound_y_c:pitch_c  0.08941 0.02299 0.0001099 0.04435 0.1345
+
+
+Magnitude-only elevation model (|elevation| in degrees):
+            Estimate Std. Error    df t value  Pr(>|t|)
+(Intercept)   9.5445    1.08719 170.0   8.779 1.705e-15
+src_abs       0.1398    0.02931 738.3   4.771 2.215e-06
+cue_abs       0.1978    0.03131 741.0   6.317 4.594e-10
+
+--- 6. Response scatter about the source and about the cue ---
+ axis rmse_to_source_m rmse_to_cue_m
+    x           0.1528        0.2053
+    y           0.2134        0.2399
+    z           0.1691        0.2099
+
+
+Outputs written to /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision

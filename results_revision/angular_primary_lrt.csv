@@ -1,0 +1,7 @@
+"comparison","response","base_predictor","added_predictor","chisq","df","p","AIC_reduced","AIC_full"
+"Set A: onset angular disparity added to nominal metric disparity","signedError_m","stimDisp_cm","angDisp_onset_cm",0.0953895709732251,1,0.75743409513948,-510.472639008906,-508.568028579879
+"Set A: time-weighted mean angular disparity added to nominal metric disparity","signedError_m","stimDisp_cm","angDisp_mean_cm",12.3450664950764,1,0.000442153397344351,-510.472639008906,-520.817705503982
+"Set A: nominal metric disparity added to onset angular disparity","signedError_m","angDisp_onset_cm","stimDisp_cm",55.9327705532078,1,7.49920671110263e-14,-447.260745332377,-501.193515885585
+"Set B: onset angular disparity added to nominal metric disparity","angResp_onset_deg","stimDisp_cm","angDisp_onset_cm",48.419396010293,1,3.44147410233477e-12,6889.20927280431,6842.78987679401
+"Set B: nominal metric disparity added to onset angular disparity","angResp_onset_deg","angDisp_onset_cm","stimDisp_cm",0.108721732363847,1,0.741604144609599,6810.08120892332,6811.97248719096
+"Set B: time-weighted mean angular disparity added to onset angular disparity","angResp_onset_deg","angDisp_onset_cm","angDisp_mean_cm",9.3201874778606,1,0.00226642802970231,6810.08120892332,6802.76102144546

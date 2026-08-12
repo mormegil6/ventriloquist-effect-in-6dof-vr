@@ -1,0 +1,298 @@
+Disparity-response shape analysis
+Run: 2026-08-05 23:38:32 
+R: R version 4.4.1 (2024-06-14) | mgcv 1.9.4 | lme4 1.1.38 | quantreg 6.1 
+
+N trials: 744  N participants: 31 
+Disparity: 56 distinct values, range 0.150-0.700 m
+
+== 0. Binned descriptives ==
+          binning              bin   n disp_mean_m signed_mean_cm signed_sd_cm
+1 published 3-bin  Short (15-30cm) 238      0.2200          7.934        16.40
+2 published 3-bin Medium (30-40cm) 246      0.3515         13.556        17.11
+3 published 3-bin   Long (40-70cm) 260      0.5502         19.029        19.92
+4        quintile      [0.15,0.24] 164      0.1980          6.841        15.68
+5        quintile      (0.24,0.33] 144      0.2919         11.255        17.10
+6        quintile      (0.33,0.38] 148      0.3608         12.733        17.18
+7        quintile      (0.38,0.52] 142      0.4499         15.995        15.96
+8        quintile       (0.52,0.7] 146      0.6170         22.412        22.27
+  signed_med_cm bias_mean_pct bias_sd_pct bias_med_pct bias_iqr_pct
+1         7.216         35.05       74.90        34.05        66.12
+2        12.659         38.27       48.07        33.99        45.51
+3        17.899         34.35       35.17        34.53        42.69
+4         7.161         33.83       79.36        35.33        74.00
+5         8.691         37.96       58.11        29.46        52.35
+6        13.132         35.24       47.02        36.22        41.11
+7        16.549         36.29       37.29        35.41        41.37
+8        19.970         36.33       35.83        33.80        45.30
+
+== 1. GAMM smooth vs linear (signed error) ==
+-- smooth model (REML) --
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+signedError_m ~ s(stimulusDisparity_m, k = 6) + soundType
+
+Parametric coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          0.14001    0.01605   8.725   <2e-16 ***
+soundTypeFlute       0.01208    0.01706   0.708    0.479    
+soundTypeSpeech     -0.00031    0.01705  -0.018    0.985    
+soundTypePink Noise -0.02516    0.01705  -1.476    0.140    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Approximate significance of smooth terms:
+                       edf Ref.df     F p-value    
+s(stimulusDisparity_m)   1      1 43.22  <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+R-sq.(adj) =  0.0842   
+  Scale est. = 0.026818  n = 744
+-- linear model (REML) --
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+signedError_m ~ stimulusDisparity_m + soundType
+
+Parametric coefficients:
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          0.0085815  0.0212343   0.404    0.686    
+stimulusDisparity_m  0.3468912  0.0528036   6.569 9.53e-11 ***
+soundTypeFlute       0.0120779  0.0170762   0.707    0.480    
+soundTypeSpeech     -0.0003101  0.0170631  -0.018    0.986    
+soundTypePink Noise -0.0251582  0.0170604  -1.475    0.141    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+R-sq.(adj) =  0.0842   
+  Scale est. = 0.026818  n = 744
+-- ML AIC comparison (gamm lme components) --
+                   model df  logLik      AIC      BIC dAIC
+1 GAMM s(disparity, k=6) 10 264.236 -508.473 -462.352    2
+2   LMM linear disparity  9 264.236 -510.473 -468.964    0
+
+-- cross-check: gam() with random-effect smooths --
+edf of s(disparity): 1.128  p = 0 
+AIC smooth: -528.659  AIC linear: -528.821  dAIC(smooth - linear): 0.161 
+
+-- parametric shape alternatives (ML LMMs, same random structure) --
+      model df  logLik      AIC      BIC     dAIC
+1    linear  9 264.236 -510.473 -468.964 1.493698
+2 quadratic 10 264.794 -509.588 -463.468 2.378014
+3       log  9 264.983 -511.966 -470.458 0.000000
+4      sqrt  9 264.931 -511.862 -470.353 0.104829
+quadratic term:
+      Estimate Std. Error    df t value Pr(>|t|)
+disp2  -0.2934     0.2771 652.6  -1.059   0.2901
+LRT linear vs quadratic: chisq = 1.116  df = 1  p = 0.2908 
+linear model singular fit: FALSE 
+
+-- linear LMM fixed effects (REML, lmerTest) --
+                      Estimate Std. Error     df  t value  Pr(>|t|)
+(Intercept)          0.0086738    0.02145  51.96  0.40443 6.876e-01
+stimulusDisparity_m  0.3465965    0.05351  30.50  6.47675 3.431e-07
+soundTypeFlute       0.0120389    0.01706 688.85  0.70577 4.806e-01
+soundTypeSpeech     -0.0002502    0.01704 689.25 -0.01468 9.883e-01
+soundTypePink Noise -0.0250685    0.01704 689.52 -1.47097 1.418e-01
+Computing profile confidence intervals ...
+slope 95% profile CI: 0.2388 to 0.4519 
+
+== 2. Segmented LMM, breakpoint grid search 0.20-0.60 m (1 cm steps) ==
+ breakpoint_m logLik     AIC     BIC  slope1     hinge singular  slope2
+         0.20 265.45 -510.90 -464.78 1.48241 -1.168456    FALSE 0.31396
+         0.21 265.33 -510.66 -464.54 1.17041 -0.857585    FALSE 0.31283
+         0.22 265.23 -510.46 -464.34 0.97326 -0.660961    FALSE 0.31230
+         0.23 265.13 -510.26 -464.14 0.84214 -0.530826    FALSE 0.31132
+         0.24 265.24 -510.49 -464.37 0.79523 -0.489155    FALSE 0.30607
+         0.25 265.22 -510.44 -464.32 0.73124 -0.427844    FALSE 0.30339
+         0.26 265.27 -510.55 -464.43 0.69473 -0.395988    FALSE 0.29875
+         0.27 265.35 -510.70 -464.58 0.66635 -0.372486    FALSE 0.29387
+         0.28 265.45 -510.90 -464.78 0.64536 -0.357259    FALSE 0.28810
+         0.29 265.43 -510.87 -464.74 0.61276 -0.327163    FALSE 0.28560
+         0.30 265.29 -510.58 -464.46 0.57261 -0.286085    FALSE 0.28652
+         0.31 265.21 -510.41 -464.29 0.54385 -0.257642    FALSE 0.28621
+         0.32 265.21 -510.42 -464.30 0.52743 -0.244244    FALSE 0.28319
+         0.33 265.16 -510.31 -464.19 0.50757 -0.225170    FALSE 0.28240
+         0.34 265.03 -510.07 -463.95 0.48518 -0.201241    FALSE 0.28394
+         0.35 264.94 -509.87 -463.75 0.46719 -0.182235    FALSE 0.28496
+         0.36 264.89 -509.79 -463.67 0.45621 -0.172847    FALSE 0.28336
+         0.37 264.85 -509.71 -463.58 0.44710 -0.165796    FALSE 0.28131
+         0.38 264.84 -509.69 -463.56 0.44149 -0.164180    FALSE 0.27731
+         0.39 264.84 -509.68 -463.56 0.43763 -0.165569    FALSE 0.27206
+         0.40 264.77 -509.54 -463.42 0.42958 -0.158954    FALSE 0.27063
+         0.41 264.71 -509.43 -463.30 0.42254 -0.153547    FALSE 0.26899
+         0.42 264.65 -509.30 -463.18 0.41491 -0.146230    FALSE 0.26868
+         0.43 264.61 -509.21 -463.09 0.40880 -0.141390    FALSE 0.26741
+         0.44 264.55 -509.09 -462.97 0.40147 -0.132790    FALSE 0.26869
+         0.45 264.49 -508.98 -462.86 0.39434 -0.123375    FALSE 0.27097
+         0.46 264.47 -508.94 -462.82 0.39069 -0.122042    FALSE 0.26865
+         0.47 264.44 -508.88 -462.76 0.38610 -0.117549    FALSE 0.26855
+         0.48 264.41 -508.82 -462.70 0.38143 -0.111781    FALSE 0.26965
+         0.49 264.38 -508.76 -462.64 0.37679 -0.105027    FALSE 0.27176
+         0.50 264.35 -508.70 -462.58 0.37182 -0.095597    FALSE 0.27622
+         0.51 264.33 -508.67 -462.55 0.36904 -0.093168    FALSE 0.27587
+         0.52 264.33 -508.67 -462.55 0.36811 -0.097971    FALSE 0.27014
+         0.53 264.34 -508.68 -462.56 0.36766 -0.105934    FALSE 0.26173
+         0.54 264.34 -508.69 -462.57 0.36709 -0.114518    FALSE 0.25258
+         0.55 264.34 -508.68 -462.56 0.36583 -0.120405    FALSE 0.24542
+         0.56 264.31 -508.63 -462.51 0.36242 -0.111563    FALSE 0.25085
+         0.57 264.28 -508.55 -462.43 0.35762 -0.088146    FALSE 0.26947
+         0.58 264.27 -508.53 -462.41 0.35568 -0.083412    FALSE 0.27227
+         0.59 264.27 -508.54 -462.42 0.35568 -0.097803    FALSE 0.25788
+         0.60 264.29 -508.58 -462.46 0.35697 -0.134506    FALSE 0.22246
+ LRT_stat
+ 2.425777
+ 2.191082
+ 1.984084
+ 1.784274
+ 2.013175
+ 1.963980
+ 2.074962
+ 2.231405
+ 2.431197
+ 2.392579
+ 2.109636
+ 1.941725
+ 1.949251
+ 1.839050
+ 1.594991
+ 1.398938
+ 1.313492
+ 1.232643
+ 1.212744
+ 1.210277
+ 1.071611
+ 0.952617
+ 0.825795
+ 0.737924
+ 0.620953
+ 0.509526
+ 0.470428
+ 0.411299
+ 0.348122
+ 0.288097
+ 0.223016
+ 0.195366
+ 0.195929
+ 0.205432
+ 0.213218
+ 0.207285
+ 0.153689
+ 0.081460
+ 0.060598
+ 0.068286
+ 0.104775
+
+Best breakpoint: 0.28 m
+logLik linear: 264.2363  logLik segmented: 265.4519 
+AIC linear: -510.473  AIC segmented: -510.904  dAIC: -0.431 
+BIC linear: -468.964  BIC segmented: -464.783  dBIC: 4.181 
+Naive LRT (1 df, breakpoint treated as known): chisq = 2.4312  p = 0.1189 
+NOTE: the breakpoint is not identified under the null (no hinge), so this
+      naive p-value is anticonservative. A parametric bootstrap of the
+      maximised LRT follows.
+-- segmented model at the best breakpoint --
+                      Estimate Std. Error    df  t value Pr(>|t|)
+(Intercept)         -0.0618176    0.04951 377.6 -1.24866 0.212564
+stimulusDisparity_m  0.6453590    0.19700 559.1  3.27599 0.001118
+hinge               -0.3572591    0.22769 634.6 -1.56903 0.117139
+soundTypeFlute       0.0109043    0.01700 692.6  0.64139 0.521481
+soundTypeSpeech     -0.0006459    0.01697 692.8 -0.03806 0.969654
+soundTypePink Noise -0.0256323    0.01697 693.1 -1.51042 0.131392
+slope before: 0.6454  slope after: 0.2881 
+
+Parametric bootstrap of the maximised LRT, B = 1000 
+bootstrap time: 9.34 min on 4 cores
+singular segmented fits across replicates: 10830 of 41000 
+lme4 convergence warnings across replicates: 1332 of 42000 fits; 372 replicates affected
+observed maximised LRT: 2.4312 
+null distribution quantiles (50/90/95/99%): 1.765, 5.21, 6.509, 9.333 
+bootstrap p-value: 0.3487 
+under a true straight line the grid search still returns a breakpoint;
+distribution of the selected breakpoint (fraction at the grid edges 0.20/0.60): 0.272 
+
+== 3. Proportionality test: ventriloquistBias ~ disparity ==
+Exact proportional scaling -> zero slope; saturation -> negative slope.
+
+                    Estimate Std. Error    df t value  Pr(>|t|)
+(Intercept)          0.34853    0.06039 220.3  5.7713 2.649e-08
+stimulusDisparity_m  0.02682    0.12945 718.4  0.2072 8.359e-01
+Computing profile confidence intervals ...
+                      2.5 % 97.5 %
+(Intercept)          0.2304 0.4667
+stimulusDisparity_m -0.2269 0.2808
+singular fit: FALSE 
+slope (bias units per m):0.0268 -> 2.68percentage points of bias per 1 m of disparity;
+ across the tested 0.55 m range that is 1.48 percentage points.
+
+Robust A: 5/95 percentile trimming of the bias ratio (cut at -0.429 and 1.176 ); n = 668 of 744 
+                    Estimate Std. Error    df t value  Pr(>|t|)
+(Intercept)           0.3048    0.04090 147.7   7.453 7.092e-12
+stimulusDisparity_m   0.1018    0.07923 639.9   1.285 1.994e-01
+Computing profile confidence intervals ...
+trimmed slope 95% CI: -0.0537 to 0.2571 
+
+Robust B: quantile regression (quantreg::rq, participant fixed effects),
+          bootstrap SE, R = 2000. Note rq may report a nonunique solution
+          for this design; the slope is stable to the reported precision.
+Komunikaty ostrzegawcze:
+1: W poleceniu 'rq.fit.br(x, y, tau = tau, ...)': Solution may be nonunique
+2: W poleceniu 'rq.fit.br(x, y, tau = tau, ...)': Solution may be nonunique
+3: W poleceniu 'rq.fit.br(x, y, tau = tau, ...)': Solution may be nonunique
+  tau    slope     se       t         p  ci_low  ci_high
+ 0.25  0.40521 0.1174  3.4527 0.0005878  0.1752  0.63523
+ 0.50  0.03825 0.1188  0.3219 0.7475858 -0.1946  0.27109
+ 0.75 -0.26298 0.1079 -2.4384 0.0149970 -0.4744 -0.05159
+
+Intercept of the signed-error LMM (zero implies a line through the origin,
+i.e. exact proportionality with slope = mean bias):
+            Estimate Std. Error    df t value Pr(>|t|)
+(Intercept) 0.008674    0.02145 51.96  0.4044   0.6876
+Computing profile confidence intervals ...
+intercept 95% profile CI: -0.0335 to 0.0511 m 
+
+              method   n    slope   ci_low  ci_high
+ LMM (1|participant) 744  0.02682 -0.22691  0.28085
+   LMM, 5/95 trimmed 668  0.10178 -0.05369  0.25708
+    rq tau=0.25 (FE) 744  0.40521  0.17518  0.63523
+    rq tau=0.50 (FE) 744  0.03825 -0.19460  0.27109
+    rq tau=0.75 (FE) 744 -0.26298 -0.47437 -0.05159
+== 4. Tested range in egocentric angular terms ==
+            variable   n   mean    sd     min    q05    q25 median    q75
+1  angDisp_onset_deg 744  28.76 23.08 0.56199  6.166 14.258  22.18  35.76
+2   angDisp_mean_deg 744  42.25 20.07 2.35564 14.923 25.971  40.54  55.05
+3 angDisp_median_deg 744  37.29 20.10 2.41046 12.448 21.841  33.86  48.48
+4    angDisp_min_deg 744  13.00 10.47 0.02611  1.069  5.235  10.88  18.62
+5    angDisp_max_deg 744 104.06 47.65 5.38080 30.736 62.204 104.74 148.42
+     q95    max pct_over_30deg pct_over_15deg
+1  73.68 146.68         32.124          72.45
+2  77.27 115.50         66.667          94.89
+3  73.26 126.17         57.392          89.78
+4  32.26  82.75          6.586          34.54
+5 173.29 179.08         95.161          99.87
+
+Angular disparity at onset by published disparity bin:
+    disparityRange   n onset_median onset_q25 onset_q75 onset_pct_over_30
+1  Short (15-30cm) 238        15.25     10.32     20.94             10.08
+2 Medium (30-40cm) 246        22.68     14.99     32.22             27.64
+3   Long (40-70cm) 260        33.68     21.72     52.74             56.54
+  mean_median mean_q25 mean_q75 mean_pct_over_30
+1       24.89    17.62    32.89            31.93
+2       42.49    30.31    52.62            75.61
+3       56.57    42.87    69.58            90.00
+
+Correlation of metric disparity with angular disparity:
+  onset: r = 0.45  Spearman = 0.496 
+  mean : r = 0.657  Spearman = 0.656 
+
+GAMM on angular disparity at onset (secondary check):
+                       edf Ref.df     F   p-value
+s(angDisp_onset_deg) 2.737  2.737 12.11 1.105e-06
+
+Done: 2026-08-05 23:48:24 

@@ -1,0 +1,192 @@
+
+==============================================================================
+A. IS SOUND TYPE WITHIN PARTICIPANT?
+==============================================================================
+      
+       Drum Flute Speech Pink Noise
+  P001    6     6      6          6
+  P002    6     6      6          6
+  P003    6     6      6          6
+  P004    6     6      6          6
+  P005    6     6      6          6
+trials per participant per sound type (unique): 6 
+
+--- M1 + by-participant random slope for soundType ---
+singular: TRUE   n warnings/messages: 1 
+   boundary (singular) fit: see help('isSingular') 
+Type III Analysis of Variance Table with Satterthwaite's method
+                               Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)
+stimulusDisparity_m           0.87402 0.87402     1  33.46 34.6645 1.277e-06
+soundType                     0.01699 0.00566     3 486.77  0.2246    0.8793
+stimulusDisparity_m:soundType 0.05674 0.01891     3 666.81  0.7502    0.5225
+                                 
+stimulusDisparity_m           ***
+soundType                        
+stimulusDisparity_m:soundType    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+--- M1 + maximal (disparity x soundType) random slopes ---
+singular: TRUE   n warnings/messages: 2 
+   boundary (singular) fit: see help('isSingular') || Model failed to converge with 1 negative eigenvalue: -5.3e+00 
+Type III Analysis of Variance Table with Satterthwaite's method
+                               Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)
+stimulusDisparity_m           0.84519 0.84519     1 32.221 35.3200 1.247e-06
+soundType                     0.00209 0.00070     3 50.673  0.0292    0.9932
+stimulusDisparity_m:soundType 0.01795 0.00598     3 55.612  0.2500    0.8610
+                                 
+stimulusDisparity_m           ***
+soundType                        
+stimulusDisparity_m:soundType    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+REML LRT M1 vs M1 + random soundType slope:
+Data: d
+Models:
+m1: signedError_m ~ stimulusDisparity_m * soundType + (1 + stimulusDisparity_m | participantId)
+m1_rs_st: form
+         npar    AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)
+m1         12 -468.0 -412.65 246.00    -492.0                     
+m1_rs_st   24 -461.7 -351.01 254.85    -509.7 17.697 12     0.1252
+
+Per-sound-type slopes under the random-soundType-slope model:
+ soundType  stimulusDisparity_m.trend     SE  df lower.CL upper.CL t.ratio
+ Drum                           0.404 0.0863 144   0.2333    0.575   4.678
+ Flute                          0.363 0.0987 209   0.1682    0.558   3.675
+ Speech                         0.348 0.0897 168   0.1710    0.525   3.880
+ Pink Noise                     0.247 0.0874 149   0.0742    0.419   2.826
+ p.value
+ <0.0001
+  0.0003
+  0.0001
+  0.0054
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+CI widths: 0.3413, 0.3893, 0.3542, 0.3453 
+
+Pairwise contrasts under that model (Tukey):
+ contrast            estimate    SE  df lower.CL upper.CL t.ratio p.value
+ Drum - Flute          0.0411 0.117 680   -0.260    0.342   0.351  0.9852
+ Drum - Speech         0.0558 0.110 670   -0.227    0.339   0.508  0.9571
+ Drum - Pink Noise     0.1570 0.108 666   -0.121    0.435   1.453  0.4665
+ Flute - Speech        0.0148 0.120 665   -0.295    0.324   0.123  0.9993
+ Flute - Pink Noise    0.1160 0.118 666   -0.187    0.419   0.987  0.7571
+ Speech - Pink Noise   0.1012 0.111 657   -0.185    0.387   0.910  0.7993
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+==============================================================================
+B. WHAT SLOPE DIFFERENCES ARE ACTUALLY COMPATIBLE WITH THE DATA?
+==============================================================================
+            contrast estimate tukey_lo tukey_hi tukey_width unadj_lo unadj_hi
+        Drum - Flute  0.02536  -0.2830   0.3337      0.6167 -0.20972   0.2604
+       Drum - Speech  0.04991  -0.2418   0.3416      0.5834 -0.17246   0.2723
+   Drum - Pink Noise  0.16268  -0.1244   0.4498      0.5742 -0.05621   0.3816
+      Flute - Speech  0.02455  -0.2930   0.3421      0.6351 -0.21755   0.2667
+  Flute - Pink Noise  0.13732  -0.1730   0.4476      0.6206 -0.09925   0.3739
+ Speech - Pink Noise  0.11277  -0.1829   0.4084      0.5913 -0.11265   0.3382
+ unadj_width tukey_hi_pct_of_pooled unadj_hi_pct_of_pooled
+      0.4702                  96.28                  75.14
+      0.4448                  98.56                  78.56
+      0.4378                 129.77                 110.09
+      0.4842                  98.70                  76.93
+      0.4731                 129.14                 107.87
+      0.4508                 117.84                  97.57
+
+widest Tukey pairwise CI width: 0.6350878  (half-width 0.3175439 )
+widest UNADJUSTED pairwise CI width: 0.4841995  (half-width 0.2420997 )
+largest slope difference still inside a Tukey CI (max upper CL): 0.449779 = 129.7702 % of the pooled slope
+largest slope difference still inside an UNADJUSTED CI (max upper CL): 0.3815673 = 110.0898 % of the pooled slope
+
+==============================================================================
+C. OPTIMISER ROBUSTNESS OF M2rs (three random-effect terms)
+==============================================================================
+boundary (singular) fit: see help('isSingular')
+Komunikaty ostrzegawcze:
+1: Model failed to converge with 2 negative eigenvalues: -3.5e-04 -2.3e+00 
+2: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.002437 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+   optimizer   logLik    b_disp    se_disp        b_ix      p_ix    sd_trial
+      bobyqa 240.9921 0.3475517 0.05253196 0.008994599 0.1316227 0.003426839
+      bobyqa 240.9921 0.3475517 0.05253196 0.008994599 0.1316227          NA
+ Nelder_Mead 240.5643 0.3483405 0.04993810 0.008813678 0.1404598 0.003402897
+ Nelder_Mead 240.5643 0.3483405 0.04993810 0.008813678 0.1404598          NA
+   nloptwrap 240.9921 0.3475544 0.05252804 0.008994683 0.1316198 0.003427347
+   nloptwrap 240.9921 0.3475544 0.05252804 0.008994683 0.1316198          NA
+  nlminbwrap 240.9921 0.3475517 0.05253200 0.008994599 0.1316227 0.003426838
+  nlminbwrap 240.9921 0.3475517 0.05253200 0.008994599 0.1316227          NA
+ singular
+    FALSE
+    FALSE
+     TRUE
+     TRUE
+    FALSE
+    FALSE
+    FALSE
+    FALSE
+
+spread in logLik: 0.4278642  spread in SD_trial: NA 
+
+==============================================================================
+D. PROFILE LIKELIHOOD ON M0 RANDOM EFFECTS
+==============================================================================
+Computing profile confidence intervals ...
+Komunikaty ostrzegawcze:
+1: 'oldNames' is deprecated. Please use 'signames' instead. 
+2: W poleceniu 'FUN(X[[i]], ...)':
+  non-monotonic profile for cor_stimulusDisparity_m.(Intercept)|participantId
+3: W poleceniu 'nextpar(mat, cc, i, delta, lowcut, upcut)':
+  unexpected decrease in profile: using minstep
+4: W poleceniu 'nextpar(mat, cc, i, delta, lowcut, upcut)':
+  unexpected decrease in profile: using minstep
+5: W poleceniu 'FUN(X[[i]], ...)':
+  non-monotonic profile for sd_stimulusDisparity_m|participantId
+6: W poleceniu 'confint.thpr(pp, level = level, zeta = zeta)':
+  bad spline fit for cor_stimulusDisparity_m.(Intercept)|participantId: falling back to linear interpolation
+7: W poleceniu 'regularize.values(x, y, ties, missing(ties), na.rm = na.rm)':
+  zwijanie do unikalnych warto'sci 'x'
+8: W poleceniu 'confint.thpr(pp, level = level, zeta = zeta)':
+  bad spline fit for sd_stimulusDisparity_m|participantId: falling back to linear interpolation
+Profile 95% CI:
+                                                        2.5 %     97.5 %
+sd_(Intercept)|participantId                       0.00000000 0.09558972
+cor_stimulusDisparity_m.(Intercept)|participantId -1.00000000 1.00000000
+sd_stimulusDisparity_m|participantId               0.09833745 0.30709745
+sigma                                              0.15544908 0.17284380
+(Intercept)                                       -0.03352219 0.05106306
+stimulusDisparity_m                                0.23881822 0.45189906
+soundTypeFlute                                    -0.02132567 0.04549376
+soundTypeSpeech                                   -0.03372201 0.03308290
+soundTypePink Noise                               -0.05858377 0.00823824
+
+Wald 95% CI (fixed effects only):
+                          2.5 %      97.5 %
+.sig01                       NA          NA
+.sig02                       NA          NA
+.sig03                       NA          NA
+.sigma                       NA          NA
+(Intercept)         -0.03336143 0.050709156
+stimulusDisparity_m  0.24171075 0.451482098
+soundTypeFlute      -0.02139394 0.045471714
+soundTypeSpeech     -0.03365736 0.033157036
+soundTypePink Noise -0.05847064 0.008333605
+
+Parametric bootstrap CI for the capture slope and the RE parameters (500 sims):
+Computing bootstrap confidence intervals ...
+
+146 message(s): boundary (singular) fit: see help('isSingular')
+36 warning(s): convergence code 1 from bobyqa: bobyqa -- maximum number of function evaluations exceeded (and others)
+
+Komunikat ostrzegawczy:
+'oldNames' is deprecated. Please use 'signames' instead. 
+                                                        2.5 %     97.5 %
+sd_(Intercept)|participantId                       0.00000000 0.09112149
+cor_stimulusDisparity_m.(Intercept)|participantId -1.00000000 1.00000000
+sd_stimulusDisparity_m|participantId               0.07038596 0.29706475
+stimulusDisparity_m                                0.25334820 0.44943845

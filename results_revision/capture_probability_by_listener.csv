@@ -1,0 +1,4 @@
+"listener_percentile","label","capture_probability","ci_lo","ci_hi"
+10,"10th (resistant)",0.159,0.1039,0.243
+50,"50th (median)",0.3344,0.2692,0.4053
+90,"90th (susceptible)",0.5717,0.4559,0.6725

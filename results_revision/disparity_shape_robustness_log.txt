@@ -1,0 +1,83 @@
+Robustness of the disparity-shape null results
+Run: 2026-08-06 00:00:33 
+
+== 1. Residual diagnostics of the linear LMM ==
+Shapiro-Wilk W = 0.94008  p = 9.655e-17 
+skewness 0.447  excess kurtosis 4.2955 
+residual SD by disparity tertile:
+[0.15,0.3]  (0.3,0.4]  (0.4,0.7] 
+   0.15359    0.16156    0.16643 
+abs(residual) ~ disparity slope:
+                       Estimate Std. Error t value   Pr(>|t|)
+(Intercept)            0.081080   0.011545  7.0230 4.9137e-12
+df$stimulusDisparity_m 0.079439   0.028365  2.8006 5.2336e-03
+
+== 2. Modelling the variance (varPower in disparity) ==
+edf homoscedastic: 1  edf varPower: 1 
+varPower delta: 0.2061  LRT for the variance function (1 df): 9.6106 
+
+== 3. Influence of extreme residuals on the shape conclusions ==
+trials with |standardised residual| > 3: 14  > 4: 4 
+participants contributing the |z| > 3 trials: P001 P002 P003 P007 P010 P020 P023 P028 P031 
+
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+Bylo 37 ostrzezenie (uzyj 'warnings()' aby je zobaczy'c)
+ cut_abs_z   n    edf   slope   quad_b quad_se   quad_p best_c max_LRT
+       Inf 744 1.1279 0.34689 -0.29340 0.27712 0.290095   0.28  2.4312
+         4 740 1.0003 0.36285 -0.18590 0.25729 0.470216   0.20  1.6090
+         3 730 1.7189 0.32811 -0.39857 0.23290 0.087495   0.60  3.8954
+
+== 4. Leave-one-participant-out edf of the smooth ==
+boundary (singular) fit: see help('isSingular')
+Komunikat ostrzegawczy:
+Model failed to converge with 1 negative eigenvalue: -1.2e+01 
+edf: min 1.0003  median 1.1316  max 1.7012 
+participants whose removal pushes edf above 1.5: P006 P031 
+quadratic p: min 0.1273  max 0.4652 ; number of leave-one-out fits with p < .05: 0 
+ dropped   n    edf   quad_b  quad_p
+    P031 720 1.7012 -0.42668 0.12730
+    P006 720 1.5168 -0.38628 0.16721
+    P030 720 1.4301 -0.35730 0.20693
+    P028 720 1.3679 -0.33925 0.21563
+    P014 720 1.3562 -0.35494 0.21626
+
+== 5. Bias ratio, homoscedastic vs variance-modelled ==
+homoscedastic (as published):
+                       Value Std.Error  DF t-value    p-value
+(Intercept)         0.348528   0.06039 712 5.77134 1.1737e-08
+stimulusDisparity_m 0.026819   0.12945 712 0.20717 8.3594e-01
+varPower in disparity:
+                        Value Std.Error  DF  t-value    p-value
+(Intercept)          0.390525  0.059476 712  6.56612 9.9578e-11
+stimulusDisparity_m -0.066086  0.106929 712 -0.61804 5.3675e-01
+varPower delta: -0.7955 
+   Model df      AIC      BIC    logLik   Test  L.Ratio p-value
+b0     1  4 1195.300 1213.737 -593.6501                        
+b1     2  5 1047.259 1070.305 -518.6293 1 vs 2 150.0415  <.0001
+variance-modelled slope 95% CI: -0.2760 to 0.1438 
+                          model     slope      se       p    AIC
+ LMM, homoscedastic (published)  0.026819 0.12945 0.83594 1195.3
+       LME, varPower(disparity) -0.066086 0.10693 0.53675 1047.3
+
+Done: 2026-08-06 00:01:10 

@@ -1,0 +1,5 @@
+"added","chisq","df","p"
+"+ time-weighted angular disparity",12.3450664950764,1,0.000442153397344351
+"+ mean head-to-source distance",40.7946928791717,1,1.69091678654544e-10
+"+ inverse mean head-to-source distance",19.3027456592137,1,1.11545832072274e-05
+"+ inverse distance AND time-weighted angle",60.074739676196,2,9.01438345966125e-14

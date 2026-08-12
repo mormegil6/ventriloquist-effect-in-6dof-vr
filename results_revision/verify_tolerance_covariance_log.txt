@@ -1,0 +1,78 @@
+ML log-likelihoods: full 264.2363 | diagonal (rho = 0) 264.0253 | slope only (tau0 = 0, rho = 0) 263.9863
+
+LRT full vs diagonal (rho = 0, 1 df):
+Data: d
+Models:
+m_diag: signedError_m ~ stimulusDisparity_m + soundType + (1 | participantId) + (0 + stimulusDisparity_m | participantId)
+m_full: signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m | participantId)
+       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)
+m_diag    8 -512.05 -475.15 264.02   -528.05                     
+m_full    9 -510.47 -468.96 264.24   -528.47 0.4221  1     0.5159
+
+LRT diagonal vs slope-only (tau0 = 0, 1 df, boundary):
+Data: d
+Models:
+m_slop: signedError_m ~ stimulusDisparity_m + soundType + (0 + stimulusDisparity_m | participantId)
+m_diag: signedError_m ~ stimulusDisparity_m + soundType + (1 | participantId) + (0 + stimulusDisparity_m | participantId)
+       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)
+m_slop    7 -513.97 -481.69 263.99   -527.97                     
+m_diag    8 -512.05 -475.15 264.02   -528.05 0.0779  1     0.7802
+
+LRT full vs slope-only (2 df):
+Data: d
+Models:
+m_slop: signedError_m ~ stimulusDisparity_m + soundType + (0 + stimulusDisparity_m | participantId)
+m_full: signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m | participantId)
+       npar     AIC     BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+m_slop    7 -513.97 -481.69 263.99   -527.97                    
+m_full    9 -510.47 -468.96 264.24   -528.47   0.5  2     0.7788
+
+full (published)              15 cm: p10 =   4.99 cm, p90 =   6.46 cm, ratio = 1.29
+full (published)              70 cm: p10 =  11.17 cm, p90 =  38.44 cm, ratio = 3.44
+   tau0 = 0.04080, tau1 = 0.18309, rho = -0.5330
+diagonal (rho = 0)            15 cm: p10 =   2.78 cm, p90 =   8.57 cm, ratio = 3.08
+diagonal (rho = 0)            70 cm: p10 =  11.36 cm, p90 =  38.37 cm, ratio = 3.38
+   tau0 = 0.01733, tau1 = 0.15058, rho = +0.0000
+slope only                    15 cm: p10 =   2.70 cm, p90 =   8.67 cm, ratio = 3.21
+slope only                    70 cm: p10 =  10.92 cm, p90 =  38.78 cm, ratio = 3.55
+   tau0 = 0.00000, tau1 = 0.15528, rho = +0.0000
+
+observed per-participant mean signed error on trials with disparity <= 22 cm
+participants 29, trials 126
+quantiles of per-participant mean signed error (cm): -12.16 -5.19 7.02 14.88 20.04
+SD across participants (cm): 7.68
+one-way ANOVA of signed error on participant, disparity <= 22 cm:
+Analysis of Variance Table
+
+Response: signedError_m
+              Df  Sum Sq  Mean Sq F value Pr(>F)
+participantId 28 0.61031 0.021797  1.0831 0.3746
+Residuals     97 1.95210 0.020125               
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS 15.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] C
+
+time zone: Europe/Warsaw
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] dplyr_1.1.4  lme4_1.1-38  Matrix_1.7-4
+
+loaded via a namespace (and not attached):
+ [1] R6_2.6.1           tidyselect_1.2.1   lattice_0.22-7     magrittr_2.0.4    
+ [5] splines_4.4.1      glue_1.8.0         tibble_3.3.1       pkgconfig_2.0.3   
+ [9] generics_0.1.4     lifecycle_1.0.5    Rdpack_2.6.4       cli_3.6.5         
+[13] nloptr_2.2.1       vctrs_0.6.5        grid_4.4.1         reformulas_0.4.3.1
+[17] compiler_4.4.1     boot_1.3-32        rbibutils_2.4      tools_4.4.1       
+[21] nlme_3.1-168       pillar_1.11.1      minqa_1.2.8        Rcpp_1.1.1        
+[25] rlang_1.1.7        MASS_7.3-65       

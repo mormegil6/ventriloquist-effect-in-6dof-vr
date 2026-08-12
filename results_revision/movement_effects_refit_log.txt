@@ -1,0 +1,213 @@
+Movement effects re-estimation
+Run: 2026-08-05 22:39:32 
+R: R version 4.4.1 (2024-06-14) | glmmTMB 1.1.13 | lme4 1.1.38 
+
+n trials = 744 | n participants = 31 
+movement_rate (m/s): mean 0.2272 SD 0.0642 range 0.0253 to 0.4367 
+participant_mean_rate (m/s, n = 31): mean 0.2272 SD 0.0413 range 0.1288 to 0.2976 
+trial_rate_deviation (m/s): SD 0.0496 
+
+==============================================================================
+1. PUBLISHED FIT REPRODUCED: glmer Gamma(log), bobyqa
+==============================================================================
+                      Estimate Std. Error    t value Pr(>|z|)
+(Intercept)            -0.5853     0.0043  -137.2131        0
+stimulusDisparity_m     1.1350     0.0043   264.3346        0
+soundTypeFlute         -0.0800     0.0042   -19.0436        0
+soundTypeSpeech        -0.0701     0.0042   -16.5015        0
+soundTypePink Noise    -0.1055     0.0043   -24.7271        0
+trialSequenceNum       -0.0102     0.0017    -5.9013        0
+participant_mean_rate  -4.6157     0.0043 -1076.0101        0
+trial_rate_deviation    0.3363     0.0043    78.4348        0
+
+glmer warnings captured:
+  - Model failed to converge with max|grad| = 0.0189917 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+Random-intercept SD: 0.021136 
+Singular fit: FALSE 
+logLik: 530.7055 
+
+==============================================================================
+2. PRIMARY REFIT: glmmTMB Gamma(log), response in metres
+==============================================================================
+ Family: Gamma  ( log )
+Formula:          
+participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum +  
+    participant_mean_rate + trial_rate_deviation + (1 | participantId)
+Data: adf
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+  -1027.3    -981.2     523.7   -1047.3       734 
+
+Random effects:
+
+Conditional model:
+ Groups        Name        Variance Std.Dev.
+ participantId (Intercept) 0.02454  0.1567  
+Number of obs: 744, groups:  participantId, 31
+
+Dispersion estimate for Gamma family (sigma^2): 0.265 
+
+Conditional model:
+                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)           -0.581120   0.204014  -2.848 0.004394 ** 
+stimulusDisparity_m    1.138003   0.129689   8.775  < 2e-16 ***
+soundTypeFlute        -0.077836   0.057482  -1.354 0.175706    
+soundTypeSpeech       -0.069904   0.053987  -1.295 0.195379    
+soundTypePink Noise   -0.104708   0.053771  -1.947 0.051499 .  
+trialSequenceNum      -0.010126   0.002811  -3.602 0.000316 ***
+participant_mean_rate -4.615327   0.830188  -5.559 2.71e-08 ***
+trial_rate_deviation   0.328970   0.398721   0.825 0.409336    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Convergence code: 0 | message: relative convergence (4) | positive-definite Hessian: TRUE 
+Max absolute gradient at the optimum: 0.002081608 
+
+Movement coefficients (metre scale):
+  participant_mean_rate  beta =  -4.6153  SE =  0.8302  z =   -5.56  p = 0.0000  95% CI [-6.2425, -2.9882]
+    -> -37.0% error per +0.1 m/s (95% CI -46.4% to -25.8%)
+  trial_rate_deviation   beta =   0.3290  SE =  0.3987  z =    0.83  p = 0.4093  95% CI [-0.4525, 1.1105]
+    -> +3.3% error per +0.1 m/s (95% CI -4.4% to +11.7%)
+
+  Between-subject effect per +1 SD of participant mean rate (0.0413 m/s): -17.4%
+  Within-subject effect per +1 SD of trial rate deviation (0.0496 m/s): +1.6%
+
+DHARMa uniformity KS p = 0.4561 | dispersion p = 0.446 
+
+==============================================================================
+3. cm-SCALED RESPONSE (glmmTMB Gamma(log))
+==============================================================================
+Convergence code: 0 | positive-definite Hessian: TRUE 
+  participant_mean_rate  beta =  -4.6153  SE =  0.8302  z =   -5.56  p = 0.0000  95% CI [-6.2425, -2.9882]
+    -> -37.0% error per +0.1 m/s (95% CI -46.4% to -25.8%)
+  trial_rate_deviation   beta =   0.3290  SE =  0.3987  z =    0.83  p = 0.4093  95% CI [-0.4525, 1.1105]
+    -> +3.3% error per +0.1 m/s (95% CI -4.4% to +11.7%)
+
+  Intercept shift m -> cm: 4.6052 (log(100) = 4.6052)
+  Max abs difference in movement slopes between scales: 4.27e-06 
+
+==============================================================================
+4. TRIANGULATION OF THE BETWEEN-SUBJECT EFFECT (n = 31)
+==============================================================================
+Participant-level table: n = 31 
+
+(2a) Pearson  r = -0.7355, 95% CI [-0.8645, -0.5156], t(29) = -5.846, p = 0.0000
+(2b) Spearman rho = -0.5198, S = 7538.0, p = 0.0031
+     (sensitivity: Pearson vs participant MEDIAN error r = -0.7364, p = 0.0000)
+
+Bootstrap: B = 5000 resamples of participants; 0 degenerate resamples dropped
+(3a) Pearson r  = -0.7355, bootstrap percentile 95% CI [-0.8773, -0.4031]
+(3b) Spearman rho = -0.5198, bootstrap percentile 95% CI [-0.7831, -0.1550]
+(3c) OLS slope = -1.3821 m error per 1 m/s, bootstrap 95% CI [-1.8381, -0.6619]
+     -> -13.82 cm error per +0.1 m/s (95% CI -18.38 to -6.62 cm)
+     bootstrap share of resamples with r < 0: 1.000
+(3d) Participant-level slope on log error = -4.5113, bootstrap 95% CI [-5.9410, -2.3577]
+     -> -36.3% error per +0.1 m/s (95% CI -44.8% to -21.0%); GLMM gave -4.6153
+
+==============================================================================
+5. WITHIN-SUBJECT EFFECT WITH DIFFICULTY COVARIATES
+==============================================================================
+Model A: + angDisp_mean_deg | convergence 0 | pdHess TRUE 
+  participant_mean_rate  beta =  -4.2007  SE =  0.7534  z =   -5.58  p = 0.0000  95% CI [-5.6774, -2.7241]
+    -> -34.3% error per +0.1 m/s (95% CI -43.3% to -23.8%)
+  trial_rate_deviation   beta =   0.2646  SE =  0.3978  z =    0.67  p = 0.5060  95% CI [-0.5150, 1.0441]
+    -> +2.7% error per +0.1 m/s (95% CI -5.0% to +11.0%)
+  angDisp_mean_deg: beta = -0.00472, SE = 0.00142, z = -3.32, p = 0.0009114
+
+Model B: + angDisp_mean_deg + responseTime_s | convergence 0 | pdHess TRUE 
+  participant_mean_rate  beta =  -4.2245  SE =  0.7202  z =   -5.87  p = 0.0000  95% CI [-5.6361, -2.8130]
+    -> -34.5% error per +0.1 m/s (95% CI -43.1% to -24.5%)
+  trial_rate_deviation   beta =   0.2889  SE =  0.3932  z =    0.73  p = 0.4625  95% CI [-0.4818, 1.0595]
+    -> +2.9% error per +0.1 m/s (95% CI -4.7% to +11.2%)
+  responseTime_s: beta = 0.00295, SE = 0.00086, z = 3.42, p = 0.0006322
+
+  trial_rate_deviation across specifications: base 0.3290 -> +angDisp 0.2646 (-19.6%) -> +angDisp+RT 0.2889 (-12.2%)
+
+==============================================================================
+6. LIKELIHOOD-RATIO TEST: base vs base + 2 movement terms
+==============================================================================
+Base model convergence: 0 | pdHess: TRUE 
+Data: adf
+Models:
+m_base_tmb: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum + , zi=~0, disp=~1
+m_base_tmb:     (1 | participantId), zi=~0, disp=~1
+m_tmb: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum + , zi=~0, disp=~1
+m_tmb:     participant_mean_rate + trial_rate_deviation + (1 | participantId), zi=~0, disp=~1
+           Df     AIC     BIC logLik deviance  Chisq Chi Df Pr(>Chisq)    
+m_base_tmb  8 -1009.3 -972.45 512.67  -1025.3                             
+m_tmb      10 -1027.3 -981.19 523.65  -1047.3 21.963      2  1.701e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+glmmTMB LRT: chi2(2) = 21.963, p = 1.701e-05  (logLik 512.672 -> 523.653, increase 10.981)
+
+Original-style glmer LRT for the record:
+Data: adf
+Models:
+m_base_glmer: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum + (1 | participantId)
+m_glmer: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum + participant_mean_rate + trial_rate_deviation + (1 | participantId)
+             npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)    
+m_base_glmer    8 -1030.4 -993.49 523.19   -1046.4                         
+m_glmer        10 -1041.4 -995.29 530.71   -1061.4 15.022  2  0.0005471 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+glmer logLik: base 523.195 -> movement 530.705 (change 7.511)
+
+LRT participant_mean_rate: chi2(1) = 21.372, p = 3.782e-06
+LRT trial_rate_deviation:  chi2(1) = 0.679, p = 0.4098
+
+==============================================================================
+7. UNDECOMPOSED movement_rate MODEL (source of the chi2 = 0 LRT)
+==============================================================================
+glmer pooled model, movement_rate row:
+              Estimate Std. Error t value Pr(>|z|)
+movement_rate  -0.4429     0.4062 -1.0903   0.2756
+Komunikaty ostrzegawcze:
+1: W poleceniu 'vcov(object, use.hessian = use.hessian)':
+  variance-covariance matrix computed from finite-difference Hessian is
+not positive definite or contains NA values: falling back to var-cov estimated from RX
+2: W poleceniu 'vcov.merMod(object, correlation = correlation, sigm = sig)':
+  variance-covariance matrix computed from finite-difference Hessian is
+not positive definite or contains NA values: falling back to var-cov estimated from RX
+Data: adf
+Models:
+m_base_glmer: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum + (1 | participantId)
+m_pool_glmer: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum + (1 | participantId) + movement_rate
+             npar     AIC     BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+m_base_glmer    8 -1030.4 -993.49 523.19   -1046.4                    
+m_pool_glmer    9 -1027.4 -985.89 522.70   -1045.4     0  1          1
+glmer logLik: base 523.195 -> pooled 522.702 (change -0.493; a nested model cannot lose logLik)
+
+glmmTMB pooled model | convergence 0 | pdHess TRUE 
+  movement_rate          beta =  -0.2261  SE =  0.3999  z =   -0.57  p = 0.5719  95% CI [-1.0099, 0.5577]
+    -> -2.2% error per +0.1 m/s (95% CI -9.6% to +5.7%)
+glmmTMB LRT (1 df): chi2 = 0.320, p = 0.5718 (logLik 512.672 -> 512.832)
+
+==============================================================================
+8. RATE VERSUS AMOUNT AT THE PARTICIPANT LEVEL
+==============================================================================
+Participant-level correlations with mean unsigned error (n = 31):
+  mean movement rate (m/s)     r = -0.736, 95% CI [-0.865, -0.516], p = 2.429e-06
+  mean path length (m)         r = -0.127, 95% CI [-0.461, +0.238], p = 0.4952
+  mean trajectory duration (s) r = +0.240, 95% CI [-0.125, +0.548], p = 0.1932
+  mean response time (s)       r = +0.239, 95% CI [-0.126, +0.547], p = 0.1949
+
+  Correlation of mean rate with mean path length: r = +0.427
+  Correlation of mean rate with mean duration:    r = -0.041
+
+Participant-level decomposition, lm(log mean error ~ log path + log duration):
+                   Estimate Std. Error t value Pr(>|t|)
+(Intercept)         -3.0044     0.3561 -8.4378        0
+log(mean_path)      -0.8705     0.1581 -5.5069        0
+log(mean_duration)   0.9561     0.1613  5.9259        0
+  adjusted R2 = 0.533
+  Wald test that the two coefficients are equal and opposite: sum = 0.0856, SE = 0.0924, t(28) = 0.926, p = 0.363
+
+Written:
+  movement_effects_coefficients.csv
+  movement_effects_triangulation.csv
+  movement_effects_lrt.csv
+  movement_effects_participant_level.csv
+  movement_effects_rate_vs_amount.csv
+  movement_effects_refit_log.txt

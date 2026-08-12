@@ -1,0 +1,11 @@
+"comparison","chisq","df","p"
+"A: onset angular added to nominal",0.0953895709732251,1,0.75743409513948
+"A: time-mean angular added to nominal",12.3450664950764,1,0.000442153397344351
+"A: nominal added to onset angular",55.9327705532078,1,7.49920671110263e-14
+"B: onset angular added to nominal",48.4193960102912,1,3.44147410233796e-12
+"B: nominal added to onset angular",0.108721746834817,1,0.741604128027447
+"B: time-mean angular added to onset angular",9.32018749231975,1,0.00226642801181737
+"B sym: onset angular added to nominal",18.5511641026942,1,1.65404183651836e-05
+"B sym: nominal added to onset angular",0.108721743832575,1,0.741604131467688
+"A sym: time-mean angular added to nominal",9.21311651732947,1,0.00240287292428666
+"A sym: onset angular added to nominal",0.0677129673182435,1,0.79469627283158

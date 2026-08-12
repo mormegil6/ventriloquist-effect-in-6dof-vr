@@ -1,0 +1,7 @@
+"criterion","base_rate","predictor","intercept","slope","slope_se","slope_z","slope_p","slope_ci_lo","slope_ci_hi","converged"
+"bias > 0.50 (primary; = closer to visual cue)",0.35215,"angular, per 10 deg",-0.6937,0.06834,0.06501,1.05131,0.29312,-0.05907,0.19575,TRUE
+"bias > 0.50 (primary; = closer to visual cue)",0.35215,"nominal, per 10 cm",-0.69021,-0.00474,0.0644,-0.07365,0.94129,-0.13097,0.12148,TRUE
+"bias > 0.25 (softer)",0.60215,"angular, per 10 deg",0.52859,0.20816,0.05744,3.62378,0.00029,0.09557,0.32074,TRUE
+"bias > 0.25 (softer)",0.60215,"nominal, per 10 cm",0.49521,0.05447,0.06693,0.81392,0.41569,-0.0767,0.18565,TRUE
+"bias > 0.75 (stricter)",0.14651,"angular, per 10 deg",-2.11967,-0.28803,0.09641,-2.98747,0.00281,-0.477,-0.09906,TRUE
+"bias > 0.75 (stricter)",0.14651,"nominal, per 10 cm",-2.08961,-0.26732,0.11533,-2.31793,0.02045,-0.49337,-0.04128,TRUE

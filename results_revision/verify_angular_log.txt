@@ -1,0 +1,432 @@
+
+==============================================================================
+INDEPENDENT VERIFICATION OF THE ANGULAR DISPARITY RE-ANALYSIS
+==============================================================================
+Run: 2026-08-05 23:25:28 | R version 4.4.1 (2024-06-14)
+lme4 1.1.38 | lmerTest 3.1.3 | glmmTMB 1.1.13 | DHARMa 0.4.7
+
+==============================================================================
+V0: DATA AND INDEPENDENT RECOMPUTATION OF ANGULAR DISPARITY
+==============================================================================
+Trials 744 | participants 31 | trajectory samples 251666
+
+Per-sample angular disparity, my code vs the stored trajectory column:
+  max abs difference = 5.68e-14 deg over 251666 samples
+
+Trial-level angular disparity summaries, my code vs the prepared columns:
+  onset : max abs diff 4.26e-14 deg
+  mean  : max abs diff 2.84e-14 deg
+  min   : max abs diff 1.42e-14 deg
+  max   : max abs diff 5.68e-14 deg
+  onset head-source distance : max abs diff 0 m
+
+Sanity of the angular response definition (should hold by construction):
+  correlation of angResp_onset with signedError_m / dist_at_onset: r = 0.7140
+  correlation of angDisp_onset with stimulusDisparity / dist_at_onset: r = 0.7303
+
+==============================================================================
+V1: DESCRIPTIVES OF THE DERIVED MEASURES
+==============================================================================
+           measure     mean       sd   median         min      max
+ angDisp_onset_deg 28.75769 23.08052 22.17674    0.561990 146.6832
+  angDisp_mean_deg 42.25234 20.06959 40.53634    2.355641 115.5007
+ angDisp_final_deg 34.56817 25.35012 27.45149    0.961237 164.7879
+ angResp_onset_deg 10.29549 24.92799  8.02131 -144.052435 177.6558
+  angResp_mean_deg 17.16063 23.11453 15.90740  -95.260923 128.7252
+ angResp_final_deg 15.76277 36.24682 11.41671 -178.785533 174.9323
+   dist_at_onset_m  0.70465  0.29667  0.67582    0.078169   1.6131
+     signedError_m  0.13670  0.18475  0.12097   -0.540378   1.0048
+
+==============================================================================
+V2: PUBLISHED METRIC MODEL, REPRODUCED
+==============================================================================
+                term    Estimate Std. Error      df   t value   Pr(>|t|)
+         (Intercept)  0.00867386   0.021447  51.956  0.404433 6.8755e-01
+ stimulusDisparity_m  0.34659642   0.053514  30.505  6.476733 3.4314e-07
+      soundTypeFlute  0.01203889   0.017058 688.846  0.705767 4.8057e-01
+     soundTypeSpeech -0.00025016   0.017045 689.250 -0.014677 9.8829e-01
+ soundTypePink Noise -0.02506852   0.017042 689.522 -1.470966 1.4176e-01
+Wald 95% CI for the disparity slope: [0.2417, 0.4515]
+  A0pub slope                                                    reported  0.3466        recomputed 0.346596       MATCH
+  A0pub SE                                                       reported 0.05351        recomputed 0.0535141      MATCH
+  A0pub t                                                        reported   6.477        recomputed 6.47673        MATCH
+  A0pub CI lo                                                    reported  0.2417        recomputed 0.241711       MATCH
+  A0pub CI hi                                                    reported  0.4515        recomputed 0.451482       MATCH
+  A0pub intercept (m)                                            reported 0.0086739      recomputed 0.00867386     MATCH
+  A0pub intercept p                                              reported  0.6876        recomputed 0.687554       MATCH
+
+Centred fit intercept = 0.139989 m (p = 0.0000); uncentred intercept = 0.008674 m
+Slope identical across centring: 0.346596 vs 0.346596; logLik 248.81890 vs 248.81890
+
+==============================================================================
+V3: THE REPORTED MODEL SET
+==============================================================================
+Random-effects ladder, independently rerun (correlated form first):
+  signedError_m      ~ stimDisp_cm       correlated : REML sing=FALSE ML sing=FALSE  reml_corr=+0.788  
+  signedError_m      ~ stimDisp_cm       zero-corr  : REML sing=FALSE ML sing=FALSE  
+  signedError_m      ~ angDisp_onset_cm  correlated : REML sing=FALSE ML sing=FALSE  reml_corr=+0.864  
+  signedError_m      ~ angDisp_onset_cm  zero-corr  : REML sing=FALSE ML sing=FALSE  
+  signedError_m      ~ angDisp_mean_cm   correlated : REML sing=FALSE ML sing=FALSE  reml_corr=+0.583  
+  signedError_m      ~ angDisp_mean_cm   zero-corr  : REML sing=FALSE ML sing=FALSE  
+  angResp_onset_deg  ~ stimDisp_cm       correlated : REML sing=TRUE  ML sing=TRUE   reml_corr=+1.000  boundary (singular) fit: see help('isSingular')
+  angResp_onset_deg  ~ stimDisp_cm       zero-corr  : REML sing=FALSE ML sing=FALSE  
+  angResp_onset_deg  ~ angDisp_onset_cm  correlated : REML sing=TRUE  ML sing=TRUE   reml_corr=+1.000  boundary (singular) fit: see help('isSingular')
+  angResp_onset_deg  ~ angDisp_onset_cm  zero-corr  : REML sing=FALSE ML sing=FALSE  
+  angResp_onset_deg  ~ angDisp_mean_cm   correlated : REML sing=TRUE  ML sing=FALSE  reml_corr=NaN  boundary (singular) fit: see help('isSingular') 
+  angResp_onset_deg  ~ angDisp_mean_cm   zero-corr  : REML sing=FALSE ML sing=FALSE  
+
+ model          response           predictor   n   estimate         se     df
+    A0     signedError_m         stimDisp_cm 744  0.3465964 0.05351408 30.505
+    A1     signedError_m    angDisp_onset_cm 744  0.0012084 0.00033503 25.265
+    A2     signedError_m     angDisp_mean_cm 744  0.0027395 0.00044200 26.219
+    B0 angResp_onset_deg         stimDisp_cm 744 24.3859756 6.45721104 32.544
+    B1 angResp_onset_deg    angDisp_onset_cm 744  0.3358771 0.06595920 32.348
+    B2 angResp_onset_deg     angDisp_mean_cm 744  0.3229799 0.06129519 31.145
+   B2m  angResp_mean_deg     angDisp_mean_cm 744  0.4293569 0.06719592 29.269
+ A0pub     signedError_m stimulusDisparity_m 744  0.3465964 0.05351408 30.505
+      t          p F_value  F_df2      ci_lo      ci_hi  AIC_ml  BIC_ml
+ 6.4767 3.4314e-07  41.948 30.505 2.4171e-01  0.4514821 -510.47 -468.96
+ 3.6067 1.3338e-03  13.009 25.265 5.5172e-04  0.0018650 -447.26 -405.75
+ 6.1980 1.4276e-06  38.415 26.219 1.8732e-03  0.0036059 -508.04 -466.53
+ 3.7765 6.4115e-04  14.262 32.544 1.1730e+01 37.0418768 6889.21 6926.11
+ 5.0922 1.4786e-05  25.930 32.348 2.0660e-01  0.4651548 6810.08 6846.98
+ 5.2693 9.7932e-06  27.765 31.145 2.0284e-01  0.4431162 6847.31 6884.20
+ 6.3896 5.2749e-07  40.827 29.269 2.9766e-01  0.5610585 6571.63 6608.53
+ 6.4767 3.4314e-07  41.948 30.505 2.4171e-01  0.4514821 -510.47 -468.96
+ logLik_ml      R2m      R2c R2m_mmList R2c_mmList singular
+    264.24 0.081727 0.210797   0.081727   0.210797    FALSE
+    232.63 0.026706 0.144524   0.026706   0.144524    FALSE
+    263.02 0.088945 0.244490   0.088945   0.244490    FALSE
+  -3436.60 0.024922 0.053227   0.024922   0.053227    FALSE
+  -3397.04 0.098982 0.183346   0.098982   0.183346    FALSE
+  -3415.65 0.070598 0.122801   0.070598   0.122801    FALSE
+  -3277.82 0.140256 0.339057   0.140256   0.339057    FALSE
+    264.24 0.081727 0.210797   0.081727   0.210797    FALSE
+
+Headline coefficient checks:
+  B1 slope (deg/deg)                                             reported  0.3359        recomputed 0.335877       MATCH
+  B1 SE                                                          reported   0.066        recomputed 0.0659592      MATCH
+  B1 Wald CI lo                                                  reported  0.2066        recomputed 0.206599       MATCH
+  B1 Wald CI hi                                                  reported  0.4651        recomputed 0.465155       MATCH
+  B1 F                                                           reported   25.93        recomputed 25.9305        MATCH
+  B2m slope                                                      reported 0.42936        recomputed 0.429357       MATCH
+  B2m CI lo                                                      reported  0.2977        recomputed 0.297655       MATCH
+  B2m CI hi                                                      reported  0.5611        recomputed 0.561059       MATCH
+  B2 slope                                                       reported 0.32298        recomputed 0.32298        MATCH
+  B0 slope (deg/m)                                               reported  24.386        recomputed  24.386        MATCH
+  A1 slope (m/deg)                                               reported 0.001208       recomputed 0.00120838     MATCH
+  A2 slope (m/deg)                                               reported 0.00274        recomputed 0.00273954     MATCH
+
+Fit statistics:
+  A0 AIC                                                         reported -510.473       recomputed -510.473       MATCH
+  A1 AIC                                                         reported -447.261       recomputed -447.261       MATCH
+  A2 AIC                                                         reported -508.038       recomputed -508.038       MATCH
+  B0 AIC                                                         reported 6889.21        recomputed 6889.21        MATCH
+  B1 AIC                                                         reported 6810.08        recomputed 6810.08        MATCH
+  B2 AIC                                                         reported  6847.3        recomputed 6847.31        MATCH
+  B1 vs B0 dAIC                                                  reported   79.13        recomputed 79.1281        MATCH
+  A0 R2m                                                         reported 0.08173        recomputed 0.0817271      MATCH
+  A0 R2c                                                         reported  0.2108        recomputed 0.210797       MATCH
+  B1 R2m                                                         reported 0.09898        recomputed 0.0989816      MATCH
+  B1 R2c                                                         reported 0.18335        recomputed 0.183346       MATCH
+  B0 R2m                                                         reported 0.02492        recomputed 0.0249222      MATCH
+  A1 R2m                                                         reported 0.02671        recomputed 0.0267056      MATCH
+  A2 R2m                                                         reported 0.08895        recomputed 0.0889453      MATCH
+  B2m R2m                                                        reported  0.1403        recomputed 0.140256       MATCH
+
+==============================================================================
+V4: LIKELIHOOD-RATIO TESTS
+==============================================================================
+As specified in the analysis (random slope for the BASE predictor only):
+  A: onset angular added to nominal                                chi2(1) =   0.0954  p = 0.7574
+  A: time-mean angular added to nominal                            chi2(1) =  12.3451  p = 0.0004422
+  A: nominal added to onset angular                                chi2(1) =  55.9328  p = 7.499e-14
+  B: onset angular added to nominal                                chi2(1) =  48.4194  p = 3.441e-12
+  B: nominal added to onset angular                                chi2(1) =   0.1087  p = 0.7416
+  B: time-mean angular added to onset angular                      chi2(1) =   9.3202  p = 0.002266
+  LRT B: angular added to nominal chi2                           reported 48.4194        recomputed 48.4194        MATCH
+  LRT B: nominal added to angular chi2                           reported 0.10872        recomputed 0.108722       MATCH
+  LRT A: time-mean added to nominal chi2                         reported 12.3451        recomputed 12.3451        MATCH
+  LRT A: nominal added to onset angular chi2                     reported 55.9328        recomputed 55.9328        MATCH
+  LRT A: onset angular added to nominal chi2                     reported   0.095        recomputed 0.0953896      MATCH
+
+Symmetric versions: both predictors in the fixed part AND both given a random
+slope, so that the test of the added predictor is not anti-conservative from an
+omitted random slope. Reduced model drops only the fixed effect.
+  B sym: onset angular added to nominal                            chi2(1) =  18.5512  p = 1.654e-05  [sing full=TRUE red=TRUE]
+  B sym: nominal added to onset angular                            chi2(1) =   0.1087  p = 0.7416  [sing full=TRUE red=TRUE]
+  A sym: time-mean angular added to nominal                        chi2(1) =   9.2131  p = 0.002403  [sing full=FALSE red=FALSE]
+  A sym: onset angular added to nominal                            chi2(1) =   0.0677  p = 0.7947  [sing full=TRUE red=TRUE]
+
+==============================================================================
+V5: CONDITIONING AND INTERVAL STABILITY OF THE PRIMARY FIT B1
+==============================================================================
+Fixed-effect vcov of B1:
+  dimension 5, eigenvalues 1.357e+01, 2.849e+00, 2.825e+00, 8.503e-01, 4.337e-03
+  condition number = 3128, min eigenvalue = 0.004337, all positive = TRUE
+  random-effect theta = 0.13359, 0.01267, sigma = 22.6816
+
+Multi-optimizer refit of B1 (each optimizer run explicitly):
+   optimizer estimate       se  logLik singular
+      bobyqa  0.33588 0.065959 -3392.9    FALSE
+ Nelder_Mead  0.33588 0.065960 -3392.9    FALSE
+  nlminbwrap  0.33588 0.065959 -3392.9    FALSE
+   nloptwrap  0.33588 0.065962 -3392.9    FALSE
+  spread across optimizers: slope range 0.000001, SE range 0.000003
+
+Profile and bootstrap intervals for the B1 slope:
+  profile 95% CI [0.2060, 0.4681]
+  B1 profile CI lo                                               reported   0.206        recomputed 0.205993       MATCH
+  B1 profile CI hi                                               reported  0.4681        recomputed 0.468059       MATCH
+  cluster bootstrap: 1000/1000 succeeded, mean 0.3363, SD 0.0671, 95% CI [0.2014, 0.4643], 0 resamples <= 0
+
+Student-t heavy-tail refits via glmmTMB (checking the reported non-convergence):
+  student_t random slope             pdHess = FALSE beta = 0.3440  SE = 0.03426
+  student_t random intercept only    pdHess = TRUE  beta = 0.3205  SE = 0.0273
+  gaussian glmmTMB, same RE as B1    pdHess = TRUE  beta = 0.3359  SE = 0.06496
+
+==============================================================================
+V6: HOW INFORMATIVE IS THE 'NOMINAL ADDS NOTHING' NULL?
+==============================================================================
+                term Estimate Std. Error      df  t value   Pr(>|t|)
+         (Intercept)  9.23494   1.770666 237.416  5.21552 3.9897e-07
+    angDisp_onset_cm  0.32893   0.069103  37.896  4.75995 2.8173e-05
+         stimDisp_cm  2.14032   6.432961 720.885  0.33271 7.3945e-01
+      soundTypeFlute  3.09063   2.382258 694.828  1.29735 1.9494e-01
+     soundTypeSpeech  2.62600   2.380257 695.978  1.10324 2.7030e-01
+ soundTypePink Noise -0.87140   2.380643 696.081 -0.36603 7.1445e-01
+Nominal slope in the joint angular model: 2.140 deg/m, 95% CI [-10.468, 14.749]
+For comparison, the nominal slope ALONE on this response (B0) is 24.386 deg/m.
+The interval is wide relative to that marginal effect, so the null is an absence
+of evidence at this precision, not evidence that nominal separation is irrelevant.
+
+==============================================================================
+V7: PLACEBO -- ARE THE ANGULAR RESULTS A GEOMETRIC RESTATEMENT OF THE METRIC FIT?
+==============================================================================
+Both sides of the angular formulation are evaluated from the same onset head
+pose, so theta_R is approximately signedError/d and theta_D approximately
+stimulusDisparity/d with the SAME d. The test below asks how much of the
+angular result survives that shared geometry.
+
+Synthetic responses are constructed from the observed geometry with an
+in-line displacement taken from the fitted METRIC model (population level,
+no random effects), so that by construction the only truth in the data is a
+constant metric capture fraction. The angular pipeline is then rerun on them.
+  helper check on the real responses: max abs diff 0 deg
+  P1 metric model truth (b = 0.3466 x disparity)   angular slope = +0.3443 (SE 0.0472, t =  7.29), dAIC(nominal - angular) = +88.4, R2m = 0.1657
+  P2 constant in-line shift (mean signed error)    angular slope = +0.2421 (SE 0.0528, t =  4.59), dAIC(nominal - angular) = +89.0, R2m = 0.0864
+  P3 zero in-line shift (no capture at all)        angular slope = -0.0690 (SE 0.0359, t = -1.92), dAIC(nominal - angular) = +34.3, R2m = 0.0131
+
+Observed data for comparison:
+  OBSERVED                                         angular slope = +0.3359 (SE 0.0660, t =  5.09), dAIC(nominal - angular) = +79.1, R2m = 0.0990
+
+==============================================================================
+V8: HEAD-TO-SOURCE DISTANCE AS A SHARED DRIVER
+==============================================================================
+  r(dist_at_onset, angDisp_onset) = -0.5239
+  r(dist_at_onset, |angResp_onset|) = -0.3599
+  r(1/dist_at_onset, angDisp_onset) = +0.5645
+
+B1 with inverse onset distance added as a covariate:
+                term Estimate Std. Error      df   t value   Pr(>|t|)
+         (Intercept)  9.25390    1.76953 236.766  5.229585 3.7344e-07
+    angDisp_onset_cm  0.33762    0.07130  43.062  4.735171 2.3915e-05
+           invdist_c -0.05872    0.90209 725.466 -0.065093 9.4812e-01
+      soundTypeFlute  3.05434    2.38115 694.543  1.282714 2.0002e-01
+     soundTypeSpeech  2.61975    2.38036 695.984  1.100570 2.7146e-01
+ soundTypePink Noise -0.88369    2.38177 696.228 -0.371022 7.1073e-01
+  onset distance >= 0.50 m: n = 550, slope = +0.2647 (SE 0.0599, t =  4.42)
+  onset distance >= 0.75 m: n = 305, slope = +0.1714 (SE 0.0911, t =  1.88)
+  onset distance >= 1.00 m: n = 132, slope = +0.5717 (SE 0.1683, t =  3.40)
+
+==============================================================================
+V9: WITHIN-TRIAL VARIATION, CORRELATIONS, ROBUSTNESS, DIAGNOSTICS
+==============================================================================
+Within-trial range: mean 91.1 SD 45.5 min 0.2 Q05 23.2 Q25 51.6 med 87.7 Q75 132.6 Q95 161.1 max 177.6
+  within-trial range mean                                        reported    91.1        recomputed 91.0656        MATCH
+  within-trial range SD                                          reported    45.5        recomputed 45.5401        MATCH
+  within-trial range median                                      reported    87.7        recomputed 87.6592        MATCH
+  >  30 deg: 669 trials (89.9%)
+  >  60 deg: 513 trials (69.0%)
+  >  90 deg: 359 trials (48.3%)
+  > 120 deg: 241 trials (32.4%)
+  pct range > 30 deg                                             reported    89.9        recomputed 89.9194        MATCH
+  pct range > 90 deg                                             reported    48.3        recomputed 48.2527        MATCH
+  median range / onset ratio                                     reported    3.36        recomputed 3.35673        MATCH
+  SD of onset angular disparity                                  reported    23.1        recomputed 23.0805        MATCH
+
+            summary       r      r2 r_within
+  angDisp_onset_deg 0.45005 0.20255  0.45289
+   angDisp_mean_deg 0.65720 0.43191  0.70060
+ angDisp_median_deg 0.65743 0.43221  0.68412
+    angDisp_min_deg 0.47186 0.22265  0.49212
+    angDisp_max_deg 0.39426 0.15544  0.44442
+  angDisp_range_deg 0.30411 0.09248  0.34677
+  angDisp_final_deg 0.49707 0.24708  0.52424
+  r nominal vs onset angular                                     reported  0.4501        recomputed 0.450051       MATCH
+  r nominal vs mean angular                                      reported  0.6572        recomputed 0.657197       MATCH
+  r between the two angular summaries                            reported   0.535        recomputed 0.53513        MATCH
+
+Per-participant slopes of B1:
+  min -0.192 Q25 0.228 median 0.344 Q75 0.466 max 0.887 SD 0.225
+  B1 per-participant slope min                                   reported  -0.192        recomputed -0.191793      MATCH
+  B1 per-participant slope max                                   reported   0.887        recomputed 0.886561       MATCH
+  B1 per-participant slope SD                                    reported   0.225        recomputed 0.224934       MATCH
+  random-slope LRT: chi2(1) = 32.1883, p = 1.399e-08
+  random-slope LRT chi2                                          reported   32.19        recomputed 32.1883        MATCH
+
+Robustness refits of the primary slope:
+  full sample (B1)                           n = 744  beta = +0.3359  SE = 0.0660  t =  5.09  singular = FALSE
+  onset angular disparity <= 90 deg          n = 721  beta = +0.3844  SE = 0.0674  t =  5.71  singular = FALSE
+  onset angular disparity <= 60 deg          n = 672  beta = +0.3790  SE = 0.0638  t =  5.94  singular = FALSE
+  excluding revisited trials                 n = 738  beta = +0.3371  SE = 0.0659  t =  5.12  singular = FALSE
+  final-pose frame                           n = 744  beta = +0.4681  SE = 0.1055  t =  4.44  singular = FALSE
+  matched time-weighted frame (B2m)          n = 744  beta = +0.4294  SE = 0.0672  t =  6.39  singular = FALSE
+  robustness <=90 deg slope                                      reported  0.3844        recomputed 0.384423       MATCH
+  robustness <=60 deg slope                                      reported   0.379        recomputed 0.378972       MATCH
+  robustness no-revisit slope                                    reported  0.3371        recomputed 0.337125       MATCH
+  robustness final-pose slope                                    reported  0.4681        recomputed 0.468058       MATCH
+  n trials with onset angle <= 90                                reported     721        recomputed     721        MATCH
+  n trials with onset angle <= 60                                reported     672        recomputed     672        MATCH
+
+DHARMa residual diagnostics:
+  B1     KS D = 0.1342 p = 4.552e-12 | dispersion 0.9960 p = 0.920
+  A0pub  KS D = 0.0753 p = 0.0004364 | dispersion 0.9928 p = 0.938
+  B1 DHARMa KS D                                                 reported  0.1342        recomputed 0.134226       MATCH
+  A0pub DHARMa KS D                                              reported  0.0753        recomputed 0.0752688      MATCH
+
+==============================================================================
+SUMMARY OF CHECKS
+==============================================================================
+                                   quantity    reported  recomputed   abs_diff
+                                A0pub slope  3.4660e-01  3.4660e-01 3.5763e-06
+                                   A0pub SE  5.3510e-02  5.3514e-02 4.0824e-06
+                                    A0pub t  6.4770e+00  6.4767e+00 2.6700e-04
+                                A0pub CI lo  2.4170e-01  2.4171e-01 1.0749e-05
+                                A0pub CI hi  4.5150e-01  4.5148e-01 1.7902e-05
+                        A0pub intercept (m)  8.6739e-03  8.6739e-03 3.5610e-08
+                          A0pub intercept p  6.8760e-01  6.8755e-01 4.5584e-05
+                         B1 slope (deg/deg)  3.3590e-01  3.3588e-01 2.2887e-05
+                                      B1 SE  6.6000e-02  6.5959e-02 4.0802e-05
+                              B1 Wald CI lo  2.0660e-01  2.0660e-01 5.3961e-07
+                              B1 Wald CI hi  4.6510e-01  4.6515e-01 5.4766e-05
+                                       B1 F  2.5930e+01  2.5930e+01 4.5248e-04
+                                  B2m slope  4.2936e-01  4.2936e-01 3.0737e-06
+                                  B2m CI lo  2.9770e-01  2.9766e-01 4.4662e-05
+                                  B2m CI hi  5.6110e-01  5.6106e-01 4.1485e-05
+                                   B2 slope  3.2298e-01  3.2298e-01 1.2606e-07
+                           B0 slope (deg/m)  2.4386e+01  2.4386e+01 2.4384e-05
+                           A1 slope (m/deg)  1.2080e-03  1.2084e-03 3.7525e-07
+                           A2 slope (m/deg)  2.7400e-03  2.7395e-03 4.5942e-07
+                                     A0 AIC -5.1047e+02 -5.1047e+02 3.6099e-04
+                                     A1 AIC -4.4726e+02 -4.4726e+02 2.5467e-04
+                                     A2 AIC -5.0804e+02 -5.0804e+02 3.0056e-04
+                                     B0 AIC  6.8892e+03  6.8892e+03 2.7280e-04
+                                     B1 AIC  6.8101e+03  6.8101e+03 2.0894e-04
+                                     B2 AIC  6.8473e+03  6.8473e+03 6.4171e-03
+                              B1 vs B0 dAIC  7.9130e+01  7.9128e+01 1.9361e-03
+                                     A0 R2m  8.1730e-02  8.1727e-02 2.9169e-06
+                                     A0 R2c  2.1080e-01  2.1080e-01 2.5468e-06
+                                     B1 R2m  9.8980e-02  9.8982e-02 1.5646e-06
+                                     B1 R2c  1.8335e-01  1.8335e-01 3.5341e-06
+                                     B0 R2m  2.4920e-02  2.4922e-02 2.1637e-06
+                                     A1 R2m  2.6710e-02  2.6706e-02 4.4331e-06
+                                     A2 R2m  8.8950e-02  8.8945e-02 4.6570e-06
+                                    B2m R2m  1.4030e-01  1.4026e-01 4.4292e-05
+       LRT B: angular added to nominal chi2  4.8419e+01  4.8419e+01 3.9897e-06
+       LRT B: nominal added to angular chi2  1.0872e-01  1.0872e-01 1.7468e-06
+     LRT A: time-mean added to nominal chi2  1.2345e+01  1.2345e+01 3.5049e-06
+ LRT A: nominal added to onset angular chi2  5.5933e+01  5.5933e+01 5.5321e-07
+ LRT A: onset angular added to nominal chi2  9.5000e-02  9.5390e-02 3.8957e-04
+                           B1 profile CI lo  2.0600e-01  2.0599e-01 6.7482e-06
+                           B1 profile CI hi  4.6810e-01  4.6806e-01 4.1145e-05
+                    within-trial range mean  9.1100e+01  9.1066e+01 3.4404e-02
+                      within-trial range SD  4.5500e+01  4.5540e+01 4.0075e-02
+                  within-trial range median  8.7700e+01  8.7659e+01 4.0850e-02
+                         pct range > 30 deg  8.9900e+01  8.9919e+01 1.9355e-02
+                         pct range > 90 deg  4.8300e+01  4.8253e+01 4.7312e-02
+                 median range / onset ratio  3.3600e+00  3.3567e+00 3.2668e-03
+              SD of onset angular disparity  2.3100e+01  2.3081e+01 1.9477e-02
+                 r nominal vs onset angular  4.5010e-01  4.5005e-01 4.8836e-05
+                  r nominal vs mean angular  6.5720e-01  6.5720e-01 3.4360e-06
+        r between the two angular summaries  5.3500e-01  5.3513e-01 1.2974e-04
+               B1 per-participant slope min -1.9200e-01 -1.9179e-01 2.0711e-04
+               B1 per-participant slope max  8.8700e-01  8.8656e-01 4.3866e-04
+                B1 per-participant slope SD  2.2500e-01  2.2493e-01 6.5674e-05
+                      random-slope LRT chi2  3.2190e+01  3.2188e+01 1.7031e-03
+                  robustness <=90 deg slope  3.8440e-01  3.8442e-01 2.2609e-05
+                  robustness <=60 deg slope  3.7900e-01  3.7897e-01 2.7552e-05
+                robustness no-revisit slope  3.3710e-01  3.3713e-01 2.5063e-05
+                robustness final-pose slope  4.6810e-01  4.6806e-01 4.2380e-05
+            n trials with onset angle <= 90  7.2100e+02  7.2100e+02 0.0000e+00
+            n trials with onset angle <= 60  6.7200e+02  6.7200e+02 0.0000e+00
+                             B1 DHARMa KS D  1.3420e-01  1.3423e-01 2.5806e-05
+                          A0pub DHARMa KS D  7.5300e-02  7.5269e-02 3.1183e-05
+     tol matches
+ 0.00010    TRUE
+ 0.00010    TRUE
+ 0.00500    TRUE
+ 0.00050    TRUE
+ 0.00050    TRUE
+ 0.00001    TRUE
+ 0.00050    TRUE
+ 0.00200    TRUE
+ 0.00200    TRUE
+ 0.00300    TRUE
+ 0.00300    TRUE
+ 0.20000    TRUE
+ 0.00200    TRUE
+ 0.00300    TRUE
+ 0.00300    TRUE
+ 0.00200    TRUE
+ 0.05000    TRUE
+ 0.00002    TRUE
+ 0.00002    TRUE
+ 0.05000    TRUE
+ 0.05000    TRUE
+ 0.05000    TRUE
+ 0.20000    TRUE
+ 0.20000    TRUE
+ 0.30000    TRUE
+ 0.30000    TRUE
+ 0.00100    TRUE
+ 0.00100    TRUE
+ 0.00100    TRUE
+ 0.00100    TRUE
+ 0.00100    TRUE
+ 0.00100    TRUE
+ 0.00100    TRUE
+ 0.00150    TRUE
+ 0.05000    TRUE
+ 0.01000    TRUE
+ 0.05000    TRUE
+ 0.05000    TRUE
+ 0.01000    TRUE
+ 0.00300    TRUE
+ 0.00300    TRUE
+ 0.05000    TRUE
+ 0.05000    TRUE
+ 0.05000    TRUE
+ 0.10000    TRUE
+ 0.10000    TRUE
+ 0.01000    TRUE
+ 0.05000    TRUE
+ 0.00100    TRUE
+ 0.00100    TRUE
+ 0.00200    TRUE
+ 0.00200    TRUE
+ 0.00200    TRUE
+ 0.00200    TRUE
+ 0.05000    TRUE
+ 0.00300    TRUE
+ 0.00300    TRUE
+ 0.00300    TRUE
+ 0.00500    TRUE
+ 0.00000    TRUE
+ 0.00000    TRUE
+ 0.00500    TRUE
+ 0.00500    TRUE
+
+Checks matching: 63 of 63
+
+Done.

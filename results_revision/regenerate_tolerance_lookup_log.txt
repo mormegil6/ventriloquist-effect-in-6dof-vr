@@ -1,0 +1,234 @@
+regenerate_tolerance_lookup.R
+run: 2026-08-12 02:09:01 CEST
+R: R version 4.4.1 (2024-06-14)
+
+==============================================================================
+0. DATA
+==============================================================================
+trials: 744   participants: 31
+
+==============================================================================
+1. PRIMARY MODEL (SLOPE-ONLY COVARIANCE)
+==============================================================================
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: 
+signedError_m ~ stimulusDisparity_m + soundType + (0 + stimulusDisparity_m |  
+    participantId)
+   Data: d
+Control: ctrl
+
+REML criterion at convergence: -497
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.7377 -0.4471 -0.0297  0.4589  5.4490 
+
+Random effects:
+ Groups        Name                Variance Std.Dev.
+ participantId stimulusDisparity_m 0.02511  0.1585  
+ Residual                          0.02719  0.1649  
+Number of obs: 744, groups:  participantId, 31
+
+Fixed effects:
+                      Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)          8.136e-03  1.996e-02  7.144e+02   0.408    0.684    
+stimulusDisparity_m  3.483e-01  5.012e-02  1.599e+02   6.950 8.75e-11 ***
+soundTypeFlute       1.234e-02  1.713e-02  7.094e+02   0.720    0.471    
+soundTypeSpeech     -6.221e-04  1.711e-02  7.094e+02  -0.036    0.971    
+soundTypePink Noise -2.573e-02  1.711e-02  7.094e+02  -1.504    0.133    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) stmlD_ sndTyF sndTyS
+stmlsDsprt_ -0.655                     
+soundTypFlt -0.464  0.038              
+sondTypSpch -0.444  0.017  0.500       
+sndTypPnkNs -0.429  0.001  0.500  0.500
+convergence messages: none
+singular fit: FALSE
+
+fixed slope (per m): 0.34832   SE 0.05012   t(159.9) = 6.95, p = 8.75e-11
+Wald 95% CI (per m): [0.2501, 0.4465]
+profile 95% CI (per m): [0.2502, 0.4462]
+random-slope SD (tau1, per m): 0.15847
+residual SD: 0.1649
+
+LRT, slope-only vs full covariance (ML):
+Data: d
+Models:
+m_slop_ml: signedError_m ~ stimulusDisparity_m + soundType + (0 + stimulusDisparity_m | participantId)
+m_full_ml: signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m | participantId)
+          npar     AIC     BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+m_slop_ml    7 -513.97 -481.69 263.99   -527.97                    
+m_full_ml    9 -510.47 -468.96 264.24   -528.47   0.5  2     0.7788
+(2-df test on a boundary; the nominal p-value is conservative)
+
+==============================================================================
+2. PREDICTIONS
+==============================================================================
+marginal intercept (m): 0.00463
+population-average CI: Wald, +/- 1.96 * SE from the fixed-effect vcov
+
+==============================================================================
+3. PARAMETRIC BOOTSTRAP (PERCENTILE PROFILES)
+==============================================================================
+2000 replicates, 0 discarded (failed refit), 2000 retained
+
+==============================================================================
+4. LOOKUP TABLE
+==============================================================================
+   disparity_cm displacement_avg_cm displacement_avg_lo_cm
+1            15               5.688                  3.342
+2            20               7.430                  5.257
+3            25               9.171                  7.068
+4            30              10.913                  8.767
+5            35              12.654                 10.359
+6            40              14.396                 11.863
+7            45              16.138                 13.301
+8            50              17.879                 14.692
+9            55              19.621                 16.049
+10           60              21.362                 17.383
+11           65              23.104                 18.700
+12           70              24.846                 20.005
+   displacement_avg_hi_cm displacement_p10_cm displacement_p10_lo_cm
+1                   8.034               2.642                  0.221
+2                   9.602               3.368                  0.877
+3                  11.274               4.094                  1.526
+4                  13.059               4.820                  2.025
+5                  14.950               5.546                  2.446
+6                  16.929               6.272                  2.767
+7                  18.974               6.999                  3.059
+8                  21.067               7.725                  3.272
+9                  23.192               8.451                  3.559
+10                 25.341               9.177                  3.862
+11                 27.508               9.903                  4.065
+12                 29.686              10.629                  4.365
+   displacement_p10_hi_cm displacement_p90_cm displacement_p90_lo_cm
+1                   5.299               8.734                  6.156
+2                   6.053              11.491                  8.904
+3                   6.868              14.248                 11.516
+4                   7.796              17.005                 14.041
+5                   8.805              19.763                 16.473
+6                  10.019              22.520                 18.796
+7                  11.169              25.277                 21.093
+8                  12.347              28.034                 23.414
+9                  13.633              30.791                 25.651
+10                 14.905              33.548                 27.856
+11                 16.261              36.305                 30.078
+12                 17.629              39.062                 32.268
+   displacement_p90_hi_cm traversed_avg_pct traversed_p10_pct traversed_p90_pct
+1                  11.289            37.920            17.612            58.229
+2                  13.976            37.148            16.839            57.457
+3                  16.833            36.685            16.376            56.994
+4                  19.815            36.376            16.067            56.685
+5                  23.006            36.155            15.847            56.464
+6                  26.150            35.990            15.681            56.299
+7                  29.258            35.861            15.552            56.170
+8                  32.414            35.758            15.449            56.067
+9                  35.671            35.674            15.365            55.983
+10                 38.928            35.604            15.295            55.913
+11                 42.179            35.544            15.236            55.853
+12                 45.411            35.494            15.185            55.802
+   residual_gap_avg_cm residual_gap_p90_cm n_trials ang_mean_deg ang_median_deg
+1                9.312               6.266       48       19.634         17.699
+2               12.570               8.509       78       25.682         24.908
+3               15.829              10.752       88       30.151         28.288
+4               19.087              12.995       68       37.574         34.907
+5               22.346              15.237      142       42.176         42.559
+6               25.604              17.480       82       42.431         42.437
+7               28.862              19.723       44       49.875         50.285
+8               32.121              21.966       48       52.803         50.692
+9               35.379              24.209       40       59.698         59.181
+10              38.638              26.452       46       58.003         56.646
+11              41.896              28.695       30       65.267         66.461
+12              45.154              30.938       30       69.013         67.885
+   ang_q25_deg ang_q75_deg angOnset_median_deg
+1       14.280      21.036              11.100
+2       18.368      30.785              14.472
+3       22.734      37.389              17.172
+4       25.385      49.844              19.866
+5       28.767      53.220              23.795
+6       34.357      50.365              22.696
+7       38.772      59.175              24.246
+8       43.678      64.752              30.202
+9       45.556      73.494              40.812
+10      47.915      68.897              33.346
+11      48.401      84.156              34.601
+12      56.936      78.018              44.233
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/tolerance_lookup_nominal.csv
+
+==============================================================================
+5. PERCENTILE DEFINITIONS COMPARED
+==============================================================================
+per-participant total slopes, n = 31:
+  min 0.1177, p10 0.1689, median 0.3339, p90 0.5089, max 0.6859
+(conditional modes are shrunk toward the mean, so these quantiles are narrower than the fitted slope distribution)
+   disparity_cm p10_normal_cm p50_normal_cm p90_normal_cm p10_empirical_cm
+1            15         2.642         5.688         8.734            2.996
+2            20         3.368         7.430        11.491            3.841
+3            25         4.094         9.171        14.248            4.685
+4            30         4.820        10.913        17.005            5.530
+5            35         5.546        12.654        19.763            6.374
+6            40         6.272        14.396        22.520            7.218
+7            45         6.999        16.138        25.277            8.063
+8            50         7.725        17.879        28.034            8.907
+9            55         8.451        19.621        30.791            9.751
+10           60         9.177        21.362        33.548           10.596
+11           65         9.903        23.104        36.305           11.440
+12           70        10.629        24.846        39.062           12.284
+   p50_empirical_cm p90_empirical_cm
+1             5.472            8.097
+2             7.141           10.642
+3             8.811           13.187
+4            10.480           15.732
+5            12.150           18.276
+6            13.819           20.821
+7            15.489           23.366
+8            17.158           25.911
+9            18.828           28.455
+10           20.497           31.000
+11           22.166           33.545
+12           23.836           36.089
+written: /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision/tolerance_percentile_definitions.csv
+
+endpoints, definition (a) normal quantiles: 15 cm 2.6 / 8.7 cm; 70 cm 10.6 / 39.1 cm
+endpoints, definition (b) empirical quantiles: 15 cm 3 / 8.1 cm; 70 cm 12.3 / 36.1 cm
+
+==============================================================================
+SESSION INFO
+==============================================================================
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS 15.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] C
+
+time zone: Europe/Warsaw
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] dplyr_1.1.4    lmerTest_3.1-3 lme4_1.1-38    Matrix_1.7-4  
+
+loaded via a namespace (and not attached):
+ [1] vctrs_0.6.5         nlme_3.1-168        cli_3.6.5          
+ [4] rlang_1.1.7         reformulas_0.4.3.1  generics_0.1.4     
+ [7] S7_0.2.1            minqa_1.2.8         glue_1.8.0         
+[10] scales_1.4.0        grid_4.4.1          tibble_3.3.1       
+[13] MASS_7.3-65         numDeriv_2016.8-1.1 lifecycle_1.0.5    
+[16] compiler_4.4.1      RColorBrewer_1.1-3  pkgconfig_2.0.3    
+[19] Rcpp_1.1.1          farver_2.1.2        lattice_0.22-7     
+[22] nloptr_2.2.1        R6_2.6.1            tidyselect_1.2.1   
+[25] pillar_1.11.1       Rdpack_2.6.4        splines_4.4.1      
+[28] magrittr_2.0.4      rbibutils_2.4       withr_3.0.2        
+[31] tools_4.4.1         gtable_0.3.6        boot_1.3-32        
+[34] ggplot2_4.0.1      

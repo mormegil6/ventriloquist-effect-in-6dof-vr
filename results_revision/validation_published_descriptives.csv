@@ -1,0 +1,15 @@
+check,published,recomputed,matches
+n trials,744,744,TRUE
+n participants,31,31,TRUE
+mean unsigned error (cm),26.2,26.2,TRUE
+SD unsigned error (cm),17.0,17.0,TRUE
+median unsigned error (cm),22.3,22.3,TRUE
+mean signed error (cm),13.7,13.7,TRUE
+SD signed error (cm),18.5,18.5,TRUE
+mean bias proportion (%),35.9,35.9,TRUE
+SD bias proportion (%),54.6,54.6,TRUE
+mean path length (m),8.36,8.36,TRUE
+SD path length (m),6.21,6.21,TRUE
+"per-participant mean path, min (m)",4.6,4.6,TRUE
+"per-participant mean path, max (m)",22.0,22.0,TRUE
+distinct disparity values,56,56,TRUE

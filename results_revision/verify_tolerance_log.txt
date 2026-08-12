@@ -1,0 +1,487 @@
+verify_tolerance_deliverable.R  |  R version 4.4.1 (2024-06-14)
+run: 2026-08-05 23:14:51 CEST
+
+==============================================================================
+0. DATA AND DERIVED VARIABLES
+==============================================================================
+trials 744  participants 31
+complete cases on the modelling variables: 744
+sound type counts: Drum=186, Flute=186, Speech=186, Pink Noise=186
+disparity cm: range 15-70  mean 37.887
+ang_deg: range 2.36-115.5  mean 42.252  median 40.536
+
+==============================================================================
+1. CAPTURE OUTCOME: ARE THE TWO CRITERIA THE SAME EVENT?
+==============================================================================
+agreement geometric vs bias>0.5: 744/744
+closest trial to the boundary: min |bias - 0.5| = 0.001122
+base rates: >0.5 0.3522 (262/744)   >0.25 0.6022   >0.75 0.1465
+per-participant capture rate: min 0.0833 median 0.3333 max 0.7917
+
+==============================================================================
+2. SIGNED-ERROR LMMs, REFITTED ACROSS OPTIMISERS
+==============================================================================
+
+-- M1 metric --
+bobyqa                             b1=0.346596 se=0.053514  tau0=0.044490 tau1=0.190145 rho=-0.5559 sigma=0.164122  logLik=248.8189
+   convergence messages: none   singular: FALSE
+Nelder_Mead                        b1=0.346596 se=0.053514  tau0=0.044490 tau1=0.190145 rho=-0.5559 sigma=0.164122  logLik=248.8189
+   convergence messages: none   singular: FALSE
+nloptwrap                          b1=0.346597 se=0.053514  tau0=0.044490 tau1=0.190144 rho=-0.5559 sigma=0.164122  logLik=248.8189
+   convergence messages: none   singular: FALSE
+                     Estimate Std. Error        df   t value Pr(>|t|)
+(Intercept)          0.008674   0.021447  51.95648  0.404433 0.687554
+stimulusDisparity_m  0.346596   0.053514  30.50499  6.476733 0.000000
+soundTypeFlute       0.012039   0.017058 688.84558  0.705767 0.480572
+soundTypeSpeech     -0.000250   0.017045 689.24995 -0.014677 0.988294
+soundTypePink Noise -0.025069   0.017042 689.52241 -1.470966 0.141756
+glmmTMB REML refit of M1: b1 = 0.3465964  se = 0.05362617  tau0 = 0.04449  tau1 = 0.190145  rho = -0.5559  pdHess TRUE
+
+-- M2 angular (per 10 deg) --
+bobyqa                             b1=0.027395 se=0.004420  tau0=0.062124 tau1=0.016481 rho=-0.4984 sigma=0.163283  logLik=245.2228
+   convergence messages: none   singular: FALSE
+Nelder_Mead                        b1=0.027395 se=0.004420  tau0=0.062125 tau1=0.016481 rho=-0.4984 sigma=0.163283  logLik=245.2228
+   convergence messages: none   singular: FALSE
+                     Estimate Std. Error        df   t value Pr(>|t|)
+(Intercept)          0.026152   0.021411  51.13383  1.221434 0.227523
+ang10                0.027395   0.004420  26.21914  6.198030 0.000001
+soundTypeFlute       0.010787   0.017043 702.15415  0.632947 0.526974
+soundTypeSpeech     -0.001275   0.017070 706.07334 -0.074704 0.940471
+soundTypePink Noise -0.024692   0.017026 700.45750 -1.450308 0.147420
+
+-- M2 angular on the raw per-degree scale (scaling-artifact claim) --
+Komunikat ostrzegawczy:
+W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.00207241 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+bobyqa raw deg                     b1=0.002740 se=0.000442  tau0=0.062121 tau1=0.001648 rho=-0.4984 sigma=0.163283  logLik=242.9202
+   convergence messages: Model failed to converge with max|grad| = 0.00207241 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.   singular: FALSE
+raw-scale slope x 10 = 0.02739541   per-10-deg slope = 0.02739539   relative difference = 9.21e-07
+
+-- ML refits (REML = FALSE) --
+M1 ML                              b1=0.346891 se=0.052626  tau0=0.040801 tau1=0.183085 rho=-0.5330 sigma=0.163763  logLik=264.2363
+   convergence messages: none   singular: FALSE
+M2 ML                              b1=0.027403 se=0.004334  tau0=0.059437 tau1=0.015836 rho=-0.4761 sigma=0.162934  logLik=263.0192
+   convergence messages: none   singular: FALSE
+m_metric fixed-effect vcov: condition number 40.406  min eigenvalue 9.3915e-05
+m_ang fixed-effect vcov: condition number 54.985  min eigenvalue 8.51e-06
+
+==============================================================================
+3. PROFILE LIKELIHOOD ON THE RANDOM-EFFECT SDs (IS tau1 WELL IDENTIFIED?)
+==============================================================================
+Komunikaty ostrzegawcze:
+1: W poleceniu 'FUN(X[[i]], ...)':
+  non-monotonic profile for cor_stimulusDisparity_m.(Intercept)|participantId
+2: W poleceniu 'nextpar(mat, cc, i, delta, lowcut, upcut)':
+  unexpected decrease in profile: using minstep
+3: W poleceniu 'nextpar(mat, cc, i, delta, lowcut, upcut)':
+  unexpected decrease in profile: using minstep
+4: W poleceniu 'FUN(X[[i]], ...)':
+  non-monotonic profile for sd_stimulusDisparity_m|participantId
+                                                     2.5 %  97.5 %
+sd_(Intercept)|participantId                       0.00000 0.09559
+cor_stimulusDisparity_m.(Intercept)|participantId -1.00000 1.00000
+sd_stimulusDisparity_m|participantId               0.09834 0.30710
+sigma                                              0.15545 0.17284
+Komunikaty ostrzegawcze:
+1: W poleceniu 'confint.thpr(pp_metric, level = 0.95)':
+  bad spline fit for cor_stimulusDisparity_m.(Intercept)|participantId: falling back to linear interpolation
+2: W poleceniu 'regularize.values(x, y, ties, missing(ties), na.rm = na.rm)':
+  zwijanie do unikalnych warto'sci 'x'
+3: W poleceniu 'confint.thpr(pp_metric, level = 0.95)':
+  bad spline fit for sd_stimulusDisparity_m|participantId: falling back to linear interpolation
+
+==============================================================================
+4. LISTENER PROFILES AND LOOKUP TABLE, RECOMPUTED
+==============================================================================
+metric pars: b0=0.00535392  b1=0.346596  tau0=0.0444905  tau1=0.190145  rho=-0.555898
+angular pars: b0=0.0223571  b1=0.0273954  tau0=0.0621241  tau1=0.0164808  rho=-0.498403
+10th/90th pct listener slopes (metric): 0.10292 / 0.59028
+10th/90th pct listener intercepts (metric, cm): 3.7049 / -2.6342
+population intercept incl. sound offset (cm): 0.53539
+BLUP slopes: min 0.1069 q10 0.1827 median 0.3157 q90 0.5429 max 0.7256  SD 0.1487
+
+==============================================================================
+5. PARAMETRIC BOOTSTRAP, REPRODUCED, PLUS THE EFFECT OF DISCARDING REPLICATES
+==============================================================================
+metric: 2000 replicates, 104 incomplete, 1896 retained
+angular: 2000 replicates, 14 incomplete, 1986 retained
+
+-- Table A1 recomputed (complete-case bootstrap, as in the original) --
+   disparity_cm avg_cm avg_lo avg_hi p10_cm p10_lo p10_hi p90_cm p90_lo p90_hi
+1            15  5.734  3.174  8.216  5.249 -0.308 10.995  6.220  0.383 12.111
+2            20  7.467  5.080  9.776  5.763  0.750 11.162  9.171  3.669 14.416
+3            25  9.200  6.968 11.422  6.278  1.839 11.450 12.123  6.870 16.759
+4            30 10.933  8.699 13.125  6.792  2.522 11.747 15.074  9.961 19.239
+5            35 12.666 10.286 14.964  7.307  3.262 12.249 18.026 12.995 22.029
+6            40 14.399 11.831 16.892  7.822  3.556 13.250 20.977 15.755 25.081
+7            45 16.132 13.345 18.926  8.336  3.814 13.906 23.928 18.331 28.449
+8            50 17.865 14.743 20.944  8.851  4.002 14.733 26.880 20.941 31.887
+9            55 19.598 16.094 23.019  9.365  4.025 15.721 29.831 23.270 35.492
+10           60 21.331 17.343 25.184  9.880  4.041 16.849 32.782 25.792 39.000
+11           65 23.064 18.719 27.384 10.394  3.903 18.032 35.734 28.205 42.606
+12           70 24.797 20.067 29.538 10.909  3.769 19.194 38.685 30.572 46.328
+
+-- Average-listener CI: all 2000 replicates vs the 1896 complete-case subset --
+   disparity_cm lo_all hi_all lo_kept hi_kept
+1            15  3.197  8.211   3.174   8.216
+2            20  5.085  9.734   5.080   9.776
+3            25  6.965 11.420   6.968  11.422
+4            30  8.698 13.122   8.699  13.125
+5            35 10.274 14.966  10.286  14.964
+6            40 11.819 16.913  11.831  16.892
+7            45 13.341 19.001  13.345  18.926
+8            50 14.705 20.951  14.743  20.944
+9            55 16.041 23.020  16.094  23.019
+10           60 17.324 25.182  17.343  25.184
+11           65 18.696 27.375  18.719  27.384
+12           70 20.022 29.514  20.067  29.538
+max absolute difference in the average-listener CI limits (cm): 0.075
+
+bootstrap tau1 distribution (400 replicates): n with tau1 < 1e-6 = 0; n with NA rho = 24; tau1 quantiles 0.061 0.1909 0.2858
+
+-- Table A2 recomputed --
+   angle_deg avg_cm avg_lo avg_hi p90_cm p90_lo p90_hi n_within_2p5deg
+1         20  7.715  4.991 10.323  7.971  1.834 15.158              61
+2         25  9.085  6.504 11.618 10.397  4.538 17.053              81
+3         30 10.454  7.993 12.925 12.823  6.929 19.049              70
+4         35 11.824  9.341 14.344 15.248  9.333 21.179              58
+5         40 13.194 10.633 15.829 17.674 11.499 23.418              65
+6         45 14.564 11.876 17.292 20.100 13.772 25.680              64
+7         50 15.933 13.011 18.863 22.526 16.007 28.102              58
+8         55 17.303 14.089 20.500 24.952 18.196 30.673              60
+9         60 18.673 15.149 22.138 27.377 20.313 33.306              39
+10        65 20.043 16.286 23.853 29.803 22.315 36.110              33
+11        70 21.412 17.341 25.543 32.229 24.330 39.119              28
+
+-- Nominal-to-angular crosswalk --
+   disparity_cm   n ang_median_deg ang_mean_deg
+1            15  48          17.70        19.63
+2            20  78          24.91        25.68
+3            25  88          28.29        30.15
+4            30  68          34.91        37.57
+5            35 142          42.56        42.18
+6            40  82          42.44        42.43
+7            45  44          50.28        49.87
+8            50  48          50.69        52.80
+9            55  40          59.18        59.70
+10           60  46          56.65        58.00
+11           65  30          66.46        65.27
+12           70  30          67.88        69.01
+
+==============================================================================
+6. CAPTURE MODELS: glmmTMB REFIT, DEGENERACY AND CROSS-PACKAGE CHECK
+==============================================================================
+
+-- B1 angular, glmmTMB --
+             Estimate Std. Error   z value Pr(>|z|)
+(Intercept) -0.693705   0.171201 -4.051996 0.000051
+ang10c       0.068342   0.065007  1.051308 0.293117
+attr(,"ddf")
+[1] "asymptotic"
+random SDs: 0.809836, 0.238401   corr = 0.81259
+convergence 0 | both X-convergence and relative convergence (5) | pdHess TRUE | logLik -451.8532
+joint cov of all estimated parameters: dim 5 | min eigenvalue 0.002858 | condition number 420.83
+
+-- B2 nominal, glmmTMB --
+             Estimate Std. Error   z value Pr(>|z|)
+(Intercept) -0.690210   0.162441 -4.248988 0.000021
+disp10c     -0.004743   0.064401 -0.073650 0.941289
+attr(,"ddf")
+[1] "asymptotic"
+random SDs: 0.771302, 0.150317   corr = 0.55154
+convergence 0 | relative convergence (4) | pdHess TRUE | logLik -460.0414
+joint cov of all estimated parameters: dim 5 | min eigenvalue 0.003673 | condition number 269.34
+
+-- B0 disparity-free, glmmTMB --
+            Estimate Std. Error   z value Pr(>|z|)
+(Intercept) -0.68849    0.16077 -4.282442  1.8e-05
+attr(,"ddf")
+[1] "asymptotic"
+random SDs: 0.762723
+convergence 0 | relative convergence (4) | pdHess TRUE | logLik -460.9056
+joint cov of all estimated parameters: dim 2 | min eigenvalue 0.02501 | condition number 1.3567
+
+-- lme4::glmer cross-check --
+gl_ang: (Intercept) b=-0.69355 se=0.17062 p=4.806e-05 | ang10c b=0.06837 se=0.06445 p=0.2887
+   SDs 0.80971, 0.23837  corr 0.81262  singular FALSE  logLik -451.8533
+   messages: none
+gl_nom: (Intercept) b=-0.69009 se=0.16205 p=2.059e-05 | disp10c b=-0.00469 se=0.0639 p=0.9415
+   SDs 0.77118, 0.15025  corr 0.55138  singular FALSE  logLik -460.0415
+   messages: none
+gl_null: (Intercept) b=-0.68841 se=0.16047 p=1.786e-05
+   SDs 0.76264  singular FALSE  logLik -460.9056
+   messages: none
+B0 with 15-point AGQ: b0 = -0.6889  se = 0.1617  tau0 = 0.76866
+
+==============================================================================
+7. LIKELIHOOD-RATIO TESTS AND DECOMPOSITION
+==============================================================================
+angular, 3 df:
+Data: d
+Models:
+g_null: capture ~ 1 + (1 | participantId), zi=~0, disp=~1
+g_ang: capture ~ ang10c + (1 + ang10c | participantId), zi=~0, disp=~1
+       Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)    
+g_null  2 925.81 935.04 -460.91   921.81                             
+g_ang   5 913.71 936.77 -451.85   903.71 18.105      3  0.0004185 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+nominal, 3 df:
+Data: d
+Models:
+g_null: capture ~ 1 + (1 | participantId), zi=~0, disp=~1
+g_nom: capture ~ disp10c + (1 + disp10c | participantId), zi=~0, disp=~1
+       Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
+g_null  2 925.81 935.04 -460.91   921.81                         
+g_nom   5 930.08 953.14 -460.04   920.08 1.7284      3     0.6306
+angular fixed slope, 1 df:
+Data: d
+Models:
+g_null: capture ~ 1 + (1 | participantId), zi=~0, disp=~1
+g_ang_ri: capture ~ ang10c + (1 | participantId), zi=~0, disp=~1
+         Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)  
+g_null    2 925.81 935.04 -460.91   921.81                           
+g_ang_ri  3 922.24 936.07 -458.12   916.24 5.5737      1    0.01823 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+angular random slope given fixed, 2 df:
+Data: d
+Models:
+g_ang_ri: capture ~ ang10c + (1 | participantId), zi=~0, disp=~1
+g_ang: capture ~ ang10c + (1 + ang10c | participantId), zi=~0, disp=~1
+         Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)   
+g_ang_ri  3 922.24 936.07 -458.12   916.24                            
+g_ang     5 913.71 936.77 -451.85   903.71 12.531      2   0.001901 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+nominal fixed slope, 1 df:
+Data: d
+Models:
+g_null: capture ~ 1 + (1 | participantId), zi=~0, disp=~1
+g_nom_ri: capture ~ disp10c + (1 | participantId), zi=~0, disp=~1
+         Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
+g_null    2 925.81 935.04 -460.91   921.81                         
+g_nom_ri  3 927.75 941.58 -460.87   921.75 0.0637      1     0.8007
+nominal random slope given fixed, 2 df:
+Data: d
+Models:
+g_nom_ri: capture ~ disp10c + (1 | participantId), zi=~0, disp=~1
+g_nom: capture ~ disp10c + (1 + disp10c | participantId), zi=~0, disp=~1
+         Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
+g_nom_ri  3 927.75 941.58 -460.87   921.75                         
+g_nom     5 930.08 953.14 -460.04   920.08 1.6646      2      0.435
+
+quadratic angular:
+               Estimate Std. Error   z value     Pr(>|z|)
+(Intercept) -0.76794124 0.18450623 -4.162143 3.152754e-05
+ang10c       0.05104941 0.06599838  0.773495 4.392295e-01
+I(ang10c^2)  0.02060987 0.01869064  1.102684 2.701643e-01
+attr(,"ddf")
+[1] "asymptotic"
+Data: d
+Models:
+g_ang: capture ~ ang10c + (1 + ang10c | participantId), zi=~0, disp=~1
+g_ang_q: capture ~ ang10c + I(ang10c^2) + (1 + ang10c | participantId), zi=~0, disp=~1
+        Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
+g_ang    5 913.71 936.77 -451.85   903.71                         
+g_ang_q  6 914.48 942.16 -451.24   902.48 1.2218      1      0.269
+
+within/between decomposition of the angular effect (random intercept only):
+             Estimate Std. Error   z value Pr(>|z|)
+(Intercept) -0.694231   0.162135 -4.281814 0.000019
+ang10_wi     0.106045   0.043826  2.419694 0.015534
+ang10_pmc   -0.019408   0.212601 -0.091287 0.927264
+attr(,"ddf")
+[1] "asymptotic"
+same with a random within-slope:
+             Estimate Std. Error   z value Pr(>|z|)
+(Intercept) -0.689821   0.168939 -4.083265 0.000044
+ang10_wi     0.072784   0.065585  1.109770 0.267098
+ang10_pmc   -0.013274   0.187061 -0.070963 0.943427
+attr(,"ddf")
+[1] "asymptotic"
+convergence 0 pdHess TRUE
+
+==============================================================================
+8. DHARMa ON THE ANGULAR CAPTURE MODEL, SEED STABILITY
+==============================================================================
+seed 20260805: KS D = 0.034786 p = 0.3289 | dispersion 1.0045 p = 0.996
+seed 1: KS D = 0.024199 p = 0.7763 | dispersion 1.0057 p = 0.958
+seed 2: KS D = 0.017059 p = 0.9819 | dispersion 1.0018 p = 0.922
+seed 3: KS D = 0.024681 p = 0.7553 | dispersion 1.0037 p = 0.948
+
+==============================================================================
+9. CROSSING POINTS AND FIELLER SETS
+==============================================================================
+            model listener prob     point       lo      hi bounded
+1  B1 angular deg  average 0.50   143.757     -Inf     Inf       0
+2  B1 angular deg      p10 0.50   -53.985 -256.969 -17.501       1
+3  B1 angular deg      p90 0.50    31.383   21.859  41.911       1
+4  B1 angular deg  average 0.75   304.510     -Inf     Inf       0
+5  B1 angular deg      p10 0.75  -115.045 -465.257 -54.161       1
+6  B1 angular deg      p90 0.75    66.082   52.802  93.777       1
+7   B2 nominal cm  average 0.50 -1417.296     -Inf     Inf       0
+8   B2 nominal cm      p10 0.50  -113.356     -Inf     Inf       0
+9   B2 nominal cm      p90 0.50     8.504     -Inf     Inf       0
+10  B2 nominal cm  average 0.75 -3733.521     -Inf     Inf       0
+11  B2 nominal cm      p10 0.75  -212.338     -Inf     Inf       0
+12  B2 nominal cm      p90 0.75   116.736     -Inf     Inf       0
+observed max angle 115.5 deg; max disparity 70 cm
+
+probe: 300-replicate parametric bootstrap of B1, retention of usable refits
+usable replicates: 198/300 = 0.66
+fully propagated 90th-pct 50% crossing (deg): median 32.05  2.5% 6.45  97.5% 62.2  fraction of replicates outside 0-115.5 deg: 0.01
+bootstrap correlation rho: median 0.784  fraction |rho| > 0.99: 0.03
+
+==============================================================================
+10. DISPARITY-FREE LISTENER PROBABILITIES, FULL 2000-REPLICATE BOOTSTRAP
+==============================================================================
+b0 = -0.68849  se = 0.16077  tau0 = 0.762723
+profile CI on tau0:
+                             2.5 %     97.5 %
+theta_1|participantId.1 -0.6383369 0.08717148
+                                       2.5 %     97.5 %   Estimate
+(Intercept)                       -1.0035940 -0.3733857 -0.6884898
+Std.Dev.(Intercept)|participantId  0.5339517  1.0895122  0.7627233
+B0 bootstrap: 2000 requested, 2000 retained
+  pct    est     lo     hi
+1  10 0.1590 0.1039 0.2430
+2  50 0.3344 0.2692 0.4053
+3  90 0.5717 0.4559 0.6725
+listener percentile reaching 50%: 81.67   reaching 75%: 99.04
+bootstrap 95% CI on the 50% percentile: [68.4, 94.5]   on the 75% percentile: [95.4, 100]
+observed per-participant capture rates, quantiles 10/50/90: 0.125 0.3333 0.5833
+observed fraction of participants with rate > 0.5: 0.2258  > 0.75: 0.0323
+
+==============================================================================
+11. EMPIRICAL BINS AND CRITERION ROBUSTNESS
+==============================================================================
+      bin   n  k      p     lo     hi
+1 [15,25) 164 60 0.3659 0.2921 0.4445
+2 [25,35) 200 68 0.3400 0.2747 0.4102
+3 [35,45) 170 59 0.3471 0.2758 0.4237
+4 [45,55)  78 28 0.3590 0.2534 0.4756
+5 [55,70] 132 47 0.3561 0.2747 0.4441
+       bin   n  k      p     lo     hi
+1   [0,20)  96 32 0.3333 0.2404 0.4369
+2  [20,30) 152 50 0.3289 0.2550 0.4097
+3  [30,40) 120 42 0.3500 0.2652 0.4424
+4  [40,50) 130 36 0.2769 0.2021 0.3622
+5  [50,60) 104 37 0.3558 0.2643 0.4557
+6 [60,Inf) 142 65 0.4577 0.3739 0.5433
+  criterion predictor    base      slope       se        z          p    tau0
+1 bias>0.50    ang10c 0.35215  0.0683420 0.065007  1.05130 0.29312000 0.80984
+2 bias>0.50   disp10c 0.35215 -0.0047431 0.064401 -0.07365 0.94129000 0.77130
+3 bias>0.25    ang10c 0.60215  0.2081600 0.057442  3.62380 0.00029033 0.82135
+4 bias>0.25   disp10c 0.60215  0.0544720 0.066926  0.81392 0.41569000 0.82274
+5 bias>0.75    ang10c 0.14651 -0.2880300 0.096413 -2.98750 0.00281290 0.92685
+6 bias>0.75   disp10c 0.14651 -0.2673200 0.115330 -2.31790 0.02045300 0.87140
+     tau1     rho conv pdHess
+1 0.23840 0.81259    0   TRUE
+2 0.15032 0.55154    0   TRUE
+3 0.16141 0.85242    0   TRUE
+4 0.18891 0.66727    0   TRUE
+5 0.21505 0.91945    0   TRUE
+6 0.25385 0.68837    0   TRUE
+
+proportional-scaling test:
+            Estimate Std. Error       df  t value Pr(>|t|)
+(Intercept) 0.348528   0.060390 220.3025 5.771337 0.000000
+disp_cm     0.000268   0.001295 718.4453 0.207169 0.835937
+      bin   n sd_bias sd_signed_cm
+1 [15,25) 164  0.7936      15.6841
+2 [25,35) 200  0.5361      16.2310
+3 [35,45) 170  0.4725      18.2159
+4 [45,55)  78  0.3126      15.8180
+5 [55,70] 132  0.3552      22.5044
+
+==============================================================================
+12. EQUIVALENCE / POWER: WHAT SLOPE COULD THE NOMINAL CAPTURE MODEL RULE OUT?
+==============================================================================
+nominal slope per 10 cm: -0.0047431 se 0.064401  95% CI [-0.131, 0.1215]
+  at the CI limit b = -0.131: predicted capture at 15 cm = 0.4036, at 70 cm = 0.2477
+  at the CI limit b = 0.1215: predicted capture at 15 cm = 0.2752, at 70 cm = 0.4255
+angular CI limit b = -0.05907: capture at 20 deg = 0.363, at 70 deg = 0.2978
+angular CI limit b = 0.1958: capture at 20 deg = 0.2443, at 70 deg = 0.4624
+
+==============================================================================
+13. TRAJECTORY CLAIMS: DISTANCE AND EXPERIENCED ANGLE
+==============================================================================
+head-to-source distance, per-trial time-weighted mean (m): mean 0.5005 median 0.4805 range 0.172-1.203
+distance at onset (m): mean 0.7047 median 0.6758
+experienced angle (time-weighted mean, deg): median 40.536 mean 42.252 max 115.501
+fraction of trials with mean angle > 30 deg: 0.6667
+fraction of trials with onset angle > 30 deg: 0.3212
+angle implied by 70 cm at the observed mean distance 0.50 m: 69.9 deg (two-point subtense), 54.4 deg (one-sided)
+distance that would make 70 cm subtend 24 deg: 1.572 m (one-sided), 1.647 m (two-point subtense)
+median experienced angle among trials with disparity >= 60 cm: 64.08
+
+==============================================================================
+14. SOUND TYPE IN THE CAPTURE MODEL (OMITTED IN THE ORIGINAL)
+==============================================================================
+                    Estimate Std. Error  z value Pr(>|z|)
+(Intercept)         -0.57967    0.22489 -2.57758  0.00995
+ang10c               0.07244    0.06514  1.11206  0.26611
+soundTypeFlute       0.06656    0.23255  0.28620  0.77472
+soundTypeSpeech     -0.04509    0.23576 -0.19125  0.84833
+soundTypePink Noise -0.50735    0.24351 -2.08346  0.03721
+attr(,"ddf")
+[1] "asymptotic"
+Data: d
+Models:
+g_ang: capture ~ ang10c + (1 + ang10c | participantId), zi=~0, disp=~1
+g_st: capture ~ ang10c + soundType + (1 + ang10c | participantId), zi=~0, disp=~1
+      Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)  
+g_ang  5 913.71 936.77 -451.85   903.71                           
+g_st   8 912.73 949.62 -448.36   896.73 6.9793      3    0.07256 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+==============================================================================
+15. WRITE OUTPUTS
+==============================================================================
+written to /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision
+
+==============================================================================
+SESSION INFO
+==============================================================================
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS 15.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] C
+
+time zone: Europe/Warsaw
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] tidyr_1.3.2    dplyr_1.1.4    DHARMa_0.4.7   glmmTMB_1.1.13 lmerTest_3.1-3
+[6] lme4_1.1-38    Matrix_1.7-4  
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.6        compiler_4.4.1      tidyselect_1.2.1   
+ [4] Rcpp_1.1.1          splines_4.4.1       scales_1.4.0       
+ [7] boot_1.3-32         TH.data_1.1-5       lattice_0.22-7     
+[10] ggplot2_4.0.1       R6_2.6.1            generics_0.1.4     
+[13] rbibutils_2.4       MASS_7.3-65         tibble_3.3.1       
+[16] nloptr_2.2.1        minqa_1.2.8         pillar_1.11.1      
+[19] RColorBrewer_1.1-3  TMB_1.9.19          rlang_1.1.7        
+[22] multcomp_1.4-29     S7_0.2.1            estimability_1.5.1 
+[25] cli_3.6.5           withr_3.0.2         magrittr_2.0.4     
+[28] mgcv_1.9-4          emmeans_2.0.1       Rdpack_2.6.4       
+[31] grid_4.4.1          xtable_1.8-4        mvtnorm_1.3-3      
+[34] sandwich_3.1-1      lifecycle_1.0.5     nlme_3.1-168       
+[37] reformulas_0.4.3.1  vctrs_0.6.5         glue_1.8.0         
+[40] farver_2.1.2        numDeriv_2016.8-1.1 codetools_0.2-20   
+[43] zoo_1.8-15          survival_3.8-3      purrr_1.2.1        
+[46] tools_4.4.1         pkgconfig_2.0.3    

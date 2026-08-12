@@ -1,0 +1,142 @@
+Deep checks on the Analysis 2 accuracy GLMMs
+Run date: 2026-08-05 23:02:32 
+R: R version 4.4.1 (2024-06-14) | glmmTMB 1.1.13 | TMB 1.9.19 | lme4 1.1.38 
+
+==============================================================================
+A. Calibration of the glmmTMB families against known answers
+==============================================================================
+A1. Gamma(log): parameter recovery, and the meaning of sigma()
+ true_shape   slope   sigma inv_sigma inv_sigma_sq   re_sd
+       0.75 0.48950 1.15649   0.86469      0.74768 0.26254
+       2.00 0.50752 0.71445   1.39969      1.95912 0.22486
+       4.00 0.49777 0.49164   2.03403      4.13727 0.22102
+       8.00 0.50726 0.35387   2.82591      7.98577 0.25378
+True slope 0.5, true RE SD 0.25. sigma() tracks 1/sqrt(shape), so shape = 1/sigma()^2, not sigma() and not 1/sigma().
+
+A2. lognormal(log): audit against the closed-form MLE
+  truth: slope 0.5, log-scale SD 0.5
+  closed-form MLE      : slope 0.50426 | sigma 0.50104 | logLik -6930.089 
+  glmmTMB lognormal    : slope 0.31251 | sigma 2.32353 | reported logLik -7397.67 
+  logLik recomputed at the glmmTMB estimates: median-link -11198.41 | mean-link -13377.48 
+  The reported value matches neither parameterisation, and the estimates sit 4268.3 nats below the MLE.
+
+A3. Spot-check of the remaining families (recovery of a known slope of 0.5)
+  poisson                slope =   0.4993 (true 0.50)  ok
+  nbinom2                slope =   0.5064 (true 0.50)  ok
+  gaussian               slope =   0.5075 (true 0.50)  ok
+  Gamma(log)             slope =   0.5061 (true 0.50)  ok
+  lognormal(log)         slope =   0.3125 (true 0.50)  DEVIATES
+  beta_family            slope =   0.5117 (true 0.50)  ok
+
+==============================================================================
+A4. The lognormal robustness check on the real data, done correctly
+==============================================================================
+glmmTMB lognormal as used in the re-analysis:
+  sigma = 16.16036 on the log scale, against sd(log y) = 0.628677 
+  reported logLik -2941.992 | AIC 5909.984 
+Correct lognormal ML fit (Gaussian on log(y), ML; identical model):
+  sigma = 0.5494266 | RE SD = 0.2431476 
+  logLik on the log(y) scale -637.1016 | on the y scale -2927.84 | AIC on the y scale 5881.68 
+  The correct lognormal fit is 14.152 nats better than the one used.
+
+lognormal robustness check, as used versus done correctly:
+                 term   b_broken se_broken z_broken   p_broken  b_correct
+1     stimDisparity_c  0.7024153 0.0972387   7.2236 5.0622e-13  1.1511677
+2     trialSequence_c -0.0035335 0.0021393  -1.6517 9.8594e-02 -0.0081865
+3      soundTypeFlute -0.0699562 0.0422235  -1.6568 9.7559e-02 -0.0747884
+4     soundTypeSpeech -0.0465380 0.0412918  -1.1271 2.5972e-01 -0.0749075
+5 soundTypePink Noise -0.0513440 0.0420019  -1.2224 2.2155e-01 -0.0790155
+  se_correct z_correct  p_correct
+1  0.1373651    8.3803 5.2771e-17
+2  0.0029302   -2.7938 5.2086e-03
+3  0.0572329   -1.3067 1.9130e-01
+4  0.0574471   -1.3039 1.9225e-01
+5  0.0570629   -1.3847 1.6614e-01
+
+Tukey contrasts under the correct lognormal fit:
+ contrast               ratio         SE  df asymp.LCL asymp.UCL null z.ratio
+ Drum / Flute        1.077656 0.06167734 Inf 0.9303032  1.248348    1   1.307
+ Drum / Speech       1.077784 0.06191554 Inf 0.9299022  1.249184    1   1.304
+ Drum / Pink Noise   1.082221 0.06175465 Inf 0.9346522  1.253089    1   1.385
+ Flute / Speech      1.000119 0.05775169 Inf 0.8622335  1.160055    1   0.002
+ Flute / Pink Noise  1.004236 0.05748573 Inf 0.8668992  1.163330    1   0.074
+ Speech / Pink Noise 1.004117 0.05749781 Inf 0.8667540  1.163248    1   0.072
+ p.value
+  0.5586
+  0.5604
+  0.5089
+  1.0000
+  0.9999
+  0.9999
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+Intervals are back-transformed from the log scale 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Tests are performed on the log scale 
+
+==============================================================================
+B. Exact marginal likelihood for the Gamma GLMM (adaptive Gauss-Hermite)
+==============================================================================
+Komunikat ostrzegawczy:
+W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.0232695 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+             fit      re_sd     shape reported_logLik quadrature_logLik
+   glmmTMB Gamma 0.24573612 3.7880082      -2912.5412        -2912.5287
+    glmer bobyqa 0.19512091 3.3683046      -2901.9859        -2916.2066
+ glmer nloptwrap 0.19548702 3.3637262      -2901.9721        -2916.2797
+ reported_minus_quadrature
+              -0.012470833
+              14.220736107
+              14.307594286
+
+The quadrature column is the like-for-like comparison. Higher is better.
+Best fit by exact marginal likelihood: glmmTMB Gamma 
+glmmTMB minus best glmer, by quadrature: 3.6779 
+
+==============================================================================
+C. Decomposition of the disparity effect
+==============================================================================
+Mean capture fraction (signed error / disparity): 0.3586892 | median 0.3414998 
+Correlation of unsigned error with disparity: 0.2494944 
+Correlation of orthogonal error with disparity: 0.05540901 
+Slope of unsigned error on disparity, both in cm, no intercept: 0.637 
+Trials with orthogonal error exactly zero, dropped from the Gamma fit: 0 
+convergence 0 | pdHess TRUE 
+
+Orthogonal-error model, same specification:
+                        Estimate Std. Error   z value Pr(>|z|)
+(Intercept)             2.829764   0.095451 29.646316 0.000000
+stimDisparity_c         0.257339   0.160163  1.606730 0.108114
+soundTypeFlute         -0.144053   0.066154 -2.177551 0.029439
+soundTypeSpeech        -0.090972   0.066837 -1.361100 0.173482
+soundTypePink Noise    -0.062478   0.065879 -0.948381 0.342936
+trialSequence_c        -0.007765   0.003354 -2.315031 0.020611
+azimuthSectorRight      0.033323   0.067966  0.490292 0.623927
+azimuthSectorBack      -0.014370   0.069258 -0.207483 0.835633
+azimuthSectorLeft      -0.044832   0.068944 -0.650261 0.515524
+elevationCategoryLevel -0.050308   0.060323 -0.833984 0.404290
+elevationCategoryAbove -0.009480   0.063465 -0.149369 0.881263
+attr(,"ddf")
+[1] "asymptotic"
+
+Disparity on the orthogonal error component: b = 0.25734 per metre, i.e. 2.61 % per 10 cm, z = 1.607 , p = 0.1081 
+For comparison, on total unsigned error: b = 1.16796 per metre, i.e. 12.39 % per 10 cm
+
+Signed (towards-flash) component, LMM in cm:
+                       Estimate Std. Error  t value
+(Intercept)            13.48329    2.19180  6.15171
+stimDisparity_c        36.11401    4.17120  8.65795
+soundTypeFlute          1.33848    1.73884  0.76976
+soundTypeSpeech        -0.24943    1.74530 -0.14291
+soundTypePink Noise    -2.64797    1.73368 -1.52736
+trialSequence_c        -0.00455    0.08902 -0.05107
+azimuthSectorRight     -0.37556    1.77892 -0.21112
+azimuthSectorBack       2.11014    1.82118  1.15867
+azimuthSectorLeft       0.39229    1.83235  0.21409
+elevationCategoryLevel -0.03617    1.56896 -0.02306
+elevationCategoryAbove  0.17801    1.66016  0.10722
+
+Done.

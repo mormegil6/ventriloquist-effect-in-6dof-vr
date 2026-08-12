@@ -1,0 +1,6 @@
+"model term","df1","df2","F.ratio","Chisq","p.value"
+"stimDisparity_c",1,Inf,79.919,79.919,3.90056151365139e-19
+"soundType",3,Inf,1.168,3.504,0.320268770101736
+"trialSequence_c",1,Inf,11.752,11.752,0.000607767451690967
+"azimuthSector",3,Inf,0.169,0.507,0.91733807484914
+"elevationCategory",2,Inf,0.716,1.432,0.488774777163981

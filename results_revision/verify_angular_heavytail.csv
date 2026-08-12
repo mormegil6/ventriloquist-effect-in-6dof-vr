@@ -1,0 +1,4 @@
+"check","pdHess","estimate","se"
+"student_t random slope",FALSE,0.343969520904354,0.034259657992157
+"student_t random intercept only",TRUE,0.320455404218152,0.0272988125671768
+"gaussian glmmTMB, same RE as B1",TRUE,0.335902132365493,0.0649627942402417

@@ -1,0 +1,339 @@
+Supporting descriptives and sensitivity analyses for the TVCG revision
+Run: 2026-08-05 22:38:17  R 4.4.1
+==============================================================================
+Trials: 744, participants: 31, samples: 251666
+
+------------------------------------------------------------------------------
+1. LISTENING DISTANCES (head to true source)
+------------------------------------------------------------------------------
+                                              measure      n   mean     sd
+                head-source distance, all samples (m) 251666 0.5382 0.2848
+ head-source distance, time-weighted over samples (m) 251666 0.5381     NA
+            per-trial time-weighted mean distance (m)    744 0.5005 0.1569
+                       per-trial minimum distance (m)    744 0.1735 0.1367
+                          distance at trial onset (m)    744 0.7047 0.2967
+      min     q25 median    q75   max
+ 0.003998 0.32488 0.5008 0.7037 4.843
+ 0.003998 0.32480 0.5006 0.7035 4.843
+ 0.171912 0.38825 0.4805 0.5874 1.203
+ 0.003998 0.07239 0.1430 0.2304 1.119
+ 0.078169 0.48676 0.6758 0.8906 1.613
+
+Samples within 0.5 m:    0.4990 (unweighted), 0.4993 (time-weighted), n = 125585 of 251666
+Samples within 0.574 m: 0.6007 (unweighted), 0.6009 (time-weighted), n = 151165 of 251666
+
+Per-participant minimum head-source distance (m):
+                              measure  n    mean     sd      min     q25
+ per-participant minimum distance (m) 31 0.03217 0.0223 0.003998 0.01576
+  median     q75     max
+ 0.02184 0.04626 0.09586
+All 31 participants came within 0.5 m at some point: TRUE
+All participants came within 0.10 m at some point: TRUE (n = 31)
+
+Per-participant fraction of samples within 0.5 m:
+                                     measure  n  mean    sd    min    q25
+ per-participant fraction of samples < 0.5 m 31 0.521 0.151 0.1346 0.4543
+ median    q75    max
+ 0.5477 0.6396 0.7456
+
+Trials with any sample within 0.5 m:    0.9691 (721 of 744)
+Trials with any sample within 0.574 m: 0.9866 (734 of 744)
+Trials with any sample within 0.10 m:   0.3468 (258 of 744)
+Trials that never entered 0.5 m: 23
+Samples beyond the 3 m maximum rendering distance: 1 of 251666 (0.0004%), from 1 participants in 1 trials; max distance 4.843 m
+
+Per-trial fraction of samples inside each threshold:
+                                 measure   n   mean     sd min    q25 median
+   per-trial fraction of samples < 0.5 m 744 0.5554 0.2605   0 0.3828 0.5947
+ per-trial fraction of samples < 0.574 m 744 0.6546 0.2469   0 0.5021 0.7027
+    q75 max
+ 0.7596   1
+ 0.8372   1
+
+------------------------------------------------------------------------------
+2. CUE ECCENTRICITY RELATIVE TO HEAD FORWARD (visibility proxy)
+------------------------------------------------------------------------------
+                                             measure      n    mean      sd
+                 cue eccentricity, all samples (deg) 251666 51.2373 38.1287
+ per-trial time-weighted mean cue eccentricity (deg)    744 49.2023 17.8324
+             per-trial median cue eccentricity (deg)    744 41.9933 20.7385
+            per-trial minimum cue eccentricity (deg)    744  6.1023  7.7291
+               cue eccentricity at trial onset (deg)    744 69.7766 39.3400
+        per-trial fraction of time cue within 55 deg    744  0.6474  0.1963
+              source eccentricity, all samples (deg) 251666 60.2614 39.4149
+     per-trial fraction of time source within 55 deg    744  0.5429  0.2002
+     min     q25  median     q75   max
+ 0.02116 20.7773 40.3928 74.0825 179.7
+ 8.16409 37.0139 48.7074 60.6714 132.2
+ 5.74775 26.5135 38.6313 53.1184 134.2
+ 0.02116  1.7192  3.4505  8.5017 129.5
+ 3.60554 38.6010 62.9266 99.1541 179.7
+ 0.00000  0.5163  0.6484  0.8040   1.0
+ 0.09809 28.2046 51.3897 86.9666 179.9
+ 0.00000  0.4087  0.5452  0.6844   1.0
+
+Samples with cue within 55 deg of head forward: 0.6272 (unweighted), 0.6268 (time-weighted)
+Samples with cue within 30 deg: 0.3797; within 90 deg: 0.8273
+Trials with cue never inside 55 deg: 1; trials with cue inside 55 deg for >90% of time: 89
+
+Trial-level correlations (pooled across participants):
+                          x                     y   n pearson_r pearson_ci_lo
+ frac_time_cue_within_55deg        signedError_cm 744   0.09828     0.0265934
+ frac_time_cue_within_55deg ventriloquistBias_pct 744   0.07121    -0.0006653
+            cueEcc_mean_deg        signedError_cm 744  -0.07903    -0.1500524
+            cueEcc_mean_deg ventriloquistBias_pct 744  -0.06033    -0.1316341
+ frac_time_cue_within_55deg   participantError_cm 744  -0.07220    -0.1433301
+ pearson_ci_hi pearson_t pearson_df pearson_p spearman_rho spearman_p
+     0.1689657     2.690        742  0.007301      0.12450  0.0006652
+     0.1423632     1.945        742  0.052175      0.08814  0.0161833
+    -0.0071917    -2.159        742  0.031135     -0.12171  0.0008856
+     0.0115992    -1.646        742  0.100123     -0.09440  0.0100048
+    -0.0003218    -1.972        742  0.049007     -0.05332  0.1462504
+
+LMM: signed error (cm) ~ within- and between-participant cue-looking + disparity + soundType
+                      Estimate Std. Error      df    t value   Pr(>|t|)
+(Intercept)          0.3568699     2.2694 274.071  0.1572532 8.7516e-01
+frac_within          7.3221580     3.7682 708.008  1.9431603 5.2393e-02
+frac_between        14.8932789    11.2329  29.032  1.3258570 1.9523e-01
+stimulusDisparity_m 35.8253856     4.1333 712.614  8.6674608 2.9564e-17
+soundTypeFlute       1.6063773     1.7352 708.009  0.9257332 3.5490e-01
+soundTypeSpeech      0.0094659     1.7291 708.003  0.0054743 9.9563e-01
+soundTypePink Noise -2.6556317     1.7241 708.001 -1.5402969 1.2393e-01
+
+LMM: bias proportion (%) ~ within- and between-participant cue-looking + soundType
+                    Estimate Std. Error     df  t value   Pr(>|t|)
+(Intercept)          36.1783     4.8095 102.47  7.52231 2.1353e-11
+frac_within          11.9583    11.8098 709.00  1.01258 3.1161e-01
+frac_between         42.6371    31.9458  29.00  1.33467 1.9237e-01
+soundTypeFlute        4.1979     5.4375 709.00  0.77203 4.4035e-01
+soundTypeSpeech       1.2255     5.4219 709.00  0.22604 8.2124e-01
+soundTypePink Noise  -6.6611     5.4070 709.00 -1.23194 2.1838e-01
+
+Cue-looking slopes rescaled to a 10-percentage-point increase in time-in-view:
+               model         term est_per_0.1 se_per_0.1 ci_lo_per_0.1
+   signed error (cm)  frac_within      0.7322     0.3768     -0.006332
+   signed error (cm) frac_between      1.4893     1.1233     -0.712289
+ bias proportion (%)  frac_within      1.1958     1.1810     -1.118838
+ bias proportion (%) frac_between      4.2637     3.1946     -1.997549
+ ci_hi_per_0.1     df     t       p
+         1.471 708.01 1.943 0.05239
+         3.691  29.03 1.326 0.19523
+         3.511 709.00 1.013 0.31161
+        10.525  29.00 1.335 0.19237
+
+Cue-looking vs stimulus disparity (possible confound): r = 0.0066, p = 0.8578
+Cue-looking vs trial duration: r = -0.1557; vs mean head-source distance: r = -0.0383
+
+Per-participant correlations of cue-looking with signed error / bias:
+                                       measure  n    mean     sd     min
+ per-participant r (cue-looking, signed error) 31 0.07689 0.2465 -0.3662
+         per-participant r (cue-looking, bias) 31 0.02480 0.2537 -0.4888
+      q25  median    q75    max
+ -0.08065 0.08937 0.2122 0.5211
+ -0.16252 0.02678 0.2100 0.6015
+Participants with positive r (signed error): 21 of 31
+
+------------------------------------------------------------------------------
+3. INTER-TRIAL INTERVALS AND TRIAL DURATIONS
+------------------------------------------------------------------------------
+                          measure   n    mean        sd min   q25 median   q75
+ inter-trial gap, run-ordered (s) 721 0.11084 0.0036436 0.1 0.111  0.111 0.112
+   max
+ 0.181
+Gaps: n = 721 across 31 sessions; IQR width 0.0010 s
+Gaps above 0.2 s: 0; above 1 s: 0; above 5 s: 0
+Tukey upper fence 0.1135 s; gaps above it: 42 (max 0.1810 s)
+
+Largest five inter-trial gaps:
+ participantId level run_id run_end gap_to_next_s
+          P030     2      2 460.439         0.181
+          P001    22     22 969.759         0.123
+          P017     1      1  76.756         0.116
+          P013    15     15 341.031         0.116
+          P008    18     20 862.502         0.115
+
+Trial duration:
+                           measure   n  mean    sd   min   q25 median   q75
+ trial duration responseTime_s (s) 744 37.01 25.88 1.212 19.74  29.97 44.38
+   max
+ 230.7
+IQR width 24.643 s; 5th/95th percentile 12.209 / 85.041 s
+Trials shorter than 3 s: 1; shorter than 5 s: 1; longer than 120 s: 12
+
+Per-participant summed trial time and session span (s):
+                                measure  n  mean    sd   min   q25 median  q75
+      summed trial time per session (s) 31 888.2 338.5 467.7 682.2  818.0 1021
+ session span, first to last sample (s) 31 899.5 343.6 467.6 682.0  820.5 1030
+  max
+ 1914
+ 1914
+Median session span 820.5 s (13.7 min); trial time accounts for 100.02% of the span (median)
+
+------------------------------------------------------------------------------
+4. ORTHOGONAL ERROR COMPONENT
+------------------------------------------------------------------------------
+Trials where sqrt(err^2 - signed^2) is NaN (i.e. where the original zero-imputation bit): 0 of 744
+Max absolute difference, vector form vs sqrt form: 7.475e-05 cm
+                                measure   n    mean      sd       min     q25
+                  orthogonal error (cm) 744 16.3810 13.3862   0.53374  7.7935
+                    unsigned error (cm) 744 26.1843 17.0236   0.60436 14.8146
+                      signed error (cm) 744 13.6701 18.4752 -54.03777  3.0794
+             absolute signed error (cm) 744 17.4876 14.9074   0.01408  6.7687
+ orthogonal / unsigned error, per trial 744  0.6516  0.2757   0.02980  0.4163
+ orthogonal / |signed| error, per trial 744  3.3218 14.5447   0.02981  0.4579
+  median     q75    max
+ 12.7366 19.7739  90.22
+ 22.2872 32.5443 125.64
+ 12.0971 22.4755 100.48
+ 13.9427 24.1375 100.48
+  0.6888  0.9181   1.00
+  0.9501  2.3157 328.65
+
+Ratio of means: mean(orthogonal) / mean(signed) = 16.3810 / 13.6701 = 1.1983
+Ratio of means: mean(orthogonal) / mean(|signed|) = 16.3810 / 17.4876 = 0.9367
+Ratio of means: mean(orthogonal) / mean(unsigned error) = 0.6256
+Trials where orthogonal exceeds |signed|: 359 (48.3%)
+
+Per-participant mean orthogonal error (cm):
+                                    measure  n  mean    sd   min   q25 median
+ per-participant mean orthogonal error (cm) 31 16.38 6.958 8.078 11.24  14.12
+   q75   max
+ 19.11 34.63
+
+------------------------------------------------------------------------------
+5. OUTLIER SENSITIVITY OF THE PRIMARY SIGNED-ERROR LMM
+------------------------------------------------------------------------------
+
+Five shortest trials:
+ participantId trialSequenceNum  soundType stimulusDisparity_m responseTime_s
+          P020                1     Speech                0.29         1.2115
+          P008               22 Pink Noise                0.38         6.2934
+          P021                7 Pink Noise                0.39         8.1679
+          P012               20     Speech                0.26         8.7072
+          P025               24     Speech                0.31         8.7498
+ participantError_cm signedError_m n_samples total_path_length
+             125.640       0.99088        10          0.025419
+              14.444       0.12502        56          1.187711
+              38.847       0.35802        73          2.124758
+              27.308       0.11475        79          1.947333
+              30.270      -0.13014        78          2.874198
+
+Five largest unsigned errors:
+ participantId trialSequenceNum  soundType stimulusDisparity_m responseTime_s
+          P020                1     Speech                0.29         1.2115
+          P003                5 Pink Noise                0.38        82.9305
+          P007                1      Flute                0.38        54.7647
+          P031               14       Drum                0.68        40.5731
+          P003               12      Flute                0.68        86.1759
+ participantError_cm signedError_m ventriloquistBias
+             125.640       0.99088            3.4168
+             103.855       0.66451            1.7487
+             103.599       1.00482            2.6443
+             103.195       0.71937            1.0579
+              94.682       0.86135            1.2667
+
+Five most negative signed errors:
+ participantId trialSequenceNum  soundType stimulusDisparity_m responseTime_s
+          P010                1       Drum                0.23         85.087
+          P023                1     Speech                0.35         83.500
+          P028                8       Drum                0.58         44.015
+          P003               24 Pink Noise                0.24         21.164
+          P026                9     Speech                0.23         63.382
+ participantError_cm signedError_m ventriloquistBias
+              68.966      -0.54038          -2.34947
+              72.607      -0.50220          -1.43485
+              57.063      -0.47378          -0.81687
+              45.544      -0.45070          -1.87793
+              35.940      -0.30874          -1.34235
+
+Unsigned error: mean 26.1843 cm, SD 17.0236 cm, mean + 3 SD = 77.2553 cm; trials above: 17
+Signed error: mean 0.1367 m, SD 0.1848 m, +/- 3 SD = [-0.4176, 0.6910] m; trials outside: 13
+Trials with responseTime_s < 3 s: 1
+
+Primary model: signedError_m ~ stimulusDisparity_m + soundType + (1 + stimulusDisparity_m | participantId), REML, bobyqa
+                                                   subset n_trials n_dropped
+                           full (published primary model)      744         0
+                             exclude responseTime_s < 3 s      743         1
+                     exclude unsigned error > mean + 3 SD      727        17
+                     exclude signed error beyond +/- 3 SD      731        13
+ exclude both (RT < 3 s and unsigned error > mean + 3 SD)      727        17
+ slope_m_per_m slope_se slope_df slope_t    slope_p slope_ci_lo slope_ci_hi
+       0.34660 0.053514   30.505  6.4767 3.4314e-07     0.24171     0.45148
+       0.35202 0.052248   30.385  6.7375 1.6983e-07     0.24961     0.45442
+       0.31755 0.050335   30.287  6.3086 5.6628e-07     0.21889     0.41620
+       0.30913 0.050918   29.718  6.0710 1.1878e-06     0.20933     0.40892
+       0.31755 0.050335   30.287  6.3086 5.6628e-07     0.21889     0.41620
+ slope_change_pct slope_change_in_base_se
+           0.0000                 0.00000
+           1.5637                 0.10128
+          -8.3818                -0.54286
+         -10.8111                -0.70021
+          -8.3818                -0.54286
+
+Random-effect and convergence detail:
+                                                   subset sd_intercept sd_slope
+                           full (published primary model)      0.04449   0.1901
+                             exclude responseTime_s < 3 s      0.04029   0.1848
+                     exclude unsigned error > mean + 3 SD      0.04281   0.1945
+                     exclude signed error beyond +/- 3 SD      0.03850   0.1997
+ exclude both (RT < 3 s and unsigned error > mean + 3 SD)      0.04281   0.1945
+  sigma is_singular warnings
+ 0.1641       FALSE     none
+ 0.1608       FALSE     none
+ 0.1420       FALSE     none
+ 0.1417       FALSE     none
+ 0.1420       FALSE     none
+
+Full fixed-effect tables per subset:
+
+[full (published primary model)]  n = 744
+                       Estimate Std. Error      df   t value   Pr(>|t|)
+(Intercept)          0.00867386   0.021447  51.956  0.404433 6.8755e-01
+stimulusDisparity_m  0.34659642   0.053514  30.505  6.476733 3.4314e-07
+soundTypeFlute       0.01203889   0.017058 688.846  0.705767 4.8057e-01
+soundTypeSpeech     -0.00025016   0.017045 689.250 -0.014677 9.8829e-01
+soundTypePink Noise -0.02506852   0.017042 689.522 -1.470966 1.4176e-01
+
+[exclude responseTime_s < 3 s]  n = 743
+                      Estimate Std. Error      df  t value   Pr(>|t|)
+(Intercept)          0.0065978   0.020794  52.233  0.31729 7.5229e-01
+stimulusDisparity_m  0.3520162   0.052248  30.385  6.73747 1.6983e-07
+soundTypeFlute       0.0121624   0.016706 687.976  0.72804 4.6684e-01
+soundTypeSpeech     -0.0051629   0.016715 688.918 -0.30887 7.5751e-01
+soundTypePink Noise -0.0251120   0.016690 688.661 -1.50458 1.3289e-01
+
+[exclude unsigned error > mean + 3 SD]  n = 727
+                      Estimate Std. Error      df  t value   Pr(>|t|)
+(Intercept)          0.0061935   0.019022  49.169  0.32560 7.4611e-01
+stimulusDisparity_m  0.3175455   0.050335  30.287  6.30860 5.6628e-07
+soundTypeFlute       0.0097623   0.014994 672.967  0.65109 5.1521e-01
+soundTypeSpeech      0.0033978   0.014916 670.873  0.22780 8.1987e-01
+soundTypePink Noise -0.0168291   0.014966 672.967 -1.12449 2.6121e-01
+
+[exclude signed error beyond +/- 3 SD]  n = 731
+                      Estimate Std. Error      df  t value   Pr(>|t|)
+(Intercept)          0.0231457   0.018647  51.696  1.24129 2.2010e-01
+stimulusDisparity_m  0.3091254   0.050918  29.718  6.07101 1.1878e-06
+soundTypeFlute       0.0017034   0.014891 675.901  0.11439 9.0896e-01
+soundTypeSpeech     -0.0063899   0.014880 676.747 -0.42943 6.6775e-01
+soundTypePink Noise -0.0243765   0.014861 676.909 -1.64026 1.0142e-01
+
+[exclude both (RT < 3 s and unsigned error > mean + 3 SD)]  n = 727
+                      Estimate Std. Error      df  t value   Pr(>|t|)
+(Intercept)          0.0061935   0.019022  49.169  0.32560 7.4611e-01
+stimulusDisparity_m  0.3175455   0.050335  30.287  6.30860 5.6628e-07
+soundTypeFlute       0.0097623   0.014994 672.967  0.65109 5.1521e-01
+soundTypeSpeech      0.0033978   0.014916 670.873  0.22780 8.1987e-01
+soundTypePink Noise -0.0168291   0.014966 672.967 -1.12449 2.6121e-01
+
+==============================================================================
+Files written to /Users/bart/Library/CloudStorage/OneDrive-Personal/Documents/R/PawelPerkowskiProject_6dofCorrelations/results_revision:
+  descriptives_listening_distance.csv
+  descriptives_distance_per_participant.csv
+  descriptives_cue_visibility.csv
+  descriptives_cue_visibility_correlations.csv
+  cue_visibility_lmm_slopes.csv
+  descriptives_intertrial_timing.csv
+  descriptives_orthogonal_error.csv
+  outlier_sensitivity_signed_lmm.csv
+  revision_descriptives_and_sensitivity_log.txt

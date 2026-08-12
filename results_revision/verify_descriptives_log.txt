@@ -1,0 +1,234 @@
+=== VERIFICATION RUN ===
+R 4.4.1  lme4 1.1.38  lmerTest 3.1.3
+trials: 744   participants: 31
+samples: 251666   runs: 752
+
+=== (1) LISTENING DISTANCE ===
+per-sample mean   = 0.538230228
+per-sample SD     = 0.2847840724
+per-sample quart  = 0.003998460619 0.324877266150 0.500750999353 0.703711637475 4.843099770863
+time-wtd mean     = 0.5380509664
+time-wtd median   = 0.500595386
+n < 0.5 m   = 125585  (49.90145669%)
+n < 0.574 m = 151165  (60.06572203%)
+  [<= instead of < : 125585 / 151165]
+time-wtd frac <0.5   = 49.9258449
+time-wtd frac <0.574 = 60.0906753
+n samples > 3 m = 1   max = 4.843099771
+per-trial time-wtd mean dist: M = 0.5005253688  SD = 0.1568960055  Mdn = 0.4805225205
+per-trial min dist: M = 0.1735044723  Mdn = 0.1430076228
+dist at trial onset: M = 0.7046520495  Mdn = 0.6758214774
+trials with any sample <0.5 m   : 721/744 (96.90860215%)
+trials with any sample <0.574 m : 734 (98.65591398%)
+trials with any sample <0.10 m  : 258 (34.67741935%)
+per-participant min dist (cm): M = 3.216681178  SD = 2.230305594  Mdn = 2.184470358  range 0.3998460619-9.586317168
+participants reaching <10 cm: 31/31
+
+=== (2) CUE VISIBILITY ===
+cueEcc per-sample: M = 51.23730132  SD = 38.12868226  quart =   0.02116236963  20.77733946904  40.39283669941  74.08250583113 179.70880594134
+pooled samples with cue within 30 deg: 37.96619329%   (time-wtd 37.94206187%)
+pooled samples with cue within 55 deg: 62.72321251%   (time-wtd 62.68062223%)
+pooled samples with cue within 90 deg: 82.72551715%   (time-wtd 82.70295598%)
+pooled samples with SOURCE within 55 deg: 53.22649861%
+time-wtd pooled SOURCE within 55 deg   : 53.19040109%
+per-trial frac cue<55: M = 0.6474196799 SD = 0.1962811861 Mdn = 0.6484067896 Q1 = 0.5162671221 Q3 = 0.803966785 range 0-1
+per-trial frac src<55: M = 0.5428852445 Mdn = 0.5452111134
+trials with cue outside 55 deg throughout: 1
+trials with cue inside 55 deg >90% of time: 89
+
+-- pooled trial-level correlations --
+                          pair   method         est           lo          hi
+  frac_cue55 vs signedError_cm  pearson  0.09828241  0.026593364  0.16896571
+  frac_cue55 vs signedError_cm spearman  0.12450288           NA          NA
+        frac_cue55 vs bias_pct  pearson  0.07121498 -0.000665342  0.14236317
+        frac_cue55 vs bias_pct spearman  0.08813914           NA          NA
+ cueEcc_mean vs signedError_cm  pearson -0.07902779 -0.150052367 -0.00719173
+       frac_cue55 vs disparity  pearson  0.00658203 -0.065325788  0.07842184
+  frac_cue55 vs responseTime_s  pearson -0.15567603 -0.225034909 -0.08474740
+         stat  df           p
+  2.69021e+00 742 7.30137e-03
+  6.00927e+07  NA 6.65218e-04
+  1.94481e+00 742 5.21752e-02
+  6.25886e+07  NA 1.61833e-02
+ -2.15945e+00 742 3.11354e-02
+  1.79296e-01 742 8.57754e-01
+ -4.29290e+00 742 1.99754e-05
+per-participant r: positive in 21/31, median r = 0.08937386932
+
+-- cue-visibility LMM on signed error (cm) --
+                term    Estimate Std. Error      df     t value    Pr(>|t|)
+         (Intercept)  0.35686991    2.26940 274.071  0.15725324 8.75161e-01
+         frac_within  7.32215801    3.76817 708.008  1.94316031 5.23928e-02
+        frac_between 14.89327895   11.23295  29.032  1.32585699 1.95225e-01
+ stimulusDisparity_m 35.82538562    4.13332 712.614  8.66746078 2.95644e-17
+      soundTypeFlute  1.60637728    1.73525 708.009  0.92573318 3.54900e-01
+     soundTypeSpeech  0.00946593    1.72914 708.003  0.00547435 9.95634e-01
+ soundTypePink Noise -2.65563167    1.72410 708.001 -1.54029692 1.23935e-01
+isSingular = FALSE
+
+-- cue-visibility LMM on bias proportion (%) --
+                term Estimate Std. Error      df   t value    Pr(>|t|)
+         (Intercept) 36.17833    4.80947 102.467  7.522308 2.13529e-11
+         frac_within 11.95835   11.80977 709.000  1.012581 3.11606e-01
+        frac_between 42.63711   31.94579  29.000  1.334671 1.92369e-01
+      soundTypeFlute  4.19793    5.43749 709.000  0.772035 4.40351e-01
+     soundTypeSpeech  1.22554    5.42189 709.000  0.226036 8.21239e-01
+ soundTypePink Noise -6.66109    5.40700 709.000 -1.231938 2.18381e-01
+
+-- same model + scaled trial duration --
+                  term  Estimate Std. Error       df    t value    Pr(>|t|)
+           (Intercept)  0.195273   2.303383 232.6918  0.0847764 9.32512e-01
+           frac_within  8.152156   3.761135 706.8900  2.1674722 3.05320e-02
+          frac_between 17.544537  11.981194  28.3156  1.4643396 1.54116e-01
+   stimulusDisparity_m 35.131857   4.118826 710.5237  8.5295813 8.82113e-17
+        soundTypeFlute  1.886528   1.728822 706.4894  1.0912217 2.75547e-01
+       soundTypeSpeech  0.572180   1.734102 707.9356  0.3299578 7.41529e-01
+   soundTypePink Noise -1.801076   1.748696 710.3088 -1.0299538 3.03382e-01
+ scale(responseTime_s)  1.753012   0.711132 707.4057  2.4651011 1.39339e-02
+
+-- same model + random slope for frac_within --
+                term  Estimate Std. Error       df   t value    Pr(>|t|)
+         (Intercept) -0.291250    2.25537 267.9234 -0.129136 8.97347e-01
+         frac_within  7.248097    5.32980  29.0010  1.359919 1.84335e-01
+        frac_between 18.895978   10.88557  29.3914  1.735873 9.30605e-02
+ stimulusDisparity_m 36.954595    4.09646 710.2524  9.021104 1.71615e-18
+      soundTypeFlute  1.814460    1.71625 702.2952  1.057225 2.90773e-01
+     soundTypeSpeech  0.317232    1.71318 704.3039  0.185172 8.53148e-01
+ soundTypePink Noise -2.290300    1.70344 700.4711 -1.344513 1.79218e-01
+isSingular(random slope model) = FALSE
+
+-- same model with the PRIMARY random-effects structure --
+                term  Estimate Std. Error       df   t value    Pr(>|t|)
+         (Intercept)  0.743044    2.17610  51.3128  0.341457 7.34154e-01
+         frac_within  7.648451    3.74015 707.8192  2.044960 4.12281e-02
+        frac_between 11.950892   10.13666  29.2898  1.178977 2.47896e-01
+ stimulusDisparity_m 34.524023    5.38685  30.6319  6.408949 4.06796e-07
+      soundTypeFlute  1.565719    1.71141 689.9577  0.914871 3.60579e-01
+     soundTypeSpeech  0.244437    1.70474 688.3976  0.143387 8.86027e-01
+ soundTypePink Noise -2.469516    1.69992 688.7041 -1.452728 1.46755e-01
+
+=== (3) INTER-TRIAL TIMING ===
+n runs = 752  n sessions = 31
+n gaps = 721
+gap: M = 0.1108363384  Mdn = 0.111  IQR 0.111-0.112  range 0.1-0.181
+n gaps > 0.2 s = 0   n negative = 0
+responseTime_s: Mdn = 29.96646118  IQR 19.74189758-44.38491821  range 1.211517334-230.7486267  M = 37.00855339  SD = 25.88002683
+  p05/p95 = 12.20898590 / 85.04146194
+  n < 3 s = 1   n > 120 s = 12
+session span: Mdn = 820.453 s  range 467.56-1913.612 s
+  = 13.67421667 min; range 7.792666667-31.89353333 min
+sum(responseTime)/span: Mdn = 100.0195396%  range 81.57405196-100.0385532%
+sum(trajectory_duration)/span: Mdn = 99.68858667%
+
+=== (4) ORTHOGONAL ERROR ===
+orth (cm): M = 16.3809861 SD = 13.38620287 Mdn = 12.73661218 Q1 = 7.793472332 Q3 = 19.77391639 range 0.5337411146-90.21594377
+ratio of means vs mean signed  = 1.19830583
+ratio of means vs mean |signed| = 0.9367204105   (mean |signed| = 17.48759386)
+ratio of means vs mean unsigned = 0.6256026113
+per-trial orth/unsigned: M = 0.6516090936 Mdn = 0.6888022711
+orth > |signed| in 359/744 (48.25268817%)
+per-participant mean orth: range 8.078170145-34.63032137  Mdn = 14.11682604
+RMS signed (1-D)          = 22.97276314 cm
+RMS orthogonal (2-D norm) = 21.14914385 cm
+RMS orthogonal per axis   = 14.95470303 cm
+SD of signed (bias removed) = 18.47523779 cm
+n trials with negative radicand (sqrt form -> NaN): 0
+min radicand = 2.848855486e-05
+max |vector form - sqrt form| = 7.474949227e-07 m
+
+=== (5) OUTLIER SENSITIVITY ===
+unsigned cut = 77.25526229 cm -> 17 trials
+signed cuts  = -41.75559204 to 69.09583472 cm -> 13 trials
+RT < 3 s -> 1 trials
+
+-- 3 shortest trials --
+ participantId trialSequenceNum  soundType stimulusDisparity_m responseTime_s
+          P020                1     Speech                0.29        1.21152
+          P008               22 Pink Noise                0.38        6.29340
+          P021                7 Pink Noise                0.39        8.16794
+ participantError_cm signedError_m ventriloquistBias n_samples
+            125.6395      0.990880          3.416829        10
+             14.4442      0.125019          0.328996        56
+             38.8469      0.358018          0.917996        73
+ total_path_length
+         0.0254194
+         1.1877108
+         2.1247583
+-- 5 largest errors --
+ participantId trialSequenceNum participantError_cm responseTime_s
+          P020                1            125.6395        1.21152
+          P003                5            103.8549       82.93051
+          P007                1            103.5994       54.76466
+          P031               14            103.1952       40.57312
+          P003               12             94.6824       86.17590
+-- most negative signed error --
+ participantId trialSequenceNum signedError_cm
+          P010                1       -54.0378
+          P023                1       -50.2196
+          P028                8       -47.3785
+
+-- primary-model refits across subsets and optimizers --
+     subset   optimizer   n      est        se      df       t           p
+       full      bobyqa 744 0.346596 0.0535141 30.5050 6.47673 3.43137e-07
+       full Nelder_Mead 744 0.346596 0.0535140 30.5049 6.47674 3.43132e-07
+       full   nloptwrap 744 0.346597 0.0535139 30.5049 6.47675 3.43122e-07
+    rt_ge_3      bobyqa 743 0.352016 0.0522476 30.3853 6.73747 1.69831e-07
+    rt_ge_3 Nelder_Mead 743 0.352016 0.0522475 30.3852 6.73747 1.69830e-07
+    rt_ge_3   nloptwrap 743 0.352016 0.0522472 30.3848 6.73752 1.69820e-07
+    err_3sd      bobyqa 727 0.317546 0.0503353 30.2868 6.30860 5.66284e-07
+    err_3sd Nelder_Mead 727 0.317546 0.0503354 30.2868 6.30859 5.66294e-07
+    err_3sd   nloptwrap 727 0.317545 0.0503355 30.2866 6.30858 5.66335e-07
+ signed_3sd      bobyqa 731 0.309125 0.0509183 29.7179 6.07101 1.18776e-06
+ signed_3sd Nelder_Mead 731 0.310424 0.0470309 35.2833 6.60044 1.21329e-07
+ signed_3sd   nloptwrap 731 0.310424 0.0470308 35.6840 6.60044 1.15052e-07
+       both      bobyqa 727 0.317546 0.0503353 30.2868 6.30860 5.66284e-07
+       both Nelder_Mead 727 0.317546 0.0503354 30.2868 6.30859 5.66294e-07
+       both   nloptwrap 727 0.317545 0.0503355 30.2866 6.30858 5.66335e-07
+   pct_change shift_in_base_se singular rcond_vcov min_eig_hess
+  0.00000e+00      0.00000e+00    FALSE  0.0162493      5.03966
+  1.01552e-05      6.57724e-07    FALSE  0.0162494      5.03905
+  2.34267e-05      1.51729e-06    FALSE  0.0162494      5.03929
+  1.56370e+00      1.01277e-01    FALSE  0.0170950      4.24086
+  1.56371e+00      1.01277e-01    FALSE  0.0170950      4.24077
+  1.56376e+00      1.01281e-01    FALSE  0.0170954      4.24050
+ -8.38176e+00     -5.42864e-01    FALSE  0.0202419      3.97659
+ -8.38177e+00     -5.42865e-01    FALSE  0.0202418      3.97669
+ -8.38178e+00     -5.42865e-01    FALSE  0.0202418      3.97687
+ -1.08111e+01     -7.00209e-01    FALSE  0.0164373      4.46282
+ -1.04364e+01     -6.75936e-01     TRUE  0.0190396           NA
+ -1.04364e+01     -6.75936e-01     TRUE  0.0190396           NA
+ -8.38176e+00     -5.42864e-01    FALSE  0.0202419      3.97659
+ -8.38177e+00     -5.42865e-01    FALSE  0.0202418      3.97669
+ -8.38178e+00     -5.42865e-01    FALSE  0.0202418      3.97687
+                                                                                                          warnings
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+ boundary (singular) fit: see help('isSingular')\n | Model failed to converge with 1 negative eigenvalue: -3.3e-01
+ boundary (singular) fit: see help('isSingular')\n | Model failed to converge with 1 negative eigenvalue: -2.8e-01
+                                                                                                              none
+                                                                                                              none
+                                                                                                              none
+full-fit Wald CI: 0.2417107494 to 0.4514820979
+full-fit profile CI: 0.2388182238 to 0.4518990563
+anova F test: 
+                term   Sum Sq   Mean Sq NumDF   DenDF  F value      Pr(>F)
+ stimulusDisparity_m 1.129918 1.1299181     1  30.505 41.94807 3.43137e-07
+           soundType 0.135108 0.0450359     3 690.708  1.67195 1.71699e-01
+
+-- Wald CIs per subset (bobyqa) --
+     subset   n      est       lo       hi covers_full_est
+       full 744 0.346596 0.241709 0.451484            TRUE
+    rt_ge_3 743 0.352016 0.249611 0.454421            TRUE
+    err_3sd 727 0.317546 0.218888 0.416203            TRUE
+ signed_3sd 731 0.309125 0.209326 0.408925            TRUE
+       both 727 0.317546 0.218888 0.416203            TRUE
+
+=== END ===

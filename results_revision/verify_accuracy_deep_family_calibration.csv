@@ -1,0 +1,7 @@
+"family","slope","true_slope","ok"
+"poisson",0.49931023855418,0.5,TRUE
+"nbinom2",0.506384268930561,0.5,TRUE
+"gaussian",0.507468727442237,0.5,TRUE
+"Gamma(log)",0.506143870634765,0.5,TRUE
+"lognormal(log)",0.31251061806085,0.5,FALSE
+"beta_family",0.511718805431126,0.5,TRUE

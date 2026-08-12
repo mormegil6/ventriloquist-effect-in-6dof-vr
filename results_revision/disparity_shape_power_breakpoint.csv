@@ -1,0 +1,4 @@
+"scenario","slope_before","slope_after","B","median_maxLRT","power_at_null95","median_argmax_m","mean_signal_drop_cm"
+"slope drops 25% at 0.40 m",0.4,0.3,400,2.01822509299507,0.085,0.39,3
+"slope drops 50% at 0.40 m",0.46,0.23,400,3.78547027418603,0.2825,0.38,6.9
+"slope drops to zero at 0.40 m (full saturation)",0.55,0,400,14.2902053472652,0.9125,0.4,16.5

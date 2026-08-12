@@ -1,0 +1,261 @@
+
+==============================================================================
+0. DATA INTEGRITY
+==============================================================================
+trials: 744  participants: 31 
+complete cases on model variables: 744 
+all errors strictly positive: TRUE 
+max |participant_mean_rate - recomputed group mean|: 0 
+max |trial_rate_deviation - recomputed deviation| : 0 
+max |movement_rate - path/duration|: 0 
+trials per participant: min 24  max 24 
+SD of participant mean rate (between, n=31): 0.04134 m/s
+SD of trial rate deviation  (within, n=744): 0.04963 m/s
+range of participant mean rate: 0.1288 0.2976 
+
+==============================================================================
+1. REPRODUCTION OF THE PUBLISHED (DEGENERATE) glmer FIT
+==============================================================================
+warnings emitted:
+  Model failed to converge with max|grad| = 0.0189917 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting. 
+                       Estimate Std. Error      t value Pr(>|z|)
+(Intercept)           -0.585268   0.004265  -137.213055        0
+stimulusDisparity_m    1.135029   0.004294   264.334603        0
+soundTypeFlute        -0.080028   0.004202   -19.043560        0
+soundTypeSpeech       -0.070063   0.004246   -16.501455        0
+soundTypePink Noise   -0.105467   0.004265   -24.727078        0
+trialSequenceNum      -0.010152   0.001720    -5.901311        0
+participant_mean_rate -4.615662   0.004290 -1076.010144        0
+trial_rate_deviation   0.336276   0.004287    78.434758        0
+isSingular: FALSE 
+range of fixed-effect SEs: 0.001720214 0.004293908 
+logLik: 530.7055 
+
+random-intercept VARIANCE (glmer): 0.02113561 
+random-intercept SD       (glmer): 0.1453809 
+residual sigma            (glmer): 0.5491154 
+
+lme4 across optimisers (same data, same formula):
+   optimizer  logLik    RE_SD beta_between SE_between beta_within  SE_within
+      bobyqa 530.705 0.145381     -4.61566 0.00428961    0.336276 0.00428734
+ Nelder_Mead 530.710 0.145287     -4.61498 1.03017953    0.317172 0.39463453
+      nAGQ=0 530.696 0.145192     -4.61563 0.80977923    0.335355 0.45043500
+
+==============================================================================
+2. glmmTMB PRIMARY REFIT
+==============================================================================
+                       Estimate Std. Error   z value Pr(>|z|)
+(Intercept)           -0.581120   0.204014 -2.848426 0.004394
+stimulusDisparity_m    1.138003   0.129689  8.774882 0.000000
+soundTypeFlute        -0.077836   0.057482 -1.354096 0.175706
+soundTypeSpeech       -0.069904   0.053987 -1.294830 0.195379
+soundTypePink Noise   -0.104708   0.053771 -1.947296 0.051499
+trialSequenceNum      -0.010126   0.002811 -3.601952 0.000316
+participant_mean_rate -4.615327   0.830188 -5.559375 0.000000
+trial_rate_deviation   0.328970   0.398721  0.825063 0.409336
+attr(,"ddf")
+[1] "asymptotic"
+
+convergence code: 0  message: relative convergence (4) 
+positive-definite Hessian: TRUE 
+max abs gradient (sdr$gradient.fixed): 0.002081608 
+random-intercept SD: 0.156654  variance: 0.02454048 
+dispersion sigma(): 0.5143681  (glmer: 0.5491154 )
+logLik: 523.6532  df: 10 
+vcov condition number (fixed effects): 199165.6 
+                          2.5 %    97.5 %  Estimate
+(Intercept)           -0.980981 -0.181259 -0.581120
+stimulusDisparity_m    0.883818  1.392188  1.138003
+soundTypeFlute        -0.190500  0.034827 -0.077836
+soundTypeSpeech       -0.175716  0.035909 -0.069904
+soundTypePink Noise   -0.210097  0.000681 -0.104708
+trialSequenceNum      -0.015636 -0.004616 -0.010126
+participant_mean_rate -6.242466 -2.988188 -4.615327
+trial_rate_deviation  -0.452508  1.110448  0.328970
+
+Interpretable scale:
+  between, per +0.1 m/s: -36.968 % CI -46.434 to -25.83 
+  between, per +1 SD ( 0.0413  m/s): -17.369 % CI -22.744 to -11.62 
+  within,  per +0.1 m/s: 3.344 % CI -4.424 to 11.745 
+  within,  per +1 SD ( 0.0496  m/s): 1.646 % CI -2.221 to 5.666 
+  0.1 m/s expressed in between-SD units: 2.419 SD
+  0.1 m/s expressed in within-SD units : 2.015 SD
+
+==============================================================================
+3. CROSS-OPTIMISER AND CROSS-FAMILY STABILITY OF THE glmmTMB FIT
+==============================================================================
+BFGS: beta_between -4.614982  SE 0.8302543  RE SD 0.1566722  logLik 523.6532 
+REML: beta_between -4.615255  SE 0.8590862 
+
+log-normal LMM on log(error), lmerTest Satterthwaite (REML):
+                      Estimate Std. Error        df  t value Pr(>|t|)
+participant_mean_rate -4.60810    0.87063  28.99382 -5.29282  0.00001
+trial_rate_deviation   0.88859    0.45267 707.01733  1.96298  0.05004
+same, ML:
+                      Estimate Std. Error        df  t value Pr(>|t|)
+participant_mean_rate -4.60812    0.84200  30.99303 -5.47285  0.00001
+trial_rate_deviation   0.88866    0.45077 713.00682  1.97145  0.04906
+glmmTMB lognormal family:
+                      Estimate Std. Error  z value Pr(>|z|)
+participant_mean_rate -2.56268    0.63796 -4.01697  0.00006
+trial_rate_deviation   1.04941    0.36381  2.88453  0.00392
+Komunikaty ostrzegawcze:
+1: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  unable to evaluate scaled gradient
+2: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.
+
+logLik comparability check (same base model, same data):
+  glmmTMB base logLik: 512.6717  df: 8 
+  glmer   base logLik: 523.1947  df: 8 
+  difference (glmer - glmmTMB): 10.52298 
+  glmer Gamma shape (1/sigma^2): 3.348439   glmmTMB shape: 0.5145149 
+
+==============================================================================
+4. RESIDUAL DIAGNOSTICS (DHARMa, 1000 sims)
+==============================================================================
+uniformity KS: D = 0.0313871  p = 0.4560614 
+dispersion   : stat = 1.077353  p = 0.446 
+outliers     : p = 0.004220607   (observed 6 of 744, expected 1.49 )
+quantile dev : p = 0.6123475 
+
+==============================================================================
+5. LIKELIHOOD RATIO TESTS
+==============================================================================
+base -> +both movement terms               chi2(2) = 21.9629, p = 1.70144e-05  [logLik 512.6717 -> 523.6532]
+within-only -> +between (between alone)    chi2(1) = 21.3722, p = 3.78207e-06  [logLik 512.9670 -> 523.6532]
+between-only -> +within (within alone)     chi2(1) = 0.6793, p = 0.409812  [logLik 523.3135 -> 523.6532]
+base -> +between only (marginal)           chi2(1) = 21.2836, p = 3.96116e-06  [logLik 512.6717 -> 523.3135]
+base -> +within only (marginal)            chi2(1) = 0.5907, p = 0.442166  [logLik 512.6717 -> 512.9670]
+
+==============================================================================
+5b. THE PUBLISHED DEGENERATE glmer LRT (pooled movement_rate)
+==============================================================================
+Komunikaty ostrzegawcze:
+1: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  unable to evaluate scaled gradient
+2: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.
+glmer base   logLik: 523.1947 
+glmer pooled logLik: 522.7016 
+delta logLik on ADDING a parameter: -0.4930771 
+Data: d
+Models:
+m_base_glmer: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum + (1 | participantId)
+m_pool_glmer: participantError_m ~ stimulusDisparity_m + soundType + trialSequenceNum + movement_rate + (1 | participantId)
+             npar     AIC     BIC logLik -2*log(L) Chisq Df Pr(>Chisq)
+m_base_glmer    8 -1030.4 -993.49 523.19   -1046.4                    
+m_pool_glmer    9 -1027.4 -985.89 522.70   -1045.4     0  1          1
+              Estimate Std. Error   z value Pr(>|z|)
+movement_rate -0.22606   0.399902 -0.565288 0.571878
+glmmTMB base -> +pooled movement_rate      chi2(1) = 0.3197, p = 0.571813  [logLik 512.6717 -> 512.8315]
+    chisq        df         p 
+0.3196579 1.0000000 0.5718133 
+
+==============================================================================
+6. DIFFICULTY-CONTROL MODELS
+==============================================================================
++angDisp:
+                       Estimate Std. Error   z value Pr(>|z|)
+participant_mean_rate -4.200738   0.753389 -5.575791 0.000000
+trial_rate_deviation   0.264552   0.397753  0.665116 0.505977
+angDisp_mean_deg      -0.004724   0.001424 -3.316526 0.000911
+
++angDisp+responseTime:
+                       Estimate Std. Error   z value Pr(>|z|)
+participant_mean_rate -4.224529   0.720172 -5.866004 0.000000
+trial_rate_deviation   0.288863   0.393175  0.734693 0.462526
+angDisp_mean_deg      -0.004159   0.001407 -2.957127 0.003105
+responseTime_s         0.002949   0.000863  3.417422 0.000632
+
+==============================================================================
+7. PARTICIPANT-LEVEL TRIANGULATION (n = 31)
+==============================================================================
+Pearson  r = -0.7355265  CI -0.8645436 -0.5155532  t( 29 ) = -5.846428  p = 2.429323e-06 
+Spearman rho = -0.5197581  S = 7538  p = 0.003101061 
+Pearson with participant MEDIAN error: r = -0.7364498 
+
+participant-level OLS, log mean error ~ mean rate:
+            Estimate Std. Error  t value Pr(>|t|)
+(Intercept) -0.35165    0.19561 -1.79773  0.08264
+mean_rate   -4.51131    0.84757 -5.32266  0.00001
+raw-scale slope: -1.382071 m per 1 m/s = -13.82071 cm per 0.1 m/s
+
+leave-one-participant-out range of Pearson r:
+  min -0.7810091  max -0.6651933  most influential: P003 
+max Cook's D (participant-level OLS on log error): 0.2413016 
+participant with max mean rate: P031  rate = 0.2975734  (next: 0.2822081 )
+
+bootstrap (5000 participant resamples, seed 20260805):
+  Pearson  CI: -0.8772673 -0.4030956 
+  Spearman CI: -0.7830931 -0.1549795 
+  log-slope CI: -5.940978 -2.357725 
+  degenerate resamples dropped: 0 
+  share of resamples with r < 0: 0.9996  (count with r >= 0: 2 )
+  share across seeds:
+    seed     1: share r<0 = 0.9990 (5 resamples with r >= 0)
+    seed     2: share r<0 = 0.9988 (6 resamples with r >= 0)
+    seed    42: share r<0 = 0.9990 (5 resamples with r >= 0)
+    seed   999: share r<0 = 0.9994 (3 resamples with r >= 0)
+    seed  2026: share r<0 = 0.9982 (9 resamples with r >= 0)
+
+permutation p (two-sided, 200000 perms) for participant-level r: 2.999985e-05 
+
+==============================================================================
+8. RATE VS AMOUNT VS DURATION (participant level)
+==============================================================================
+mean_path  vs mean error: r = -0.1272  CI [-0.461, +0.238]  p = 0.4952
+mean_dur   vs mean error: r = +0.2401  CI [-0.125, +0.548]  p = 0.1932
+mean_rt    vs mean error: r = +0.2393  CI [-0.126, +0.547]  p = 0.1949
+cor(mean_path, mean_dur) = 0.8730112 
+cor(mean_rate, mean_dur) = -0.04061444 
+cor(mean_rate, mean_path) = 0.427307 
+
+log mean error ~ log path + log duration:
+               Estimate Std. Error  t value Pr(>|t|)
+(Intercept)    -3.00441    0.35607 -8.43777    0e+00
+log(mean_path) -0.87049    0.15807 -5.50686    1e-05
+log(mean_dur)   0.95606    0.16134  5.92585    0e+00
+adj R2: 0.5326031 
+Wald test b_path + b_dur = 0: sum = 0.08557067  SE = 0.09244947  t( 28 ) = 0.9255939  p = 0.3625664 
+log mean error ~ log mean rate: adj R2 = 0.5163292  slope = -0.9400883 
+
+==============================================================================
+9. IS THE WITHIN-PARTICIPANT NULL INFORMATIVE?
+==============================================================================
+within-term CI on the log scale: -0.4525228 to 1.110463 
+smallest between-style effect the within CI still excludes (log scale):
+  upper bound of |effect| ruled out below: -0.4525228 
+  the between estimate is -4.615327 -> is it inside the within CI? FALSE 
+between - within contrast: -4.944297  SE = 0.9225825  z = -5.359193  p = 8.35946e-08 
+trial_rate_deviation range: -0.2088026 0.1754429  IQR: 0.06103472 
+per-participant within-subject correlations: mean r = 0.03492035  median = 0.09846504  n positive = 18 / 31 
+
+	One Sample t-test
+
+data:  wc$r
+t = 0.80427, df = 30, p-value = 0.4276
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -0.05375229  0.12359299
+sample estimates:
+ mean of x 
+0.03492035 
+
+
+==============================================================================
+10. cm-SCALED RESPONSE
+==============================================================================
+max abs slope difference: 4.269462e-06 
+intercept shift: 4.605169  log(100) = 4.60517 
+
+==============================================================================
+11. WRITING CSV OUTPUT
+==============================================================================
+Blad w poleceniu 'match.names(clabs, names(xi))': 
+  nazwy nie zgadzaja sie z poprzednimi nazwami
+Wywolania: rbind -> rbind -> match.names
+Wykonywanie wstrzymane

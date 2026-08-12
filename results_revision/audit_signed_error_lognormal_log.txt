@@ -1,0 +1,327 @@
+Independent audit run: 2026-08-07 00:29:10 
+R version 4.4.1 (2024-06-14) | lme4 1.1.38 | lmerTest 3.1.3 | emmeans 2.0.1 | glmmTMB 1.1.13 
+Rows: 744 | participants: 31 
+Complete cases on the signed-error model variables: 744 
+
+==============================================================================
+(a) Sound type main effect on signed error
+==============================================================================
+Default optimiser (nloptwrap):
+Type III Analysis of Variance Table with Satterthwaite's method
+                      Sum Sq  Mean Sq NumDF   DenDF  F value     Pr(>F)    
+stimulusDisparity_m 1.129926 1.129926     1  30.505 41.94835 3.4312e-07 ***
+soundType           0.135108 0.045036     3 690.708  1.67195     0.1717    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+bobyqa, as in the original compute_ftests.R:
+Type III Analysis of Variance Table with Satterthwaite's method
+                      Sum Sq  Mean Sq NumDF   DenDF  F value     Pr(>F)    
+stimulusDisparity_m 1.129918 1.129918     1  30.505 41.94807 3.4314e-07 ***
+soundType           0.135108 0.045036     3 690.708  1.67195     0.1717    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Same model under sum-to-zero contrasts:
+Type III Analysis of Variance Table with Satterthwaite's method
+                      Sum Sq  Mean Sq NumDF   DenDF  F value     Pr(>F)    
+stimulusDisparity_m 1.129926 1.129926     1  30.505 41.94835 3.4312e-07 ***
+soundType           0.135108 0.045036     3 690.708  1.67195     0.1717    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Random effects:
+ Groups        Name                Std.Dev. Corr  
+ participantId (Intercept)         0.04449        
+               stimulusDisparity_m 0.19014  -0.556
+ Residual                          0.16412        
+
+==============================================================================
+(b) Sound type EMMs and Tukey contrasts
+==============================================================================
+emmeans default df method for lmerMod: kenward-roger 
+
+EMMs in cm, Kenward-Roger:
+ soundType    emmean       SE    df  lower.CL upper.CL t.ratio p.value
+ Drum       13.99892 1.617749 86.09 10.782987 17.21485   8.653 <0.0001
+ Flute      15.20281 1.619736 86.41 11.983096 18.42252   9.386 <0.0001
+ Speech     13.97390 1.618650 86.21 10.756244 17.19156   8.633 <0.0001
+ Pink Noise 11.49207 1.618791 86.24  8.274142 14.70999   7.099 <0.0001
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+EMMs in cm, Satterthwaite:
+ soundType    emmean       SE    df  lower.CL upper.CL t.ratio p.value
+ Drum       13.99892 1.617188 86.00 10.784056 17.21378   8.656 <0.0001
+ Flute      15.20281 1.618675 86.33 11.985165 18.42045   9.392 <0.0001
+ Speech     13.97390 1.617701 86.13 10.758087 17.18972   8.638 <0.0001
+ Pink Noise 11.49207 1.617847 86.16  8.275977 14.70815   7.103 <0.0001
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+
+Tukey pairwise contrasts in cm (Kenward-Roger):
+ contrast             estimate       SE     df  lower.CL upper.CL t.ratio
+ Drum - Flute        -1.203889 1.706996 688.38 -5.599946 3.192167  -0.705
+ Drum - Speech        0.025018 1.705704 688.79 -4.367704 4.417740   0.015
+ Drum - Pink Noise    2.506854 1.705526 689.06 -1.885407 6.899115   1.470
+ Flute - Speech       1.228907 1.708640 694.53 -3.171288 5.629102   0.719
+ Flute - Pink Noise   3.710743 1.706905 688.41 -0.685079 8.106566   2.174
+ Speech - Pink Noise  2.481836 1.707609 692.79 -1.915731 6.879404   1.453
+ p.value
+  0.8950
+  1.0000
+  0.4564
+  0.8894
+  0.1315
+  0.4665
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Smallest Tukey p: 0.1315415 at Flute - Pink Noise 
+Smallest unadjusted p: 0.03004818 
+
+==============================================================================
+(c) Azimuth sector and elevation category on signed error
+==============================================================================
+Optimiser: nloptwrap 
+Type III Analysis of Variance Table with Satterthwaite's method
+                      Sum Sq  Mean Sq NumDF   DenDF  F value  Pr(>F)    
+stimulusDisparity_m 2.088661 2.088661     1 709.372 75.06330 < 2e-16 ***
+azimuthSector       0.064046 0.021349     3 720.745  0.76724 0.51259    
+elevationCategory   0.000572 0.000286     2 727.803  0.01027 0.98978    
+soundType           0.153282 0.051094     3 704.204  1.83624 0.13917    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Azimuth Tukey contrasts (cm):
+ contrast        estimate       SE     df  lower.CL upper.CL t.ratio p.value
+ Front - Right  0.3817684 1.774737 717.97 -4.188281 4.951818   0.215  0.9965
+ Front - Back  -2.1054716 1.819632 726.47 -6.791000 2.580057  -1.157  0.6541
+ Front - Left  -0.3921614 1.832898 721.33 -5.111928 4.327605  -0.214  0.9965
+ Right - Back  -2.4872401 1.750727 721.04 -6.995417 2.020937  -1.421  0.4868
+ Right - Left  -0.7739298 1.769031 717.62 -5.329291 3.781432  -0.437  0.9720
+ Back - Left    1.7133102 1.782874 719.98 -2.877664 6.304284   0.961  0.7717
+
+Results are averaged over the levels of: elevationCategory, soundType 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Smallest azimuth Tukey p: 0.4867643 at Right - Back 
+
+Elevation Tukey contrasts (cm):
+ contrast         estimate       SE     df  lower.CL upper.CL t.ratio p.value
+ Below - Level  0.03158074 1.569160 732.86 -3.653562 3.716723   0.020  0.9998
+ Below - Above -0.17954375 1.660435 721.61 -4.079166 3.720079  -0.108  0.9936
+ Level - Above -0.21112448 1.546147 725.22 -3.842298 3.420049  -0.137  0.9898
+
+Results are averaged over the levels of: azimuthSector, soundType 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 3 estimates 
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Smallest elevation Tukey p: 0.9897734 at Level - Above 
+
+==============================================================================
+(d) Joint LRT for the two spatial factors
+==============================================================================
+Accuracy analysis rows: 744 
+
+glmer Gamma, optimiser bobyqa :
+  reduced                                    optimiser bobyqa       max|grad| = 13.4617 | messages: Model failed to converge with max|grad| = 0.0315139 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+  full                                       optimiser bobyqa       max|grad| = 8.96677 | messages: Model failed to converge with max|grad| = 0.0232695 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+
+glmer Gamma, optimiser Nelder_Mead :
+  reduced                                    optimiser Nelder_Mead  max|grad| = 0.0726319 | messages: none
+  full                                       optimiser Nelder_Mead  max|grad| = 0.0399867 | messages: none
+
+glmer Gamma, optimiser nloptwrap :
+  reduced                                    optimiser nloptwrap    max|grad| = 7.09794 | messages: Model failed to converge with max|grad| = 0.0209932 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+  full                                       optimiser nloptwrap    max|grad| = 0.952581 | messages: Model failed to converge with max|grad| = 0.0373268 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+Komunikaty ostrzegawcze:
+1: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.0315139 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+2: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.0232695 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+3: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.0209932 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+4: W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.0373268 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+
+glmer Gamma, package default (bobyqa + Nelder_Mead):
+  reduced                                    optimiser Nelder_Mead  max|grad| = 0.0156257 | messages: none
+  full                                       optimiser Nelder_Mead  max|grad| = 0.106389 | messages: none
+
+glmmTMB convergence: reduced code 0 pdHess TRUE | full code 0 pdHess TRUE 
+
+                                       comparison    chisq df         p
+                            signed error LMM (ML) 2.338424  5 0.8006073
+          unsigned accuracy Gamma, glmer (bobyqa) 2.128862  5 0.8310426
+     unsigned accuracy Gamma, glmer (Nelder_Mead) 2.151874  5 0.8277563
+       unsigned accuracy Gamma, glmer (nloptwrap) 2.155066  5 0.8272993
+ unsigned accuracy Gamma, glmer (package default) 2.151875  5 0.8277562
+                 unsigned accuracy Gamma, glmmTMB 2.067454  5 0.8397350
+ logLik_reduced logLik_full
+       258.3515    259.5207
+     -2903.0503  -2901.9859
+     -2903.0480  -2901.9721
+     -2903.0502  -2901.9726
+     -2903.0480  -2901.9721
+     -2913.5749  -2912.5412
+
+Percentage change versus the reference level (Front, Below):
+                    term pct_glmmTMB pct_glmer_bobyqa pct_glmer_default
+1     azimuthSectorRight     -0.9772         -1.35619           -0.7315
+2      azimuthSectorBack      2.7878          2.60662            2.9611
+3      azimuthSectorLeft      0.1531         -0.02785            0.1380
+4 elevationCategoryLevel      4.8761          4.82052            4.9786
+5 elevationCategoryAbove      5.9699          5.85125            5.9742
+Manuscript quotes +2.5% (Back vs Front) and +5.7% (Above vs Below).
+
+==============================================================================
+Convergence, conditioning and cross-optimiser stability of the two LMMs
+==============================================================================
+              model optimizer n_warn max_abs_grad theta_hess_min_eig vcov_kappa
+ (a)/(b) sound type nloptwrap      0  6.81422e-05            5.03929    33.1406
+        (c) spatial nloptwrap      0  1.91960e-06          497.33717    26.1915
+ vcov_min_eig singular
+  9.39150e-05    FALSE
+  8.00005e-05    FALSE
+   model                   term    bobyqa nloptwrap Nelder_Mead  beta_range
+ (a)/(b)            (Intercept) 0.0214470 0.0214469   0.0214470 2.49564e-08
+ (a)/(b)    stimulusDisparity_m 0.0535141 0.0535139   0.0535140 8.11961e-08
+ (a)/(b)         soundTypeFlute 0.0170579 0.0170579   0.0170579 7.61076e-09
+ (a)/(b)        soundTypeSpeech 0.0170448 0.0170448   0.0170448 1.62622e-08
+ (a)/(b)    soundTypePink Noise 0.0170422 0.0170422   0.0170422 2.04156e-08
+     (c)            (Intercept) 0.0270619 0.0270619   0.0270619 2.29052e-08
+     (c)    stimulusDisparity_m 0.0416812 0.0416812   0.0416812 8.28434e-09
+     (c)     azimuthSectorRight 0.0177337 0.0177337   0.0177337 8.77874e-09
+     (c)      azimuthSectorBack 0.0181707 0.0181707   0.0181707 4.16252e-08
+     (c)      azimuthSectorLeft 0.0183107 0.0183107   0.0183107 3.31828e-09
+     (c) elevationCategoryLevel 0.0156568 0.0156568   0.0156568 2.70748e-08
+     (c) elevationCategoryAbove 0.0165875 0.0165875   0.0165875 3.46887e-09
+     (c)         soundTypeFlute 0.0173713 0.0173713   0.0173713 8.76631e-10
+     (c)        soundTypeSpeech 0.0174320 0.0174320   0.0174320 1.33153e-09
+     (c)    soundTypePink Noise 0.0173162 0.0173162   0.0173162 2.06291e-10
+ se_max_rel_dev
+    1.88412e-06
+    3.05165e-06
+    1.03959e-07
+    1.02960e-07
+    1.02151e-07
+    9.82806e-07
+    2.03376e-07
+    1.63162e-07
+    1.11150e-07
+    1.44697e-07
+    4.29865e-08
+    1.43082e-07
+    2.24912e-07
+    2.24009e-07
+    2.25267e-07
+Largest relative SE deviation across three optimisers: 3.052e-06 
+Largest absolute fixed-effect range across optimisers: 8.12e-08 
+
+==============================================================================
+Lognormal audit: call site 1 (refit_accuracy_gamma_glmm_revision.R:281)
+==============================================================================
+glmmTMB lognormal(): convergence 0 | pdHess TRUE | sigma = 16.16036 
+sd(log y) = 0.628677 | correct residual sigma = 0.5494266 
+logLik: broken -2941.992 | correct on the y scale -2927.84 | deficit 14.15169 nats
+
+Broken versus correct fixed effects:
+                 term   b_broken se_broken   p_broken  b_correct se_correct
+1     stimDisparity_c  0.7024153 0.0972387 5.0622e-13  1.1511677  0.1373651
+2     trialSequence_c -0.0035335 0.0021393 9.8594e-02 -0.0081865  0.0029302
+3      soundTypeFlute -0.0699562 0.0422235 9.7559e-02 -0.0747884  0.0572329
+4     soundTypeSpeech -0.0465380 0.0412918 2.5972e-01 -0.0749075  0.0574471
+5 soundTypePink Noise -0.0513440 0.0420019 2.2155e-01 -0.0790155  0.0570629
+   p_correct se_ratio
+1 5.2771e-17  0.70788
+2 5.2086e-03  0.73010
+3 1.9130e-01  0.73775
+4 1.9225e-01  0.71878
+5 1.6614e-01  0.73606
+
+Sound-type Tukey p, broken lognormal fit:
+ contrast               estimate         SE  df z.ratio p.value
+ Drum - Flute         0.06995616 0.04222355 Inf   1.657  0.3468
+ Drum - Speech        0.04653799 0.04129178 Inf   1.127  0.6728
+ Drum - Pink Noise    0.05134403 0.04200191 Inf   1.222  0.6125
+ Flute - Speech      -0.02341817 0.04231058 Inf  -0.553  0.9456
+ Flute - Pink Noise  -0.01861213 0.04260296 Inf  -0.437  0.9721
+ Speech - Pink Noise  0.00480604 0.04171369 Inf   0.115  0.9995
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Results are given on the log (not the response) scale. 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Smallest p (broken): 0.3468198 
+
+Sound-type Tukey p, correct log-normal fit (Gaussian on log y):
+ contrast              estimate         SE  df z.ratio p.value
+ Drum - Flute        0.07478837 0.05723287 Inf   1.307  0.5586
+ Drum - Speech       0.07490749 0.05744705 Inf   1.304  0.5604
+ Drum - Pink Noise   0.07901553 0.05706287 Inf   1.385  0.5089
+ Flute - Speech      0.00011912 0.05774481 Inf   0.002  1.0000
+ Flute - Pink Noise  0.00422717 0.05724325 Inf   0.074  0.9999
+ Speech - Pink Noise 0.00410805 0.05726209 Inf   0.072  0.9999
+
+Results are averaged over the levels of: azimuthSector, elevationCategory 
+Results are given on the log (not the response) scale. 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Smallest p (correct): 0.5089412 
+Smallest p (correct, lmerTest with finite df): 0.515463 
+
+lognormal() against gaussian(link = 'log') on the same data:
+  max abs coefficient difference: 0.2918245 
+  sigma: 16.16036 versus 14.76814 | sd(y) = 17.02364 
+  The two do not coincide, so lognormal() is not silently a Gaussian fit on the response; it converges to a wrong interior point.
+
+AIC family comparison. Gamma: 5851.082 | lognormal as printed by glmmTMB: 5909.984 | correct log-normal on the y scale: 5881.68 
+
+==============================================================================
+Lognormal audit: the two published Task 2 numbers
+==============================================================================
+(i) learning effect, coefficient on trialSequence_c
+  correct log-normal MLE (glmmTMB gaussian on log y, ML):
+                   Estimate Std. Error  z value   Pr(>|z|)
+trialSequence_c -0.00818647 0.00293018 -2.79384 0.00520855
+  same via lmerTest, ML:
+                   Estimate Std. Error      df  t value   Pr(>|t|)
+trialSequence_c -0.00818647 0.00293017 713.134 -2.79385 0.00534822
+  same via lmerTest, REML:
+                   Estimate Std. Error      df  t value   Pr(>|t|)
+trialSequence_c -0.00818694  0.0029508 703.262 -2.77448 0.00567578
+  glmmTMB lognormal() family (must not be reported):
+                   Estimate Std. Error  z value  Pr(>|z|)
+trialSequence_c -0.00353352 0.00213931 -1.65171 0.0985942
+
+(ii) movement effects, call site verify_movement_effects_independent.R:161
+  rows: 744 
+  lmerTest REML on log(error):
+                       Estimate Std. Error       df  t value    Pr(>|t|)
+participant_mean_rate -4.608099   0.870632  28.9938 -5.29282 1.12485e-05
+trial_rate_deviation   0.888587   0.452672 707.0173  1.96298 5.00402e-02
+  lmerTest ML on log(error):
+                       Estimate Std. Error      df  t value    Pr(>|t|)
+participant_mean_rate -4.608118   0.841996  30.993 -5.47285 5.53840e-06
+trial_rate_deviation   0.888663   0.450765 713.007  1.97145 4.90581e-02
+  glmmTMB lognormal():
+                      Estimate Std. Error  z value    Pr(>|z|)
+participant_mean_rate -2.56268   0.637965 -4.01697 5.89523e-05
+trial_rate_deviation   1.04941   0.363805  2.88453 3.92001e-03
+  glmmTMB lognormal sigma: 0.1619305 | sd(log y): 0.628677 
+
+Done.

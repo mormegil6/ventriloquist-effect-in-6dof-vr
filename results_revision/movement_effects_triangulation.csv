@@ -1,0 +1,8 @@
+"approach","statistic","value","ci_lo","ci_hi","p_value","n"
+"GLMM between-subject (glmmTMB)","beta (log scale, per 1 m/s)",-4.61532733728015,-6.24249628646036,-2.98815838809994,2.70743178343963e-08,744
+"Participant-level Pearson","r",-0.735526497896099,-0.864543603330708,-0.515553238614911,2.42932268876253e-06,31
+"Participant-level Spearman","rho",-0.519758064516129,NA,NA,0.00310106140113173,31
+"Participant-level Pearson (bootstrap)","r",-0.735526497896099,-0.877267331313663,-0.403095604413358,NA,31
+"Participant-level Spearman (bootstrap)","rho",-0.519758064516129,-0.783093052154383,-0.154979471378137,NA,31
+"Participant-level OLS slope (bootstrap)","slope (m error per 1 m/s)",-1.38207134499226,-1.83814010199084,-0.661863731355617,NA,31
+"Participant-level log-error slope (bootstrap)","slope (log error per 1 m/s)",-4.51131357204791,-5.94097781585153,-2.35772523078789,NA,31

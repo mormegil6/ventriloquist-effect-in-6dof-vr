@@ -1,0 +1,215 @@
+Signed-error LMMs: re-estimation for the revision
+Run date: 2026-08-07 00:18:08 
+R: R version 4.4.1 (2024-06-14) | lme4 1.1.38 | lmerTest 3.1.3 | emmeans 2.0.1 
+Trials: 744 | participants: 31 
+
+==============================================================================
+(a) Sound type main effect on signed error
+==============================================================================
+Type III F tests (Satterthwaite):
+       model                term   Sum.Sq  Mean.Sq NumDF    DenDF  F.value
+1 sound type stimulusDisparity_m 1.129926 1.129926     1  30.5049 41.94835
+2 sound type           soundType 0.135108 0.045036     3 690.7078  1.67195
+       Pr..F.
+1 3.43122e-07
+2 1.71698e-01
+
+Random effects:
+ Groups        Name                Std.Dev. Corr 
+ participantId (Intercept)         0.04449       
+               stimulusDisparity_m 0.19014  -0.56
+ Residual                          0.16412       
+
+==============================================================================
+(b) Estimated marginal means and Tukey contrasts for sound type
+==============================================================================
+EMMs in cm (Kenward-Roger df):
+ soundType    emmean       SE    df  lower.CL upper.CL t.ratio p.value
+ Drum       13.99892 1.617749 86.09 10.782987 17.21485   8.653 <0.0001
+ Flute      15.20281 1.619736 86.41 11.983096 18.42252   9.386 <0.0001
+ Speech     13.97390 1.618650 86.21 10.756244 17.19156   8.633 <0.0001
+ Pink Noise 11.49207 1.618791 86.24  8.274142 14.70999   7.099 <0.0001
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+Tukey pairwise contrasts in cm:
+ contrast             estimate       SE     df  lower.CL upper.CL t.ratio
+ Drum - Flute        -1.203889 1.706996 688.38 -5.599946 3.192167  -0.705
+ Drum - Speech        0.025018 1.705704 688.79 -4.367704 4.417740   0.015
+ Drum - Pink Noise    2.506854 1.705526 689.06 -1.885407 6.899115   1.470
+ Flute - Speech       1.228907 1.708640 694.53 -3.171288 5.629102   0.719
+ Flute - Pink Noise   3.710743 1.706905 688.41 -0.685079 8.106566   2.174
+ Speech - Pink Noise  2.481836 1.707609 692.79 -1.915731 6.879404   1.453
+ p.value
+  0.8950
+  1.0000
+  0.4564
+  0.8894
+  0.1315
+  0.4665
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+Smallest Tukey p: 0.1315415 
+
+==============================================================================
+(c) Azimuth sector and elevation category on signed error
+==============================================================================
+Type III F tests (Satterthwaite):
+                  model                term      Sum.Sq     Mean.Sq NumDF
+1 spatial configuration stimulusDisparity_m 2.088660722 2.088660722     1
+2 spatial configuration       azimuthSector 0.064045725 0.021348575     3
+3 spatial configuration   elevationCategory 0.000571526 0.000285763     2
+4 spatial configuration           soundType 0.153282066 0.051094022     3
+    DenDF    F.value      Pr..F.
+1 709.372 75.0633014 3.06581e-17
+2 720.745  0.7672354 5.12591e-01
+3 727.803  0.0102699 9.89783e-01
+4 704.204  1.8362417 1.39167e-01
+
+Azimuth Tukey contrasts in cm:
+ contrast        estimate       SE     df  lower.CL upper.CL t.ratio p.value
+ Front - Right  0.3817684 1.774737 717.97 -4.188281 4.951818   0.215  0.9965
+ Front - Back  -2.1054716 1.819632 726.47 -6.791000 2.580057  -1.157  0.6541
+ Front - Left  -0.3921614 1.832898 721.33 -5.111928 4.327605  -0.214  0.9965
+ Right - Back  -2.4872401 1.750727 721.04 -6.995417 2.020937  -1.421  0.4868
+ Right - Left  -0.7739298 1.769031 717.62 -5.329291 3.781432  -0.437  0.9720
+ Back - Left    1.7133102 1.782874 719.98 -2.877664 6.304284   0.961  0.7717
+
+Results are averaged over the levels of: elevationCategory, soundType 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+Smallest azimuth Tukey p: 0.4867643 
+
+Elevation Tukey contrasts in cm:
+ contrast         estimate       SE     df  lower.CL upper.CL t.ratio p.value
+ Below - Level  0.03158074 1.569160 732.86 -3.653562 3.716723   0.020  0.9998
+ Below - Above -0.17954375 1.660435 721.61 -4.079166 3.720079  -0.108  0.9936
+ Level - Above -0.21112448 1.546147 725.22 -3.842298 3.420049  -0.137  0.9898
+
+Results are averaged over the levels of: azimuthSector, soundType 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 3 estimates 
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Smallest elevation Tukey p: 0.9897734 
+
+==============================================================================
+(d) Joint likelihood ratio test for adding the spatial factors
+==============================================================================
+Komunikat ostrzegawczy:
+W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.0315139 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+Komunikat ostrzegawczy:
+W poleceniu 'checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, ':
+  Model failed to converge with max|grad| = 0.0232695 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+Komunikat ostrzegawczy:
+W poleceniu 'check_dep_version(dep_pkg = "TMB")': package version mismatch: 
+glmmTMB was built with TMB package version 1.9.17
+Current TMB package version is 1.9.19
+Please re-install glmmTMB from source or restore original 'TMB' package (see '?reinstalling' for more information)
+                                       comparison   chisq df        p
+                             signed error LMM, ML 2.33842  5 0.800607
+ unsigned accuracy Gamma GLMM, glmer (degenerate) 2.12886  5 0.831043
+            unsigned accuracy Gamma GLMM, glmmTMB 2.06745  5 0.839735
+ logLik_reduced logLik_full
+        258.351     259.521
+      -2903.050   -2901.986
+      -2913.575   -2912.541
+
+==============================================================================
+Convergence, Hessian conditioning and cross-optimiser stability
+==============================================================================
+                     model optimizer n_warnings max_abs_gradient
+        (a)/(b) sound type nloptwrap          0       6.8142e-05
+ (c) spatial configuration nloptwrap          0       1.9196e-06
+ theta_hessian_min_eigen vcov_condition_number vcov_min_eigen is_singular
+                  5.0393                33.141     9.3915e-05       FALSE
+                497.3372                26.192     8.0000e-05       FALSE
+
+Fixed-effect standard errors, bobyqa versus nloptwrap:
+                     model                   term se_bobyqa se_nloptwrap
+        (a)/(b) sound type            (Intercept) 0.0214470    0.0214469
+        (a)/(b) sound type    stimulusDisparity_m 0.0535141    0.0535139
+        (a)/(b) sound type         soundTypeFlute 0.0170579    0.0170579
+        (a)/(b) sound type        soundTypeSpeech 0.0170448    0.0170448
+        (a)/(b) sound type    soundTypePink Noise 0.0170422    0.0170422
+ (c) spatial configuration            (Intercept) 0.0270619    0.0270619
+ (c) spatial configuration    stimulusDisparity_m 0.0416812    0.0416812
+ (c) spatial configuration     azimuthSectorRight 0.0177337    0.0177337
+ (c) spatial configuration      azimuthSectorBack 0.0181707    0.0181707
+ (c) spatial configuration      azimuthSectorLeft 0.0183107    0.0183107
+ (c) spatial configuration elevationCategoryLevel 0.0156568    0.0156568
+ (c) spatial configuration elevationCategoryAbove 0.0165875    0.0165875
+ (c) spatial configuration         soundTypeFlute 0.0173713    0.0173713
+ (c) spatial configuration        soundTypeSpeech 0.0174320    0.0174320
+ (c) spatial configuration    soundTypePink Noise 0.0173162    0.0173162
+ se_ratio beta_abs_diff
+ 0.999998   2.49564e-08
+ 0.999997   8.11961e-08
+ 1.000000   7.61076e-09
+ 1.000000   1.62622e-08
+ 1.000000   2.04156e-08
+ 1.000000   8.09556e-11
+ 1.000000   2.92795e-11
+ 1.000000   3.10273e-11
+ 1.000000   1.47118e-10
+ 1.000000   1.17281e-11
+ 1.000000   9.56922e-11
+ 1.000000   1.22604e-11
+ 1.000000   3.09828e-12
+ 1.000000   4.70619e-12
+ 1.000000   7.29188e-13
+
+Largest relative SE disagreement across optimisers: 3.052e-06 
+Largest absolute coefficient disagreement: 8.12e-08 
+
+Session info:
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS 15.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] C
+
+time zone: Europe/Warsaw
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] glmmTMB_1.1.13 emmeans_2.0.1  lmerTest_3.1-3 lme4_1.1-38    Matrix_1.7-4  
+
+loaded via a namespace (and not attached):
+ [1] sandwich_3.1-1      generics_0.1.4      tidyr_1.3.2        
+ [4] lattice_0.22-7      magrittr_2.0.4      grid_4.4.1         
+ [7] estimability_1.5.1  RColorBrewer_1.1-3  mvtnorm_1.3-3      
+[10] backports_1.5.0     survival_3.8-3      multcomp_1.4-29    
+[13] mgcv_1.9-4          purrr_1.2.1         scales_1.4.0       
+[16] TH.data_1.1-5       codetools_0.2-20    numDeriv_2016.8-1.1
+[19] reformulas_0.4.3.1  Rdpack_2.6.4        cli_3.6.5          
+[22] rlang_1.1.7         rbibutils_2.4       splines_4.4.1      
+[25] tools_4.4.1         pbkrtest_0.5.5      parallel_4.4.1     
+[28] nloptr_2.2.1        minqa_1.2.8         dplyr_1.1.4        
+[31] ggplot2_4.0.1       boot_1.3-32         broom_1.0.11       
+[34] vctrs_0.6.5         R6_2.6.1            zoo_1.8-15         
+[37] lifecycle_1.0.5     MASS_7.3-65         pkgconfig_2.0.3    
+[40] pillar_1.11.1       gtable_0.3.6        glue_1.8.0         
+[43] Rcpp_1.1.1          tibble_3.3.1        tidyselect_1.2.1   
+[46] farver_2.1.2        xtable_1.8-4        nlme_3.1-168       
+[49] TMB_1.9.19          compiler_4.4.1      S7_0.2.1           
+
+Done.
